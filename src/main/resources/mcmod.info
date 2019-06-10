@@ -1,0 +1,16 @@
+[
+{
+  "modid": "${mod_id}",
+  "name": "${mod_name}",
+  "description": "Fun and experimental additions to Psi",
+  "version": "${version}",
+  "mcversion": "${mc_version}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Dudblockman"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": ["psi", "librarianlib", "autoreglib"]
+}
+]
