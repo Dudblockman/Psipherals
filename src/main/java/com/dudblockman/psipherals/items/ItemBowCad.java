@@ -1,5 +1,6 @@
 package com.dudblockman.psipherals.items;
 
+import com.dudblockman.psipherals.entity.EntityPsiArrow;
 import com.dudblockman.psipherals.util.libs.ItemMaterials;
 import com.teamwizardry.librarianlib.features.base.item.ItemModBow;
 import com.teamwizardry.librarianlib.features.helpers.NBTHelper;
@@ -7,17 +8,25 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.enchantment.EnchantmentDurability;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.init.Enchantments;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumRarity;
+import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.stats.StatList;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
@@ -145,6 +154,106 @@ public class ItemBowCad extends ItemModBow implements ICAD, ISpellSettable, IIte
         ItemStack stack = playerIn.getHeldItem(hand);
         Block block = worldIn.getBlockState(pos).getBlock();
         return block == ModBlocks.programmer ? ((BlockProgrammer) block).setSpell(worldIn, pos, playerIn, stack) : EnumActionResult.PASS;
+    }
+
+    @Nonnull
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
+    {
+        ItemStack itemstack = playerIn.getHeldItem(handIn);
+        PlayerDataHandler.PlayerData data = PlayerDataHandler.get(playerIn);
+        boolean flag = !data.overflowed && data.getAvailablePsi() > 0;
+
+        //ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(itemstack, worldIn, playerIn, handIn, flag);
+        //if (ret != null) return ret;
+        if (flag) {
+            data.deductPsi(100, 20, true, false);
+        }
+        if (!playerIn.capabilities.isCreativeMode && !flag)
+        {
+            return flag ? new ActionResult(EnumActionResult.PASS, itemstack) : new ActionResult(EnumActionResult.FAIL, itemstack);
+        }
+        else
+        {
+            playerIn.setActiveHand(handIn);
+            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
+        }
+    }
+
+    @Nonnull
+    @Override
+    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft)
+    {
+        if (entityLiving instanceof EntityPlayer)
+        {
+            EntityPlayer entityplayer = (EntityPlayer)entityLiving;
+
+            PlayerDataHandler.PlayerData data = PlayerDataHandler.get(entityplayer);
+
+            boolean flag = EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
+
+            int i = this.getMaxItemUseDuration(stack) - timeLeft;
+            i = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(stack, worldIn, entityplayer, i, (!data.overflowed && data.getAvailablePsi() > 0) || flag);
+            if (i < 0) return;
+
+            float f = getArrowVelocity(i);
+
+            if ((double)f >= 0.1D)
+            {
+
+                if (!worldIn.isRemote)
+                {
+                    EntityPsiArrow entityarrow = new EntityPsiArrow(worldIn, entityplayer);
+                    entityarrow.shoot(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.5F, 0.5F);
+
+                    if (f == 1.0F)
+                    {
+                        entityarrow.setIsCritical(true);
+                    }
+
+                    int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack);
+
+                    if (j > 0)
+                    {
+                        entityarrow.setDamage(entityarrow.getDamage() + (double)j * 0.5D + 0.5D);
+                    }
+
+                    int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stack);
+
+                    if (k > 0)
+                    {
+                        entityarrow.setKnockbackStrength(k);
+                    }
+
+                    if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stack) > 0)
+                    {
+                        entityarrow.setFire(100);
+                    }
+                    if (!flag) { //Deduct cost of conjuring arrow
+                        data.deductPsi(100, 20, true, false);
+                    }
+                        //Deduct cost of preventing damage
+                    int cost = 150 / (1+EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack));
+                    data.deductPsi(cost,0,true,false);
+
+
+                    entityarrow.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
+
+
+
+                    //Spellcasting Logic here
+
+                    //castSpell(entityplayer, stack, new Vec3d(entityplayer.posX, entityplayer.posY, entityplayer.posZ), entityarrow);
+
+                    worldIn.spawnEntity(entityarrow);
+                }
+
+                worldIn.playSound((EntityPlayer)null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+
+                entityplayer.addStat(StatList.getObjectUseStats(this));
+
+            }
+        }
     }
 
     @Override

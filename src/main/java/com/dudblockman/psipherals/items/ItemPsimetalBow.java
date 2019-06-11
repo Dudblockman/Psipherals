@@ -229,11 +229,6 @@ public class ItemPsimetalBow extends ItemModBow implements IPsimetalTool {
                 }
             }
         }
-        // End code from ItemBow
-        /*if (entityLiving instanceof EntityPlayer) {
-            EntityPlayer entityplayer = (EntityPlayer) entityLiving;
-            castSpell(entityplayer, stack, new Vec3d(entityplayer.posX, entityplayer.posY, entityplayer.posZ));
-        }*/
     }
     public static void regenPsi(ItemStack stack, Entity entityIn, boolean isSelected) {
         if (entityIn instanceof EntityPlayer && stack.getItemDamage() > 0 && !isSelected) {

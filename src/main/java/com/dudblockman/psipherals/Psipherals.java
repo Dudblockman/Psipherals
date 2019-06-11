@@ -1,6 +1,7 @@
 package com.dudblockman.psipherals;
 
 import com.dudblockman.psipherals.items.Items;
+import com.dudblockman.psipherals.spell.base.SpellPieces;
 import com.dudblockman.psipherals.util.CreativeTab;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -21,5 +22,6 @@ public class Psipherals {
     public void preInit(FMLPreInitializationEvent event) {
         new CreativeTab();
         new Items();
+        SpellPieces.init();
     }
 }
