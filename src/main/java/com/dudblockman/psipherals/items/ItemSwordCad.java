@@ -1,16 +1,25 @@
 package com.dudblockman.psipherals.items;
 
+import com.dudblockman.psipherals.Psipherals;
 import com.dudblockman.psipherals.util.libs.ItemMaterials;
+import com.teamwizardry.librarianlib.features.base.item.IModItemProvider;
 import com.teamwizardry.librarianlib.features.base.item.ItemModSword;
 import com.teamwizardry.librarianlib.features.helpers.NBTHelper;
+import kotlin.jvm.functions.Function1;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.ItemMeshDefinition;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Enchantments;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -44,7 +53,6 @@ import vazkii.psi.common.block.base.ModBlocks;
 import vazkii.psi.common.core.handler.PlayerDataHandler;
 import vazkii.psi.common.core.handler.PsiSoundHandler;
 import vazkii.psi.common.core.handler.capability.CADData;
-import vazkii.psi.common.item.base.IPsiItem;
 import vazkii.psi.common.item.base.ModItems;
 import vazkii.psi.common.item.component.ItemCADSocket;
 import vazkii.psi.common.network.message.MessageCADDataSync;
@@ -60,7 +68,7 @@ import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, IItemColorProvider, IPsiItem {
+public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, IItemColorProvider {
 
     private static final String TAG_BULLET_PREFIX = "bullet";
     private static final String TAG_SELECTED_SLOT = "selectedSlot";
@@ -86,7 +94,33 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
 
         return new CADData();
     }
+    @Override
+    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
+    {
+        if (attacker instanceof EntityPlayer) {
+            EntityPlayer entityplayer = (EntityPlayer) attacker;
+            PlayerDataHandler.PlayerData data = PlayerDataHandler.get(entityplayer);
+            int cost = 150 / (1 + EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack));
+            data.deductPsi(cost, 0, true, false);
+        }
+        return true;
+    }
+    @Override
+    public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving)
+    {
+        if ((double)state.getBlockHardness(worldIn, pos) != 0.0D)
+        {
+            if (entityLiving instanceof EntityPlayer) {
+                EntityPlayer entityplayer = (EntityPlayer) entityLiving;
+                PlayerDataHandler.PlayerData data = PlayerDataHandler.get(entityplayer);
+                int cost = 150 / (1 + EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack));
+                data.deductPsi(cost * 2, 0, true, false);
+            }
+            return true;
+        }
 
+        return true;
+    }
     @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
@@ -519,8 +553,33 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
         if(!isInCreativeTab(tab))
             return;
 
+        // Iron Psimetal CAD
+        subItems.add(makeCAD(new ItemStack(Items.swordAssembly, 1, 0),
+                new ItemStack(ModItems.cadCore, 1, 0),
+                new ItemStack(ModItems.cadSocket, 1, 0),
+                new ItemStack(ModItems.cadBattery, 1, 0)));
+        // Gold Psimetal CAD
+        subItems.add(makeCAD(new ItemStack(Items.swordAssembly, 1, 1),
+                new ItemStack(ModItems.cadCore, 1, 0),
+                new ItemStack(ModItems.cadSocket, 1, 0),
+                new ItemStack(ModItems.cadBattery, 1, 0)));
+        // Psimetal CAD
+        subItems.add(makeCAD(new ItemStack(Items.swordAssembly, 1, 2),
+                new ItemStack(ModItems.cadCore, 1, 1),
+                new ItemStack(ModItems.cadSocket, 1, 1),
+                new ItemStack(ModItems.cadBattery, 1, 1)));
+        // Ebony Psimetal CAD
+        subItems.add(makeCAD(new ItemStack(Items.swordAssembly, 1, 3),
+                new ItemStack(ModItems.cadCore, 1, 3),
+                new ItemStack(ModItems.cadSocket, 1, 3),
+                new ItemStack(ModItems.cadBattery, 1, 2)));
         // Ivory Psimetal CAD
-        subItems.add(makeCAD(new ItemStack(ModItems.cadAssembly, 1, 4),
+        subItems.add(makeCAD(new ItemStack(Items.swordAssembly, 1, 4),
+                new ItemStack(ModItems.cadCore, 1, 3),
+                new ItemStack(ModItems.cadSocket, 1, 3),
+                new ItemStack(ModItems.cadBattery, 1, 2)));
+        // Creative CAD
+        subItems.add(makeCAD(new ItemStack(Items.swordAssembly, 1, 5),
                 new ItemStack(ModItems.cadCore, 1, 3),
                 new ItemStack(ModItems.cadSocket, 1, 3),
                 new ItemStack(ModItems.cadBattery, 1, 2)));
@@ -573,9 +632,10 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
     public static String local(String s) {
         return TooltipHandler.local(s);
     }
-    /*@Override
-    @SideOnly(Side.CLIENT)
-    public ItemMeshDefinition getCustomMeshDefinition() {
+
+    @Nullable
+    @Override
+    public Function1<ItemStack, ModelResourceLocation> getMeshDefinition() {
         return stack -> {
             ICAD cad = (ICAD) stack.getItem();
             ItemStack assemblyStack = cad.getComponentInSlot(stack, EnumCADComponent.ASSEMBLY);
@@ -584,5 +644,6 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
             ICADAssembly assembly = (ICADAssembly) assemblyStack.getItem();
             return assembly.getCADModel(assemblyStack, stack);
         };
-    }*/
+    }
+
 }

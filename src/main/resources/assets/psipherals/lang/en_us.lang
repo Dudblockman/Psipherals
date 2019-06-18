@@ -1,3 +1,10 @@
 item_group.psipherals=Psionic Peripherals
 
 item.psipherals:psimetal_bow.name=Psimetal Bow
+
+item.psipherals:sword_iron.name=Iron Sword Assembly
+item.psipherals:sword_gold.name=Gold Sword Assembly
+item.psipherals:sword_psimetal.name=Psimetal Sword Assembly
+item.psipherals:sword_ebony_psimetal.name=Ebony Sword Assembly
+item.psipherals:sword_ivory_psimetal.name=Ivory Sword Assembly
+item.psipherals:sword_creative.name=Creative Sword Assembly

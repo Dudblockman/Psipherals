@@ -31,6 +31,7 @@ import vazkii.psi.api.spell.SpellContext;
 import vazkii.psi.common.core.handler.PlayerDataHandler;
 import vazkii.psi.common.entity.EntitySpellProjectile;
 import vazkii.psi.common.item.ItemCAD;
+import vazkii.psi.common.item.ItemSpellBullet;
 import vazkii.psi.common.item.tool.IPsimetalTool;
 
 import javax.annotation.Nonnull;
@@ -52,11 +53,9 @@ public class ItemPsimetalBow extends ItemModBow implements IPsimetalTool {
             if (!playerCad.isEmpty()) {
 
                 ItemStack bullet = bow.getBulletInSocket(stack, bow.getSelectedSlot(stack));
-                if (bullet.getItemDamage() != 1) {
-                    //ItemStack itemstack = yourbulletthinghere;
+                if ((bullet.getItem() instanceof ItemSpellBullet) & bullet.getItemDamage() != 1) {
                     NBTTagCompound entityCmp = arrow.getEntityData();
                     NBTTagCompound bulletCmp = new NBTTagCompound();
-                    //itemstack.writeToNBT(bulletCmp);
                     entityCmp.setTag("rpsideas-spellimmune", bulletCmp);
                 }
 
@@ -70,45 +69,6 @@ public class ItemPsimetalBow extends ItemModBow implements IPsimetalTool {
                 for (EntitySpellProjectile spell : spells) {
                     spell.startRiding(arrow, true);
                 }
-                /*ISpellAcceptor spellContainer = ISpellAcceptor.acceptor(bullet);
-                Spell spell = spellContainer.getSpell();
-                SpellContext spellcontext = new SpellContext().setPlayer(player).setSpell(spell);
-                spellcontext.tool = stack;
-
-                ItemStack colorizer = ((ICAD) playerCad.getItem()).getComponentInSlot(playerCad, EnumCADComponent.DYE);
-                EntitySpellProjectile projectile = null;
-
-                switch (bullet.getItemDamage()) {
-                    case 1: // Basic
-                        break;
-                    case 3: // Projectile
-                        projectile = new EntitySpellProjectile(spellcontext.caster.getEntityWorld(), spellcontext.caster);
-                        break;
-                    case 5: // Loopcast
-                        break;
-                    case 7: // Circle
-                        break;
-                    case 9: // Grenade
-                        projectile = new EntitySpellGrenade(spellcontext.caster.getEntityWorld(), spellcontext.caster);
-                        break;
-                    case 11: // Charge
-                        projectile = new EntitySpellCharge(spellcontext.caster.getEntityWorld(), spellcontext.caster);
-                        break;
-                    case 13: // Mine
-                        projectile = new EntitySpellMine(spellcontext.caster.getEntityWorld(), spellcontext.caster);
-                        break;
-                }
-
-                if (projectile != null) {
-                    projectile.setInfo(spellcontext.caster, colorizer, stack);
-                    projectile.context = spellcontext;
-                    projectile.getEntityWorld().spawnEntity(projectile);
-                    projectile.startRiding(arrow, true);
-                } else {
-                    ItemCAD.cast(player.world, player, data, bullet, playerCad, 5, 10, 0.05F, (SpellContext context) -> {
-                        context.tool = stack;
-                    });
-                }*/
             }
         }
 

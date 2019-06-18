@@ -10,4 +10,5 @@ public class Items {
     public static final ItemModBow psimetalBow = new ItemPsimetalBow(ItemNames.PSIMETAL_BOW);
     public static final ItemSwordCad swordCAD = new ItemSwordCad(ItemNames.PSIMETAL_SWORD_ADVANCED);
     public static final ItemBowCad bowCAD = new ItemBowCad(ItemNames.PSIMETAL_BOW_ADVANCED);
+    public static final ItemSwordAssembly swordAssembly = new ItemSwordAssembly(ItemNames.SWORD_ASSEMBLY);
 }
