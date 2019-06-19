@@ -642,7 +642,8 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
             if(assemblyStack.isEmpty())
                 return new ModelResourceLocation("missingno");
             ICADAssembly assembly = (ICADAssembly) assemblyStack.getItem();
-            return assembly.getCADModel(assemblyStack, stack);
+            ModelResourceLocation loc = assembly.getCADModel(assemblyStack, stack);
+            return loc;
         };
     }
 

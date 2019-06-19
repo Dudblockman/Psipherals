@@ -2,9 +2,13 @@ package com.dudblockman.psipherals.items;
 
 import com.dudblockman.psipherals.Psipherals;
 import com.teamwizardry.librarianlib.core.client.ModelHandler;
+import com.teamwizardry.librarianlib.features.base.IExtraVariantHolder;
 import com.teamwizardry.librarianlib.features.base.IVariantHolder;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jetbrains.annotations.NotNull;
 import vazkii.psi.api.cad.EnumCADComponent;
 import vazkii.psi.api.cad.EnumCADStat;
@@ -12,7 +16,7 @@ import vazkii.psi.api.cad.ICADAssembly;
 
 import java.util.List;
 
-public class ItemSwordAssembly extends ItemAdvComponent implements ICADAssembly, IVariantHolder {
+public class ItemSwordAssembly extends ItemAdvComponent implements ICADAssembly, IExtraVariantHolder {
     public ItemSwordAssembly (String name){
         super(name, VARIANTS);
     }
@@ -59,11 +63,6 @@ public class ItemSwordAssembly extends ItemAdvComponent implements ICADAssembly,
         addStat(EnumCADStat.EFFICIENCY, 5, -1);
         addStat(EnumCADStat.POTENCY, 5, -1);
     }
-    @NotNull
-    @Override
-    public String[] getVariants() {
-        return VARIANTS;
-    }
 
     @Override
     public ItemStack createCADStack(ItemStack stack, List<ItemStack> allComponents) {
@@ -71,13 +70,25 @@ public class ItemSwordAssembly extends ItemAdvComponent implements ICADAssembly,
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public ModelResourceLocation getCADModel(ItemStack stack, ItemStack cad) {
-
         return ModelHandler.INSTANCE.getResource(Psipherals.MODID, MODELS[Math.min(MODELS.length - 1, stack.getItemDamage())]);
     }
 
     @Override
     public EnumCADComponent getComponentType(ItemStack stack) {
         return EnumCADComponent.ASSEMBLY;
+    }
+
+    @NotNull
+    @Override
+    public String[] getVariants() {
+        return VARIANTS;
+    }
+
+    @NotNull
+    @Override
+    public String[] getExtraVariants() {
+        return MODELS;
     }
 }
