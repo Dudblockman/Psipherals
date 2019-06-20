@@ -1,14 +1,13 @@
 package com.dudblockman.psipherals.items;
 
-import com.dudblockman.psipherals.Psipherals;
 import com.dudblockman.psipherals.util.libs.ItemMaterials;
-import com.teamwizardry.librarianlib.features.base.item.IModItemProvider;
+import com.teamwizardry.librarianlib.features.base.item.IItemColorProvider;
 import com.teamwizardry.librarianlib.features.base.item.ItemModSword;
 import com.teamwizardry.librarianlib.features.helpers.NBTHelper;
 import kotlin.jvm.functions.Function1;
+import kotlin.jvm.functions.Function2;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.util.ITooltipFlag;
@@ -38,7 +37,6 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import vazkii.arl.interf.IItemColorProvider;
 import vazkii.arl.network.NetworkHandler;
 import vazkii.arl.util.TooltipHandler;
 import vazkii.psi.api.PsiAPI;
@@ -53,6 +51,7 @@ import vazkii.psi.common.block.base.ModBlocks;
 import vazkii.psi.common.core.handler.PlayerDataHandler;
 import vazkii.psi.common.core.handler.PsiSoundHandler;
 import vazkii.psi.common.core.handler.capability.CADData;
+import vazkii.psi.common.item.ItemCAD;
 import vazkii.psi.common.item.base.ModItems;
 import vazkii.psi.common.item.component.ItemCADSocket;
 import vazkii.psi.common.network.message.MessageCADDataSync;
@@ -97,9 +96,26 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
     @Override
     public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
     {
+        if(attacker instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) attacker;
+
+            PlayerDataHandler.PlayerData data = PlayerDataHandler.get(player);
+
+        }
         if (attacker instanceof EntityPlayer) {
             EntityPlayer entityplayer = (EntityPlayer) attacker;
             PlayerDataHandler.PlayerData data = PlayerDataHandler.get(entityplayer);
+            ItemStack playerCad = PsiAPI.getPlayerCAD(entityplayer);
+
+            if(!playerCad.isEmpty()) {
+                ItemStack bullet = getBulletInSocket(stack, getSelectedSlot(stack));
+                ItemCAD.cast(entityplayer.getEntityWorld(), entityplayer, data, bullet, playerCad, 5, 10, 0.05F,
+                        (SpellContext context) -> {
+                            context.attackedEntity = target;
+                            context.tool = stack;
+                        });
+            }
+
             int cost = 150 / (1 + EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack));
             data.deductPsi(cost, 0, true, false);
         }
@@ -462,11 +478,6 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
         NBTHelper.setInt(stack, TAG_SELECTED_SLOT, slot);
     }
 
-    @SideOnly(Side.CLIENT)
-    public IItemColor getItemColor() {
-        return (stack, tintIndex) -> tintIndex == 1 ? getSpellColor(stack) : 0xFFFFFF;
-    }
-
     @Override
     public int getTime(ItemStack stack) {
         return getCADData(stack).getTime();
@@ -647,4 +658,9 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
         };
     }
 
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public Function2<ItemStack, Integer, Integer> getItemColorFunction() {
+        return (stack, tintIndex) -> tintIndex == 1 ? getSpellColor(stack) : 0xFFFFFF;
+    }
 }

@@ -22,6 +22,6 @@ public class Psipherals {
     public void preInit(FMLPreInitializationEvent event) {
         new CreativeTab();
         new Items();
-        SpellPieces.init();
+        //SpellPieces.init();
     }
 }
