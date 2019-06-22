@@ -31,20 +31,18 @@ public class EventHandler {
     public static void arrowHit(ProjectileImpactEvent event) {
         Entity projectile = event.getEntity();
         if ((projectile instanceof EntityArrow) && !(projectile instanceof EntityPsiArrow)) {
-            //if (projectile.hasCapability(ISpellImmune.CAPABILITY, null)  ) {
             if (NBTHelper.hasKey(projectile.getEntityData(), TAG_SPELLIMMUNE)) {
-            for (Entity rider : projectile.getPassengers()) {
-                if (rider instanceof EntitySpellProjectile) {
-                    rider.dismountRidingEntity();
-                    rider.setPosition(projectile.posX, projectile.posY, projectile.posZ);
-                    rider.motionX = projectile.motionX;
-                    rider.motionY = projectile.motionY;
-                    rider.motionZ = projectile.motionZ;
-                    rider.velocityChanged = true;
+                for (Entity rider : projectile.getPassengers()) {
+                    if (rider instanceof EntitySpellProjectile) {
+                        rider.dismountRidingEntity();
+                        rider.setPosition(projectile.posX, projectile.posY, projectile.posZ);
+                        rider.motionX = projectile.motionX;
+                        rider.motionY = projectile.motionY;
+                        rider.motionZ = projectile.motionZ;
+                        rider.velocityChanged = true;
+                    }
                 }
             }
-            }
-            //}
         }
     }
 }
