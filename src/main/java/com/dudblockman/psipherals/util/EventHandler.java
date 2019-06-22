@@ -37,7 +37,10 @@ public class EventHandler {
                 if (rider instanceof EntitySpellProjectile) {
                     rider.dismountRidingEntity();
                     rider.setPosition(projectile.posX, projectile.posY, projectile.posZ);
-                    rider.setVelocity(projectile.motionX, projectile.motionY, projectile.motionZ);
+                    rider.motionX = projectile.motionX;
+                    rider.motionY = projectile.motionY;
+                    rider.motionZ = projectile.motionZ;
+                    rider.velocityChanged = true;
                 }
             }
             }

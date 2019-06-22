@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "psipherals:sword_assembly",
+    "data": 2
+  },
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+    {
+      "type": "forge:ore_dict",
+      "ore": "ingotIvoryPsi"
+    },
+    {
+      "item": "psi:cad_assembly",
+      "data": 2
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "ingotEbonyPsi"
+    }
+  ]
+}
