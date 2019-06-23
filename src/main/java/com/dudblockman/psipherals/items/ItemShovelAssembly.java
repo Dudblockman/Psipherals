@@ -3,10 +3,8 @@ package com.dudblockman.psipherals.items;
 import com.dudblockman.psipherals.Psipherals;
 import com.teamwizardry.librarianlib.core.client.ModelHandler;
 import com.teamwizardry.librarianlib.features.base.IExtraVariantHolder;
-import com.teamwizardry.librarianlib.features.base.IVariantHolder;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jetbrains.annotations.NotNull;
@@ -16,26 +14,27 @@ import vazkii.psi.api.cad.ICADAssembly;
 
 import java.util.List;
 
-public class ItemSwordAssembly extends ItemAdvComponent implements ICADAssembly, IExtraVariantHolder {
-    public ItemSwordAssembly (String name){
+public class ItemShovelAssembly extends ItemAdvComponent implements ICADAssembly, IExtraVariantHolder {
+    public ItemShovelAssembly(String name){
         super(name, VARIANTS);
     }
 
     public static final String[] VARIANTS = {
-            "sword/sword_assembly_iron",
-            "sword/sword_assembly_gold",
-            "sword/sword_assembly_psimetal",
-            "sword/sword_assembly_ebony_psimetal",
-            "sword/sword_assembly_ivory_psimetal",
-            "sword/sword_assembly_creative"
+            "shovel/shovel_assembly_iron",
+            "shovel/shovel_assembly_gold",
+            "shovel/shovel_assembly_psimetal",
+            "shovel/shovel_assembly_ebony_psimetal",
+            "shovel/shovel_assembly_ivory_psimetal",
+            "shovel/shovel_assembly_creative"
     };
     public static final String[] MODELS = {
-            "sword/sword_iron",
-            "sword/sword_gold",
-            "sword/sword_psimetal",
-            "sword/sword_ebony_psimetal",
-            "sword/sword_ivory_psimetal",
-            "sword/sword_creative"
+            "shovel/shovel"
+            /*"shovel_iron",
+            "shovel_gold",
+            "shovel_psimetal",
+            "shovel_ebony_psimetal",
+            "shovel_ivory_psimetal",
+            "shovel_creative"*/
     };
     @Override
     public void registerStats() {
@@ -66,7 +65,7 @@ public class ItemSwordAssembly extends ItemAdvComponent implements ICADAssembly,
 
     @Override
     public ItemStack createCADStack(ItemStack stack, List<ItemStack> allComponents) {
-        return ItemSwordCad.makeCAD(allComponents);
+        return ItemShovelCad.makeCAD(allComponents);
     }
 
     @Override

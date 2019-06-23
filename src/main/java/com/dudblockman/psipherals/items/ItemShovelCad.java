@@ -2,14 +2,13 @@ package com.dudblockman.psipherals.items;
 
 import com.dudblockman.psipherals.util.libs.ItemMaterials;
 import com.teamwizardry.librarianlib.features.base.item.IItemColorProvider;
-import com.teamwizardry.librarianlib.features.base.item.ItemModSword;
+import com.teamwizardry.librarianlib.features.base.item.ItemModSpade;
 import com.teamwizardry.librarianlib.features.helpers.NBTHelper;
 import kotlin.jvm.functions.Function1;
 import kotlin.jvm.functions.Function2;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -54,6 +53,7 @@ import vazkii.psi.common.core.handler.capability.CADData;
 import vazkii.psi.common.item.ItemCAD;
 import vazkii.psi.common.item.base.ModItems;
 import vazkii.psi.common.item.component.ItemCADSocket;
+import vazkii.psi.common.item.tool.IPsimetalTool;
 import vazkii.psi.common.network.message.MessageCADDataSync;
 import vazkii.psi.common.network.message.MessageVisualEffect;
 
@@ -67,7 +67,7 @@ import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, IItemColorProvider {
+public class ItemShovelCad extends ItemModSpade implements ICAD, ISpellSettable, IItemColorProvider {
 
     private static final String TAG_BULLET_PREFIX = "bullet";
     private static final String TAG_SELECTED_SLOT = "selectedSlot";
@@ -83,7 +83,7 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
 
     private static final Pattern FAKE_PLAYER_PATTERN = Pattern.compile("^(?:\\[.*])|(?:ComputerCraft)$");
 
-    public ItemSwordCad(String name) {
+    public ItemShovelCad(String name) {
         super(name, ItemMaterials.PSIMETAL_TOOL_MATERIAL);
         setMaxStackSize(1);
     }
@@ -99,21 +99,33 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
         if (attacker instanceof EntityPlayer) {
             EntityPlayer entityplayer = (EntityPlayer) attacker;
             PlayerDataHandler.PlayerData data = PlayerDataHandler.get(entityplayer);
-            ItemStack playerCad = PsiAPI.getPlayerCAD(entityplayer);
-
-            if(!playerCad.isEmpty()) {
-                ItemStack bullet = getBulletInSocket(stack, getSelectedSlot(stack));
-                ItemCAD.cast(entityplayer.getEntityWorld(), entityplayer, data, bullet, playerCad, 5, 10, 0.05F,
-                        (SpellContext context) -> {
-                            context.attackedEntity = target;
-                            context.tool = stack;
-                        });
-            }
 
             int cost = 150 / (1 + EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack));
-            data.deductPsi(cost, 0, true, false);
+            data.deductPsi(cost*2, 0, true, false);
         }
         return true;
+    }
+
+    public void castOnBlockBreak(ItemStack itemstack, EntityPlayer player) {
+
+        PlayerDataHandler.PlayerData data = PlayerDataHandler.get(player);
+        ItemStack playerCad = PsiAPI.getPlayerCAD(player);
+
+        if (!playerCad.isEmpty()) {
+            ItemStack bullet = getBulletInSocket(itemstack, getSelectedSlot(itemstack));
+            ItemCAD.cast(player.getEntityWorld(), player, data, bullet, playerCad, 5, 10, 0.05F, (SpellContext context) -> {
+                context.tool = itemstack;
+                context.positionBroken = IPsimetalTool.raytraceFromEntity(player.getEntityWorld(), player, false, player.getAttributeMap().getAttributeInstance(EntityPlayer.REACH_DISTANCE).getAttributeValue());
+            });
+        }
+    }
+    @Override
+    public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, EntityPlayer player) {
+        super.onBlockStartBreak(itemstack, pos, player);
+
+        castOnBlockBreak(itemstack, player);
+
+        return false;
     }
     @Override
     public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving)
@@ -124,7 +136,7 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
                 EntityPlayer entityplayer = (EntityPlayer) entityLiving;
                 PlayerDataHandler.PlayerData data = PlayerDataHandler.get(entityplayer);
                 int cost = 150 / (1 + EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack));
-                data.deductPsi(cost * 2, 0, true, false);
+                data.deductPsi(cost, 0, true, false);
             }
             return true;
         }
@@ -381,13 +393,13 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
     public static ItemStack makeCADWithAssembly(ItemStack assembly, List<ItemStack> components) {
         ItemStack cad = assembly.getItem() instanceof ICADAssembly ?
                 ((ICADAssembly) assembly.getItem()).createCADStack(assembly, components) :
-                new ItemStack(Items.swordCAD);
+                new ItemStack(Items.shovelCAD);
 
         return makeCAD(cad, components);
     }
 
     public static ItemStack makeCAD(List<ItemStack> components) {
-        return makeCAD(new ItemStack(Items.swordCAD), components);
+        return makeCAD(new ItemStack(Items.shovelCAD), components);
     }
 
     public static ItemStack makeCAD(ItemStack base, List<ItemStack> components) {
@@ -559,32 +571,32 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
             return;
 
         // Iron Psimetal CAD
-        subItems.add(makeCAD(new ItemStack(Items.swordAssembly, 1, 0),
+        subItems.add(makeCAD(new ItemStack(Items.shovelAssembly, 1, 0),
                 new ItemStack(ModItems.cadCore, 1, 0),
                 new ItemStack(ModItems.cadSocket, 1, 0),
                 new ItemStack(ModItems.cadBattery, 1, 0)));
         // Gold Psimetal CAD
-        subItems.add(makeCAD(new ItemStack(Items.swordAssembly, 1, 1),
+        subItems.add(makeCAD(new ItemStack(Items.shovelAssembly, 1, 1),
                 new ItemStack(ModItems.cadCore, 1, 0),
                 new ItemStack(ModItems.cadSocket, 1, 0),
                 new ItemStack(ModItems.cadBattery, 1, 0)));
         // Psimetal CAD
-        subItems.add(makeCAD(new ItemStack(Items.swordAssembly, 1, 2),
+        subItems.add(makeCAD(new ItemStack(Items.shovelAssembly, 1, 2),
                 new ItemStack(ModItems.cadCore, 1, 1),
                 new ItemStack(ModItems.cadSocket, 1, 1),
                 new ItemStack(ModItems.cadBattery, 1, 1)));
         // Ebony Psimetal CAD
-        subItems.add(makeCAD(new ItemStack(Items.swordAssembly, 1, 3),
+        subItems.add(makeCAD(new ItemStack(Items.shovelAssembly, 1, 3),
                 new ItemStack(ModItems.cadCore, 1, 3),
                 new ItemStack(ModItems.cadSocket, 1, 3),
                 new ItemStack(ModItems.cadBattery, 1, 2)));
         // Ivory Psimetal CAD
-        subItems.add(makeCAD(new ItemStack(Items.swordAssembly, 1, 4),
+        subItems.add(makeCAD(new ItemStack(Items.shovelAssembly, 1, 4),
                 new ItemStack(ModItems.cadCore, 1, 3),
                 new ItemStack(ModItems.cadSocket, 1, 3),
                 new ItemStack(ModItems.cadBattery, 1, 2)));
         // Creative CAD
-        subItems.add(makeCAD(new ItemStack(Items.swordAssembly, 1, 5),
+        subItems.add(makeCAD(new ItemStack(Items.shovelAssembly, 1, 5),
                 new ItemStack(ModItems.cadCore, 1, 3),
                 new ItemStack(ModItems.cadSocket, 1, 3),
                 new ItemStack(ModItems.cadBattery, 1, 2)));
