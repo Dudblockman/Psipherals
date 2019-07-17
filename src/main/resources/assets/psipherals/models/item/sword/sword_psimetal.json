@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"0": "psipherals:items/blade",
-		"1": "psi:blocks/psimetal_block"
+		"1": "psi:blocks/psigem_block"
 	},
 	"elements": [
 		{

@@ -1,4 +1,4 @@
-package com.dudblockman.psipherals.items;
+/*package com.dudblockman.psipherals.items;
 
 import com.dudblockman.psipherals.entity.EntityPsiArrow;
 import com.dudblockman.psipherals.util.libs.ItemMaterials;
@@ -463,6 +463,7 @@ public class ItemBowCad extends ItemModBow implements ICAD, ISpellSettable, IIte
         return makeCAD(new ItemStack(Items.bowCAD), components);
     }
 
+
     public static ItemStack makeCAD(ItemStack base, List<ItemStack> components) {
         ItemStack stack = base.copy();
         for(ItemStack component : components)
@@ -690,7 +691,7 @@ public class ItemBowCad extends ItemModBow implements ICAD, ISpellSettable, IIte
     public static String local(String s) {
         return TooltipHandler.local(s);
     }
-    /*@Override
+    @Override
     @SideOnly(Side.CLIENT)
     public ItemMeshDefinition getCustomMeshDefinition() {
         return stack -> {
@@ -701,5 +702,6 @@ public class ItemBowCad extends ItemModBow implements ICAD, ISpellSettable, IIte
             ICADAssembly assembly = (ICADAssembly) assemblyStack.getItem();
             return assembly.getCADModel(assemblyStack, stack);
         };
-    }*/
+    }
 }
+*/

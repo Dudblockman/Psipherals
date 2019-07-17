@@ -21,5 +21,5 @@ public class Items {
     public static final ItemAxeCad axeCAD = new ItemAxeCad(ItemNames.PSIMETAL_AXE_ADVANCED);
     public static final ItemAxeAssembly axeAssembly = new ItemAxeAssembly(ItemNames.AXE_ASSEMBLY);
 
-    public static final ItemBowCad bowCAD = new ItemBowCad(ItemNames.PSIMETAL_BOW_ADVANCED);
+    //public static final ItemBowCad bowCAD = new ItemBowCad(ItemNames.PSIMETAL_BOW_ADVANCED);
 }

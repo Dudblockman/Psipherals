@@ -2,9 +2,13 @@ item_group.psipherals=Psionic Peripherals
 
 item.psipherals:psimetal_bow.name=Psimetal Bow
 
-item.psipherals:sword_iron.name=Iron Sword Assembly
-item.psipherals:sword_gold.name=Gold Sword Assembly
-item.psipherals:sword_psimetal.name=Psimetal Sword Assembly
-item.psipherals:sword_ebony_psimetal.name=Ebony Sword Assembly
-item.psipherals:sword_ivory_psimetal.name=Ivory Sword Assembly
-item.psipherals:sword_creative.name=Creative Sword Assembly
+item.psipherals:psimetal_sword_advanced.name=Casting Assistant Device
+
+item.psipherals:sword_assembly_iron.name=Iron Sword Assembly
+item.psipherals:sword_assembly_gold.name=Gold Sword Assembly
+item.psipherals:sword_assembly_psimetal.name=Psimetal Sword Assembly
+item.psipherals:sword_assembly_ebony_psimetal.name=Ebony Sword Assembly
+item.psipherals:sword_assembly_ivory_psimetal.name=Ivory Sword Assembly
+item.psipherals:sword_assembly_creative.name=Creative Sword Assembly
+
+item.psipherals:psimetal_bow_advanced.name=Casting Assistant Device [WIP]

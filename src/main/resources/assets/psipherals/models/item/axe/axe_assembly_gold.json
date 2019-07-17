@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "psipherals:items/axe_assembly_gold"
+		"layer0": "psipherals:items/axe/axe_assembly_gold"
 	}
 }

@@ -1,6 +1,6 @@
 {
   "result": {
-    "item": "psipherals:sword_assembly",
+    "item": "psipherals:shovel_assembly",
     "data": 1
   },
   "type": "forge:ore_shapeless",
@@ -16,6 +16,9 @@
     {
       "type": "forge:ore_dict",
       "ore": "ingotEbonyPsi"
+    },
+    {
+      "item": "minecraft:golden_shovel"
     }
   ]
 }

@@ -1,7 +1,7 @@
 package com.dudblockman.psipherals.util;
 
 import com.dudblockman.psipherals.Psipherals;
-import com.dudblockman.psipherals.entity.EntityPsiArrow;
+//import com.dudblockman.psipherals.entity.EntityPsiArrow;
 import com.dudblockman.psipherals.entity.capability.ArrowSpellImmuneCapability;
 import com.teamwizardry.librarianlib.features.helpers.NBTHelper;
 import net.minecraft.entity.Entity;
@@ -17,7 +17,7 @@ import vazkii.psi.common.entity.EntitySpellProjectile;
 @Mod.EventBusSubscriber(modid = Psipherals.MODID)
 public class EventHandler {
 
-    public static final String TAG_SPELLIMMUNE = "rpsideas-spellimmune";
+    public static final String TAG_SPELLIMMUNE = "psipherals-spellimmune";
 
     @SubscribeEvent
     public static void attachArrowSpellImmunity(AttachCapabilitiesEvent<Entity> event) {
@@ -30,7 +30,7 @@ public class EventHandler {
     @SubscribeEvent
     public static void arrowHit(ProjectileImpactEvent event) {
         Entity projectile = event.getEntity();
-        if ((projectile instanceof EntityArrow) && !(projectile instanceof EntityPsiArrow)) {
+        if ((projectile instanceof EntityArrow) /*&& !(projectile instanceof EntityPsiArrow)*/) {
             if (NBTHelper.hasKey(projectile.getEntityData(), TAG_SPELLIMMUNE)) {
                 for (Entity rider : projectile.getPassengers()) {
                     if (rider instanceof EntitySpellProjectile) {

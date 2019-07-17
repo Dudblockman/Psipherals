@@ -1,4 +1,4 @@
-package com.dudblockman.psipherals.entity;
+/*package com.dudblockman.psipherals.entity;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityTippedArrow;
@@ -49,26 +49,9 @@ public class EntityPsiArrow extends EntityTippedArrow implements ISpellImmune, I
                 break;
 
             case 5: // Loopcast
-                /*PlayerDataHandler.PlayerData data = PlayerDataHandler.get(context.caster);
-                if (!data.loopcasting || context.castFrom != data.loopcastHand) {
-                    context.cspell.safeExecute(context);
-                    data.loopcasting = true;
-                    data.loopcastHand = context.castFrom;
-                    data.lastTickLoopcastStack = null;
-                    if (context.caster instanceof EntityPlayerMP)
-                        LoopcastTrackingHandler.syncForTrackers((EntityPlayerMP) context.caster);
-                }*/
                 break;
 
             case 7: // Spell Circle
-                /*RayTraceResult pos = PieceOperatorVectorRaycast.raycast(context.caster, 32);
-
-                if (pos != null) {
-                    EntitySpellCircle circle = new EntitySpellCircle(context.caster.getEntityWorld());
-                    circle.setInfo(context.caster, colorizer, stack);
-                    circle.setPosition(pos.hitVec.x, pos.hitVec.y, pos.hitVec.z);
-                    circle.getEntityWorld().spawnEntity(circle);
-                }*/
                 break;
 
             case 9: // Grenade
@@ -114,3 +97,4 @@ public class EntityPsiArrow extends EntityTippedArrow implements ISpellImmune, I
 
     }
 }
+*/

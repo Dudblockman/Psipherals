@@ -1,7 +1,7 @@
 {
   "result": {
-    "item": "psipherals:sword_assembly",
-    "data": 4
+    "item": "psipherals:pickaxe_assembly",
+    "data": 2
   },
   "type": "forge:ore_shapeless",
   "ingredients": [
@@ -11,11 +11,14 @@
     },
     {
       "item": "psi:cad_assembly",
-      "data": 4
+      "data": 2
     },
     {
       "type": "forge:ore_dict",
       "ore": "ingotEbonyPsi"
+    },
+    {
+      "item": "minecraft:golden_pickaxe"
     }
   ]
 }

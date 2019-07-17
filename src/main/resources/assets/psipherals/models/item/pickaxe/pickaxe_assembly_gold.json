@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "psipherals:items/pickaxe_assembly_gold"
+		"layer0": "psipherals:items/pickaxe/pickaxe_assembly_gold"
 	}
 }
