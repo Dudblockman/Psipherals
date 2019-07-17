@@ -10,7 +10,7 @@ import vazkii.psi.common.lib.LibPieceGroups;
 
 public class SpellPieces {
     public static void init() {
-        register(PieceTrickRedirectMotion.class, PieceNames.REDIRECT_MOTION, LibPieceGroups.MOVEMENT);
+        //register(PieceTrickRedirectMotion.class, PieceNames.REDIRECT_MOTION, LibPieceGroups.MOVEMENT);
     }
     public static void register(Class<? extends SpellPiece> pieceClass, String name, String group) {
         register(pieceClass, name, group, false);
