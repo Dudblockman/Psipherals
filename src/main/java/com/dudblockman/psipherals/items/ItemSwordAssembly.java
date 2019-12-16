@@ -1,6 +1,7 @@
 package com.dudblockman.psipherals.items;
 
 import com.dudblockman.psipherals.Psipherals;
+import com.dudblockman.psipherals.util.libs.StringObfuscator;
 import com.teamwizardry.librarianlib.core.client.ModelHandler;
 import com.teamwizardry.librarianlib.features.base.IExtraVariantHolder;
 import com.teamwizardry.librarianlib.features.base.IVariantHolder;
@@ -14,9 +15,13 @@ import vazkii.psi.api.cad.EnumCADComponent;
 import vazkii.psi.api.cad.EnumCADStat;
 import vazkii.psi.api.cad.ICADAssembly;
 
+
 import java.util.List;
 
 public class ItemSwordAssembly extends ItemAdvComponent implements ICADAssembly, IExtraVariantHolder {
+
+    public static final String FLUGEL_TIARA_II_ELECTRIC_BOOGALOO = "53839016453E46E15E5DE8F8CE7AE737843767E7CEDAAC2D91F67E44C46CC513";
+
     public ItemSwordAssembly (String name){
         super(name, VARIANTS);
     }
@@ -27,7 +32,8 @@ public class ItemSwordAssembly extends ItemAdvComponent implements ICADAssembly,
             "sword/sword_assembly_psimetal",
             "sword/sword_assembly_ebony_psimetal",
             "sword/sword_assembly_ivory_psimetal",
-            "sword/sword_assembly_creative"
+            "sword/sword_assembly_creative",
+            "igalima",
     };
     public static final String[] MODELS = {
             "sword/sword_iron",
@@ -35,7 +41,8 @@ public class ItemSwordAssembly extends ItemAdvComponent implements ICADAssembly,
             "sword/sword_psimetal",
             "sword/sword_ebony_psimetal",
             "sword/sword_ivory_psimetal",
-            "sword/sword_creative"
+            "sword/sword_creative",
+            "igalima",
     };
     @Override
     public void registerStats() {
@@ -62,10 +69,18 @@ public class ItemSwordAssembly extends ItemAdvComponent implements ICADAssembly,
         // Creative
         addStat(EnumCADStat.EFFICIENCY, 5, -1);
         addStat(EnumCADStat.POTENCY, 5, -1);
+
+        // Hey stop looking at my code
+        addStat(EnumCADStat.EFFICIENCY, 6, 90);
+        addStat(EnumCADStat.POTENCY, 6, 350);
     }
 
     @Override
     public ItemStack createCADStack(ItemStack stack, List<ItemStack> allComponents) {
+        if (StringObfuscator.matchesHash(stack.getTranslationKey()+stack.getDisplayName(),FLUGEL_TIARA_II_ELECTRIC_BOOGALOO)) {
+            stack.setItemDamage(6);
+            stack.getTagCompound().removeTag("display");
+        }
         return ItemSwordCad.makeCAD(allComponents);
     }
 

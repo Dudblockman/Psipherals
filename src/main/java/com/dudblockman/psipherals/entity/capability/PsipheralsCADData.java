@@ -1,9 +1,8 @@
 package com.dudblockman.psipherals.entity.capability;
 
-import com.google.common.collect.Lists;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagByteArray;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagLong;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -13,15 +12,20 @@ import net.minecraftforge.common.util.INBTSerializable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.List;
 
 public class PsipheralsCADData implements ICapabilityProvider, INBTSerializable<NBTTagCompound> {
 
-    @CapabilityInject(PsipheralsCADData.class)
-    Capability<PsipheralsCADData> CAPABILITY = null;
 
-    private List<Byte> bytes = Lists.newArrayList();
+    @CapabilityInject(PsipheralsCADData.class)
+    public static final Capability<PsipheralsCADData> CAPABILITY = null;
+
+    private Long data = 0L;
     private boolean dirty;
+    public final ItemStack cadStack;
+
+    public PsipheralsCADData(ItemStack stack){
+        this.cadStack = stack;
+    }
 
     @Override
     public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
@@ -54,7 +58,7 @@ public class PsipheralsCADData implements ICapabilityProvider, INBTSerializable<
     public NBTTagCompound serializeNBT() {
         NBTTagCompound compound = new NBTTagCompound();
 
-        NBTTagByteArray memory = new NBTTagByteArray(bytes);
+        NBTTagLong memory = new NBTTagLong(data);
 
         compound.setTag("PsipheralsMemory", memory);
 
@@ -64,13 +68,7 @@ public class PsipheralsCADData implements ICapabilityProvider, INBTSerializable<
     @Override
     public void deserializeNBT(NBTTagCompound nbt) {
         if (nbt.hasKey("PsipheralsMemory", Constants.NBT.TAG_LIST)) {
-            byte[] newBytes = nbt.getByteArray("PsipheralsMemory");
-
-            bytes = Lists.newArrayList();
-
-            for (byte b : newBytes) {
-                bytes.add(b);
-            }
+            data = nbt.getLong("PsipheralsMemory");
         }
     }
 }

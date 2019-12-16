@@ -12,8 +12,10 @@ import vazkii.psi.api.spell.piece.PieceTrick;
 public class PieceTrickSaveBinary extends PieceTrick {
 
     public static final String KEY_BINARY_LOCKED = "psipherals:BinaryLocked";
+    public static final int MAX_BITS_PER_OPERATION = 8;
 
-    SpellParam number;
+    SpellParam position;
+    SpellParam band;
     SpellParam target;
 
     public PieceTrickSaveBinary(Spell spell){
@@ -22,25 +24,34 @@ public class PieceTrickSaveBinary extends PieceTrick {
 
     @Override
     public void initParams() {
-        addParam(number = new ParamNumber(SpellParam.GENERIC_NAME_NUMBER, SpellParam.BLUE, false, true));
-        addParam(target = new ParamVector(SpellParam.GENERIC_NAME_TARGET, SpellParam.RED, false, false));
+        addParam(position = new ParamNumber(SpellParam.GENERIC_NAME_NUMBER, SpellParam.BLUE, false, true));
+        addParam(band = new ParamNumber(SpellParam.GENERIC_NAME_NUMBER, SpellParam.PURPLE, true, true));
+
+        addParam(target = new ParamNumber(SpellParam.GENERIC_NAME_TARGET, SpellParam.RED, false, false));
     }
 
     @Override
     public void addToMetadata(SpellMetadata meta) throws SpellCompilationException {
-        meta.addStat(EnumSpellStat.COMPLEXITY, 1);
 
-        Double numberVal = this.<Double>getParamEvaluation(number);
-        if(numberVal == null || numberVal <= 0 || numberVal != numberVal.intValue())
+        Double posVal = this.<Double>getParamEvaluation(position);
+        if(posVal == null || posVal <= 0 || posVal != posVal.intValue())
             throw new SpellCompilationException(SpellCompilationException.NON_POSITIVE_INTEGER, x, y);
 
-        meta.addStat(EnumSpellStat.POTENCY, numberVal.intValue() * 8);
+        Double bandVal = this.<Double>getParamEvaluation(band);
+        if (bandVal == null) {
+            bandVal = 0d;
+        }
+        if(bandVal == null || bandVal <= 0 || bandVal != bandVal.intValue())
+            throw new SpellCompilationException(SpellCompilationException.NON_INTEGER, x, y);
+
+        meta.addStat(EnumSpellStat.COMPLEXITY, 1);
+        meta.addStat(EnumSpellStat.POTENCY, (posVal.intValue() / 16 + 1) * 8);
     }
 
     @Override
     public Object execute(SpellContext context) throws SpellRuntimeException {
-        Double numberVal = this.<Double>getParamValue(context, number);
-        Vector3 targetVal = this.getParamValue(context, target);
+        Double numberVal = this.<Double>getParamValue(context, position);
+        Double targetVal = this.<Double>getParamValue(context, target);
 
         int n = numberVal.intValue() - 1;
 
@@ -50,6 +61,7 @@ public class PieceTrickSaveBinary extends PieceTrick {
         ItemStack cadStack = PsiAPI.getPlayerCAD(context.caster);
         if(cadStack == null || !(cadStack.getItem() instanceof ICAD))
             throw new SpellRuntimeException(SpellRuntimeException.NO_CAD);
+
         ICAD cad = (ICAD) cadStack.getItem();
 
         //cad.setStoredVector(cadStack, n, targetVal);

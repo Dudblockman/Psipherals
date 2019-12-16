@@ -1,5 +1,6 @@
 package com.dudblockman.psipherals.spell.selector;
 
+import com.dudblockman.psipherals.entity.capability.PsipheralsCADData;
 import com.dudblockman.psipherals.spell.trick.PieceTrickSaveBinary;
 import vazkii.psi.api.spell.Spell;
 
@@ -9,8 +10,8 @@ import vazkii.psi.api.cad.ICAD;
 import vazkii.psi.api.internal.Vector3;
 import vazkii.psi.api.spell.*;
 import vazkii.psi.api.spell.param.ParamNumber;
-import vazkii.psi.api.spell.param.ParamVector;
 import vazkii.psi.api.spell.piece.PieceSelector;
+
 
 public class PieceSelectorSavedBinary extends PieceSelector {
 
@@ -44,6 +45,7 @@ public class PieceSelectorSavedBinary extends PieceSelector {
             throw new SpellRuntimeException(SpellRuntimeException.LOCKED_MEMORY);
 
         ItemStack cadStack = PsiAPI.getPlayerCAD(context.caster);
+        cadStack.getCapability(PsipheralsCADData.CAPABILITY,null);
         if(cadStack == null || !(cadStack.getItem() instanceof ICAD))
             throw new SpellRuntimeException(SpellRuntimeException.NO_CAD);
         ICAD cad = (ICAD) cadStack.getItem();
