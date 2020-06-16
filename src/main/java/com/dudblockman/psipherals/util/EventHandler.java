@@ -6,13 +6,13 @@ import com.dudblockman.psipherals.entity.capability.ArrowSpellImmuneCapability;
 import com.dudblockman.psipherals.entity.capability.PsipheralsCADData;
 import com.teamwizardry.librarianlib.features.helpers.NBTHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import vazkii.psi.api.cad.ICAD;
 import vazkii.psi.common.entity.EntitySpellProjectile;
 
@@ -31,7 +31,7 @@ public class EventHandler {
     }
     @SubscribeEvent
     public static void attachArrowSpellImmunity(AttachCapabilitiesEvent<Entity> event) {
-        if (event.getObject() instanceof EntityArrow) {
+        if (event.getObject() instanceof AbstractArrowEntity) {
             event.addCapability(new ResourceLocation(Psipherals.MODID,"psipheralsspellimmunearrow"), new ArrowSpellImmuneCapability(event.getObject()));
         }
 
@@ -40,7 +40,7 @@ public class EventHandler {
     @SubscribeEvent
     public static void arrowHit(ProjectileImpactEvent event) {
         Entity projectile = event.getEntity();
-        if ((projectile instanceof EntityArrow) /*&& !(projectile instanceof EntityPsiArrow)*/) {
+        if ((projectile instanceof AbstractArrowEntity) /*&& !(projectile instanceof EntityPsiArrow)*/) {
             if (NBTHelper.hasKey(projectile.getEntityData(), TAG_SPELLIMMUNE)) {
                 for (Entity rider : projectile.getPassengers()) {
                     if (rider instanceof EntitySpellProjectile) {

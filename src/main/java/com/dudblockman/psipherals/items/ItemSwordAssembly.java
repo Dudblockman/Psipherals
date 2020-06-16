@@ -5,11 +5,11 @@ import com.dudblockman.psipherals.util.libs.StringObfuscator;
 import com.teamwizardry.librarianlib.core.client.ModelHandler;
 import com.teamwizardry.librarianlib.features.base.IExtraVariantHolder;
 import com.teamwizardry.librarianlib.features.base.IVariantHolder;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import vazkii.psi.api.cad.EnumCADComponent;
 import vazkii.psi.api.cad.EnumCADStat;
@@ -85,7 +85,7 @@ public class ItemSwordAssembly extends ItemAdvComponent implements ICADAssembly,
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public ModelResourceLocation getCADModel(ItemStack stack, ItemStack cad) {
         return ModelHandler.INSTANCE.getResource(Psipherals.MODID, MODELS[Math.min(MODELS.length - 1, stack.getItemDamage())]);
     }

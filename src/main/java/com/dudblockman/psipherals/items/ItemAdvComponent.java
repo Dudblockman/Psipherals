@@ -7,8 +7,8 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import vazkii.psi.api.cad.EnumCADComponent;
 import vazkii.psi.api.cad.EnumCADStat;
 import vazkii.psi.api.cad.ICADComponent;
@@ -29,7 +29,7 @@ public abstract class ItemAdvComponent extends ItemMod implements ICADComponent{
         // NO-OP
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, ITooltipFlag advanced) {
         TooltipHelper.tooltipIfShift(tooltip, () -> {

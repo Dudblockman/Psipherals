@@ -6,24 +6,24 @@ import com.teamwizardry.librarianlib.features.utilities.client.TooltipHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.init.Enchantments;
-import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.item.ItemArrow;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.item.Items;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.item.ArrowItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.stats.StatList;
-import net.minecraft.util.EnumHand;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.stats.Stats;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.oredict.OreDictionary;
 import vazkii.psi.api.PsiAPI;
 import vazkii.psi.api.cad.ISocketable;
@@ -45,7 +45,7 @@ public class ItemPsimetalBow extends ItemModBow implements IPsimetalTool {
         this.addPropertyOverride(new ResourceLocation("pull"), (stack, world, entity) -> entity == null || entity.getActiveItemStack().getItem() != this ? 0 : (stack.getMaxItemUseDuration() - entity.getItemInUseCount()) / 20F);
     }
 
-    public static void castSpell(EntityPlayer player, ItemStack stack, Vec3d pos, EntityArrow arrow) {
+    public static void castSpell(PlayerEntity player, ItemStack stack, Vec3d pos, AbstractArrowEntity arrow) {
         PlayerDataHandler.PlayerData data = PlayerDataHandler.get(player);
         ItemStack playerCad = PsiAPI.getPlayerCAD(player);
         if (stack.getItem() instanceof ItemPsimetalBow) {
@@ -54,8 +54,8 @@ public class ItemPsimetalBow extends ItemModBow implements IPsimetalTool {
 
                 ItemStack bullet = bow.getBulletInSocket(stack, bow.getSelectedSlot(stack));
                 if ((bullet.getItem() instanceof ItemSpellBullet) & bullet.getItemDamage() != 1) {
-                    NBTTagCompound entityCmp = arrow.getEntityData();
-                    NBTTagCompound bulletCmp = new NBTTagCompound();
+                    CompoundNBT entityCmp = arrow.getEntityData();
+                    CompoundNBT bulletCmp = new CompoundNBT();
                     entityCmp.setTag("rpsideas-spellimmune", bulletCmp);
                 }
 
@@ -73,15 +73,15 @@ public class ItemPsimetalBow extends ItemModBow implements IPsimetalTool {
         }
 
     }
-    private ItemStack findAmmo(EntityPlayer player)
+    private ItemStack findAmmo(PlayerEntity player)
     {
-        if (this.isArrow(player.getHeldItem(EnumHand.OFF_HAND)))
+        if (this.isArrow(player.getHeldItem(Hand.OFF_HAND)))
         {
-            return player.getHeldItem(EnumHand.OFF_HAND);
+            return player.getHeldItem(Hand.OFF_HAND);
         }
-        else if (this.isArrow(player.getHeldItem(EnumHand.MAIN_HAND)))
+        else if (this.isArrow(player.getHeldItem(Hand.MAIN_HAND)))
         {
-            return player.getHeldItem(EnumHand.MAIN_HAND);
+            return player.getHeldItem(Hand.MAIN_HAND);
         }
         else
         {
@@ -101,13 +101,13 @@ public class ItemPsimetalBow extends ItemModBow implements IPsimetalTool {
 
     @Nonnull
     @Override
-    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft)
+    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft)
     {
         //super.onPlayerStoppedUsing(stack, worldIn, entityLiving, timeLeft);
         // Code from ItemBow
-        if (entityLiving instanceof EntityPlayer)
+        if (entityLiving instanceof PlayerEntity)
         {
-            EntityPlayer entityplayer = (EntityPlayer)entityLiving;
+            PlayerEntity entityplayer = (PlayerEntity)entityLiving;
             boolean flag = entityplayer.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
             ItemStack itemstack = this.findAmmo(entityplayer);
 
@@ -126,12 +126,12 @@ public class ItemPsimetalBow extends ItemModBow implements IPsimetalTool {
 
                 if ((double)f >= 0.1D)
                 {
-                    boolean flag1 = entityplayer.capabilities.isCreativeMode || (itemstack.getItem() instanceof ItemArrow && ((ItemArrow) itemstack.getItem()).isInfinite(itemstack, stack, entityplayer));
+                    boolean flag1 = entityplayer.capabilities.isCreativeMode || (itemstack.getItem() instanceof ArrowItem && ((ArrowItem) itemstack.getItem()).isInfinite(itemstack, stack, entityplayer));
 
                     if (!worldIn.isRemote)
                     {
-                        ItemArrow itemarrow = (ItemArrow)(itemstack.getItem() instanceof ItemArrow ? itemstack.getItem() : Items.ARROW);
-                        EntityArrow entityarrow = itemarrow.createArrow(worldIn, itemstack, entityplayer);
+                        ArrowItem itemarrow = (ArrowItem)(itemstack.getItem() instanceof ArrowItem ? itemstack.getItem() : Items.ARROW);
+                        AbstractArrowEntity entityarrow = itemarrow.createArrow(worldIn, itemstack, entityplayer);
                         entityarrow.shoot(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
 
                         if (f == 1.0F)
@@ -162,7 +162,7 @@ public class ItemPsimetalBow extends ItemModBow implements IPsimetalTool {
 
                         if (flag1 || entityplayer.capabilities.isCreativeMode && (itemstack.getItem() == Items.SPECTRAL_ARROW || itemstack.getItem() == Items.TIPPED_ARROW))
                         {
-                            entityarrow.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
+                            entityarrow.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
                         }
 
 
@@ -173,7 +173,7 @@ public class ItemPsimetalBow extends ItemModBow implements IPsimetalTool {
                         worldIn.spawnEntity(entityarrow);
                     }
 
-                    worldIn.playSound((EntityPlayer)null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+                    worldIn.playSound((PlayerEntity)null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
 
                     if (!flag1 && !entityplayer.capabilities.isCreativeMode)
                     {
@@ -185,14 +185,14 @@ public class ItemPsimetalBow extends ItemModBow implements IPsimetalTool {
                         }
                     }
 
-                    entityplayer.addStat(StatList.getObjectUseStats(this));
+                    entityplayer.addStat(Stats.getObjectUseStats(this));
                 }
             }
         }
     }
     public static void regenPsi(ItemStack stack, Entity entityIn, boolean isSelected) {
-        if (entityIn instanceof EntityPlayer && stack.getItemDamage() > 0 && !isSelected) {
-            EntityPlayer player = (EntityPlayer) entityIn;
+        if (entityIn instanceof PlayerEntity && stack.getItemDamage() > 0 && !isSelected) {
+            PlayerEntity player = (PlayerEntity) entityIn;
             PlayerDataHandler.PlayerData data = PlayerDataHandler.get(player);
             int regenTime = NBTHelper.getInt(stack, TAG_REGEN_TIME, 0);
 
@@ -208,7 +208,7 @@ public class ItemPsimetalBow extends ItemModBow implements IPsimetalTool {
         regenPsi(stack, entityIn, isSelected);
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, ITooltipFlag advanced) {
         String componentName = TooltipHelper.local(ISocketable.getSocketedItemName(stack, "psimisc.none"));

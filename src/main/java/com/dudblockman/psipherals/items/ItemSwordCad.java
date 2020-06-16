@@ -7,26 +7,26 @@ import com.teamwizardry.librarianlib.features.helpers.NBTHelper;
 import kotlin.jvm.functions.Function1;
 import kotlin.jvm.functions.Function2;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.block.BlockState;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Enchantments;
-import net.minecraft.item.EnumRarity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.item.Rarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -35,8 +35,8 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import vazkii.arl.network.NetworkHandler;
 import vazkii.arl.util.TooltipHandler;
 import vazkii.psi.api.PsiAPI;
@@ -94,10 +94,10 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
         return new CADData();
     }
     @Override
-    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
+    public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker)
     {
-        if (attacker instanceof EntityPlayer) {
-            EntityPlayer entityplayer = (EntityPlayer) attacker;
+        if (attacker instanceof PlayerEntity) {
+            PlayerEntity entityplayer = (PlayerEntity) attacker;
             PlayerDataHandler.PlayerData data = PlayerDataHandler.get(entityplayer);
             ItemStack playerCad = PsiAPI.getPlayerCAD(entityplayer);
 
@@ -116,12 +116,12 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
         return true;
     }
     @Override
-    public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving)
+    public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving)
     {
         if ((double)state.getBlockHardness(worldIn, pos) != 0.0D)
         {
-            if (entityLiving instanceof EntityPlayer) {
-                EntityPlayer entityplayer = (EntityPlayer) entityLiving;
+            if (entityLiving instanceof PlayerEntity) {
+                PlayerEntity entityplayer = (PlayerEntity) entityLiving;
                 PlayerDataHandler.PlayerData data = PlayerDataHandler.get(entityplayer);
                 int cost = 150 / (1 + EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack));
                 data.deductPsi(cost * 2, 0, true, false);
@@ -133,7 +133,7 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
     }
     @Nullable
     @Override
-    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
+    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
         CADData data = new CADData();
         if (nbt != null && nbt.hasKey("Parent", Constants.NBT.TAG_COMPOUND))
             data.deserializeNBT(nbt.getCompoundTag("Parent"));
@@ -142,7 +142,7 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
 
     @Override
     public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-        NBTTagCompound compound = NBTHelper.getOrCreateNBT(stack);
+        CompoundNBT compound = NBTHelper.getOrCreateNBT(stack);
 
         if (ICADData.hasData(stack)) {
             ICADData data = ICADData.data(stack);
@@ -164,7 +164,7 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
             for (String key : keys) {
                 Matcher matcher = VECTOR_PREFIX_PATTERN.matcher(key);
                 if (matcher.find()) {
-                    NBTTagCompound vec = compound.getCompoundTag(key);
+                    CompoundNBT vec = compound.getCompoundTag(key);
                     compound.removeTag(key);
                     int memory = Integer.parseInt(matcher.group(1));
                     Vector3 vector = new Vector3(vec.getDouble(TAG_X_LEGACY),
@@ -174,8 +174,8 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
                 }
             }
 
-            if (entityIn instanceof EntityPlayerMP && data.isDirty()) {
-                NetworkHandler.INSTANCE.sendTo(new MessageCADDataSync(data), (EntityPlayerMP) entityIn);
+            if (entityIn instanceof ServerPlayerEntity && data.isDirty()) {
+                NetworkHandler.INSTANCE.sendTo(new MessageCADDataSync(data), (ServerPlayerEntity) entityIn);
                 data.markDirty(false);
             }
         }
@@ -183,7 +183,7 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
 
     @Nonnull
     @Override
-    public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(PlayerEntity playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = playerIn.getHeldItem(hand);
         Block block = worldIn.getBlockState(pos).getBlock();
         return block == ModBlocks.programmer ? ((BlockProgrammer) block).setSpell(worldIn, pos, playerIn, stack) : EnumActionResult.PASS;
@@ -191,13 +191,13 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
 
     @Nonnull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, @Nonnull EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, @Nonnull EnumHand hand) {
         ItemStack itemStackIn = playerIn.getHeldItem(hand);
         PlayerDataHandler.PlayerData data = PlayerDataHandler.get(playerIn);
         ItemStack playerCad = PsiAPI.getPlayerCAD(playerIn);
         if(playerCad != itemStackIn) {
             if(!worldIn.isRemote)
-                playerIn.sendMessage(new TextComponentTranslation("psimisc.multipleCads").setStyle(new Style().setColor(TextFormatting.RED)));
+                playerIn.sendMessage(new TranslationTextComponent("psimisc.multipleCads").setStyle(new Style().setColor(TextFormatting.RED)));
             return new ActionResult<>(EnumActionResult.SUCCESS, itemStackIn);
         }
 
@@ -217,7 +217,7 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
     }
 
     @Override
-    public void setSpell(EntityPlayer player, ItemStack stack, Spell spell) {
+    public void setSpell(PlayerEntity player, ItemStack stack, Spell spell) {
         int slot = getSelectedSlot(stack);
         ItemStack bullet = getBulletInSocket(stack, slot);
         if (!bullet.isEmpty() && ISpellAcceptor.isAcceptor(bullet)) {
@@ -227,7 +227,7 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
         }
     }
 
-    public static boolean cast(World world, EntityPlayer player, PlayerDataHandler.PlayerData data, ItemStack bullet, ItemStack cad, int cd, int particles, float sound, Consumer<SpellContext> predicate) {
+    public static boolean cast(World world, PlayerEntity player, PlayerDataHandler.PlayerData data, ItemStack bullet, ItemStack cad, int cd, int particles, float sound, Consumer<SpellContext> predicate) {
         if (!data.overflowed && data.getAvailablePsi() > 0 && !cad.isEmpty() && !bullet.isEmpty() && ISpellAcceptor.hasSpell(bullet) && isTruePlayer(player)) {
             ISpellAcceptor spellContainer = ISpellAcceptor.acceptor(bullet);
             Spell spell = spellContainer.getSpell();
@@ -242,7 +242,7 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
                     if (MinecraftForge.EVENT_BUS.post(event)) {
                         String cancelMessage = event.getCancellationMessage();
                         if (cancelMessage != null && !cancelMessage.isEmpty())
-                            player.sendMessage(new TextComponentTranslation(cancelMessage).setStyle(new Style().setColor(TextFormatting.RED)));
+                            player.sendMessage(new TranslationTextComponent(cancelMessage).setStyle(new Style().setColor(TextFormatting.RED)));
                         return false;
                     }
 
@@ -295,31 +295,31 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
                     MinecraftForge.EVENT_BUS.post(new SpellCastEvent(spell, context, player, data, cad, bullet));
                     return true;
                 } else if (!world.isRemote)
-                    player.sendMessage(new TextComponentTranslation("psimisc.weakCad").setStyle(new Style().setColor(TextFormatting.RED)));
+                    player.sendMessage(new TranslationTextComponent("psimisc.weakCad").setStyle(new Style().setColor(TextFormatting.RED)));
             }
         }
 
         return false;
     }
 
-    public static boolean craft(EntityPlayer player, ItemStack in, ItemStack out) {
+    public static boolean craft(PlayerEntity player, ItemStack in, ItemStack out) {
         return craft(player, CraftingHelper.getIngredient(in), out);
     }
 
-    public static boolean craft(EntityPlayer player, String in, ItemStack out) {
+    public static boolean craft(PlayerEntity player, String in, ItemStack out) {
         return craft(player, CraftingHelper.getIngredient(in), out);
     }
 
-    public static boolean craft(EntityPlayer player, Ingredient in, ItemStack out) {
+    public static boolean craft(PlayerEntity player, Ingredient in, ItemStack out) {
         if (player.world.isRemote)
             return false;
 
-        List<EntityItem> items = player.getEntityWorld().getEntitiesWithinAABB(EntityItem.class,
+        List<ItemEntity> items = player.getEntityWorld().getEntitiesWithinAABB(ItemEntity.class,
                 player.getEntityBoundingBox().grow(8),
                 entity -> entity != null && entity.getDistanceSq(player) <= 8 * 8);
 
         boolean did = false;
-        for(EntityItem item : items) {
+        for(ItemEntity item : items) {
             ItemStack stack = item.getItem();
             if(in.test(stack)) {
                 ItemStack outCopy = out.copy();
@@ -360,10 +360,10 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
     }
 
     public static boolean isTruePlayer(Entity e) {
-        if(!(e instanceof EntityPlayer))
+        if(!(e instanceof PlayerEntity))
             return false;
 
-        EntityPlayer player = (EntityPlayer) e;
+        PlayerEntity player = (PlayerEntity) e;
 
         String name = player.getName();
         return !(player instanceof FakePlayer || FAKE_PLAYER_PATTERN.matcher(name).matches());
@@ -400,7 +400,7 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
     @Override
     public ItemStack getComponentInSlot(ItemStack stack, EnumCADComponent type) {
         String name = TAG_COMPONENT_PREFIX + type.name();
-        NBTTagCompound cmp = NBTHelper.getCompound(stack, name);
+        CompoundNBT cmp = NBTHelper.getCompound(stack, name);
 
         if(cmp == null)
             return ItemStack.EMPTY;
@@ -423,7 +423,7 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public int getSpellColor(ItemStack stack) {
         ItemStack dye = getComponentInSlot(stack, EnumCADComponent.DYE);
         if(!dye.isEmpty() && dye.getItem() instanceof ICADColorizer)
@@ -443,7 +443,7 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
     @Override
     public ItemStack getBulletInSocket(ItemStack stack, int slot) {
         String name = TAG_BULLET_PREFIX + slot;
-        NBTTagCompound cmp = NBTHelper.getCompound(stack, name);
+        CompoundNBT cmp = NBTHelper.getCompound(stack, name);
 
         if(cmp == null)
             return ItemStack.EMPTY;
@@ -454,7 +454,7 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
     @Override
     public void setBulletInSocket(ItemStack stack, int slot, ItemStack bullet) {
         String name = TAG_BULLET_PREFIX + slot;
-        NBTTagCompound cmp = new NBTTagCompound();
+        CompoundNBT cmp = new CompoundNBT();
 
         if(!bullet.isEmpty())
             bullet.writeToNBT(cmp);
@@ -554,7 +554,7 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
     }
 
     @Override
-    public void getSubItems(@Nonnull CreativeTabs tab, @Nonnull NonNullList<ItemStack> subItems) {
+    public void getSubItems(@Nonnull ItemGroup tab, @Nonnull NonNullList<ItemStack> subItems) {
         if(!isInCreativeTab(tab))
             return;
 
@@ -590,7 +590,7 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
                 new ItemStack(ModItems.cadBattery, 1, 2)));
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void addInformation(ItemStack stack, World playerIn, List<String> tooltip, ITooltipFlag advanced) {
         TooltipHelper.tooltipIfShift(tooltip, () -> {
@@ -629,11 +629,11 @@ public class ItemSwordCad extends ItemModSword implements ICAD, ISpellSettable, 
 
     @Nonnull
     @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.RARE;
+    public Rarity getRarity(ItemStack stack) {
+        return Rarity.RARE;
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static String local(String s) {
         return TooltipHandler.local(s);
     }

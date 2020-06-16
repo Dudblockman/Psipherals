@@ -1,9 +1,9 @@
 package com.dudblockman.psipherals.entity.capability;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagLong;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.LongNBT;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -13,7 +13,7 @@ import net.minecraftforge.common.util.INBTSerializable;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class PsipheralsCADData implements ICapabilityProvider, INBTSerializable<NBTTagCompound> {
+public class PsipheralsCADData implements ICapabilityProvider, INBTSerializable<CompoundNBT> {
 
 
     @CapabilityInject(PsipheralsCADData.class)
@@ -28,13 +28,13 @@ public class PsipheralsCADData implements ICapabilityProvider, INBTSerializable<
     }
 
     @Override
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
+    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable Direction facing) {
         return capability == CAPABILITY;
     }
 
     @Nullable
     @Override
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
         return capability == CAPABILITY ? CAPABILITY.cast(this) : null;
     }
 
@@ -55,10 +55,10 @@ public class PsipheralsCADData implements ICapabilityProvider, INBTSerializable<
     }
 
     @Override
-    public NBTTagCompound serializeNBT() {
-        NBTTagCompound compound = new NBTTagCompound();
+    public CompoundNBT serializeNBT() {
+        CompoundNBT compound = new CompoundNBT();
 
-        NBTTagLong memory = new NBTTagLong(data);
+        LongNBT memory = new LongNBT(data);
 
         compound.setTag("PsipheralsMemory", memory);
 
@@ -66,7 +66,7 @@ public class PsipheralsCADData implements ICapabilityProvider, INBTSerializable<
     }
 
     @Override
-    public void deserializeNBT(NBTTagCompound nbt) {
+    public void deserializeNBT(CompoundNBT nbt) {
         if (nbt.hasKey("PsipheralsMemory", Constants.NBT.TAG_LIST)) {
             data = nbt.getLong("PsipheralsMemory");
         }

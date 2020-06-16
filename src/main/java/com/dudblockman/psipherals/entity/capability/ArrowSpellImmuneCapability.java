@@ -3,7 +3,7 @@ package com.dudblockman.psipherals.entity.capability;
 import com.dudblockman.psipherals.util.EventHandler;
 import com.teamwizardry.librarianlib.features.helpers.NBTHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import vazkii.psi.api.spell.ISpellImmune;
@@ -21,7 +21,7 @@ public class ArrowSpellImmuneCapability implements ISpellImmune, ICapabilityProv
 
 
     @Override
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
+    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable Direction facing) {
         if (capability == ISpellImmune.CAPABILITY)
             return NBTHelper.hasKey(entity.getEntityData(), EventHandler.TAG_SPELLIMMUNE);
         return false;
@@ -29,7 +29,7 @@ public class ArrowSpellImmuneCapability implements ISpellImmune, ICapabilityProv
 
     @Nullable
     @Override
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
         if (capability == ISpellImmune.CAPABILITY)
             return NBTHelper.hasKey(entity.getEntityData(), EventHandler.TAG_SPELLIMMUNE) ? ISpellImmune.CAPABILITY.cast(this) : null ;
         return null;
