@@ -122,7 +122,7 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-1.15.2:6.0.0.2:api")
     runtimeOnly fg.deobf("mezz.jei:jei-1.15.2:6.0.0.2")
 
-    compileOnly fg.deobf("vazkii.psi:Psi:r1.2-82.232:api")
+    compileOnly fg.deobf("vazkii.psi:Psi:r1.2-82.232")
     runtimeOnly fg.deobf("vazkii.psi:Psi:r1.2-82.232")
 
     compileOnly fg.deobf("top.theillusivec4.curios:curios:FORGE-1.15.2-2.0:api")

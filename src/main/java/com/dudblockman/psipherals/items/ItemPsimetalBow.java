@@ -10,10 +10,9 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.item.*;
 import net.minecraft.item.Items;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.item.ArrowItem;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Hand;
@@ -24,7 +23,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.oredict.OreDictionary;
 import vazkii.psi.api.PsiAPI;
 import vazkii.psi.api.cad.ISocketable;
 import vazkii.psi.api.spell.SpellContext;
@@ -36,8 +34,9 @@ import vazkii.psi.common.item.tool.IPsimetalTool;
 
 import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.function.Predicate;
 
-public class ItemPsimetalBow extends ItemModBow implements IPsimetalTool {
+public class ItemPsimetalBow extends ShootableItem implements IPsimetalTool {
     public ItemPsimetalBow(String name) {
         super(name);
         this.setMaxStackSize(1);
@@ -223,6 +222,11 @@ public class ItemPsimetalBow extends ItemModBow implements IPsimetalTool {
     @Override
     public boolean requiresSneakForSpellSet(ItemStack stack) {
         return false;
+    }
+
+    @Override
+    public Predicate<ItemStack> getInventoryAmmoPredicate() {
+        return ARROWS;
     }
 
     public int getItemEnchantability() {

@@ -3,8 +3,7 @@ package com.dudblockman.psipherals.util;
 import com.dudblockman.psipherals.Psipherals;
 //import com.dudblockman.psipherals.entity.EntityPsiArrow;
 import com.dudblockman.psipherals.entity.capability.ArrowSpellImmuneCapability;
-import com.dudblockman.psipherals.entity.capability.PsipheralsCADData;
-import com.teamwizardry.librarianlib.features.helpers.NBTHelper;
+//import com.teamwizardry.librarianlib.features.helpers.NBTHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
@@ -23,13 +22,6 @@ public class EventHandler {
     public static final String TAG_SPELLIMMUNE = "psipherals-spellimmune";
 
     @SubscribeEvent
-    public static void attachDataHandler(AttachCapabilitiesEvent<ItemStack> event) {
-        if (event.getObject().getItem() instanceof ICAD) {
-            event.addCapability(new ResourceLocation(Psipherals.MODID,"psipheralscaddata"), new PsipheralsCADData(event.getObject()));
-        }
-
-    }
-    @SubscribeEvent
     public static void attachArrowSpellImmunity(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof AbstractArrowEntity) {
             event.addCapability(new ResourceLocation(Psipherals.MODID,"psipheralsspellimmunearrow"), new ArrowSpellImmuneCapability(event.getObject()));
@@ -40,7 +32,7 @@ public class EventHandler {
     @SubscribeEvent
     public static void arrowHit(ProjectileImpactEvent event) {
         Entity projectile = event.getEntity();
-        if ((projectile instanceof AbstractArrowEntity) /*&& !(projectile instanceof EntityPsiArrow)*/) {
+        /*if ((projectile instanceof AbstractArrowEntity) ) {
             if (NBTHelper.hasKey(projectile.getEntityData(), TAG_SPELLIMMUNE)) {
                 for (Entity rider : projectile.getPassengers()) {
                     if (rider instanceof EntitySpellProjectile) {
@@ -53,6 +45,6 @@ public class EventHandler {
                     }
                 }
             }
-        }
+        }*/
     }
 }

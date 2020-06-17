@@ -1,11 +1,12 @@
 package com.dudblockman.psipherals.entity.capability;
 
 import com.dudblockman.psipherals.util.EventHandler;
-import com.teamwizardry.librarianlib.features.helpers.NBTHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.util.LazyOptional;
+import vazkii.psi.api.PsiAPI;
 import vazkii.psi.api.spell.ISpellImmune;
 
 import javax.annotation.Nonnull;
@@ -19,24 +20,17 @@ public class ArrowSpellImmuneCapability implements ISpellImmune, ICapabilityProv
         this.entity = entity;
     }
 
-
+    @Nonnull
     @Override
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable Direction facing) {
-        if (capability == ISpellImmune.CAPABILITY)
-            return NBTHelper.hasKey(entity.getEntityData(), EventHandler.TAG_SPELLIMMUNE);
-        return false;
-    }
-
-    @Nullable
-    @Override
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
-        if (capability == ISpellImmune.CAPABILITY)
-            return NBTHelper.hasKey(entity.getEntityData(), EventHandler.TAG_SPELLIMMUNE) ? ISpellImmune.CAPABILITY.cast(this) : null ;
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+        if (cap == PsiAPI.SPELL_IMMUNE_CAPABILITY)
+            return entity.getTags().contains(EventHandler.TAG_SPELLIMMUNE) ? PsiAPI.SPELL_IMMUNE_CAPABILITY : null ;
         return null;
     }
 
     @Override
     public boolean isImmune() {
-        return true;
+        return false;
     }
+
 }

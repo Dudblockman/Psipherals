@@ -1,6 +1,5 @@
 package com.dudblockman.psipherals.items;
 
-import com.dudblockman.psipherals.util.libs.ItemMaterials;
 import com.teamwizardry.librarianlib.features.base.item.IItemColorProvider;
 import com.teamwizardry.librarianlib.features.base.item.ItemModSpade;
 import com.teamwizardry.librarianlib.features.helpers.NBTHelper;

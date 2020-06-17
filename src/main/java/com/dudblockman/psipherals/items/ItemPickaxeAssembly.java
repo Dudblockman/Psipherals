@@ -1,20 +1,18 @@
 package com.dudblockman.psipherals.items;
 
 import com.dudblockman.psipherals.Psipherals;
-import com.teamwizardry.librarianlib.core.client.ModelHandler;
-import com.teamwizardry.librarianlib.features.base.IExtraVariantHolder;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import org.jetbrains.annotations.NotNull;
 import vazkii.psi.api.cad.EnumCADComponent;
 import vazkii.psi.api.cad.EnumCADStat;
 import vazkii.psi.api.cad.ICADAssembly;
 
 import java.util.List;
 
-public class ItemPickaxeAssembly extends ItemAdvComponent implements ICADAssembly, IExtraVariantHolder {
+public class ItemPickaxeAssembly extends ItemAdvComponent implements ICADAssembly {
     public ItemPickaxeAssembly(String name){
         super(name, VARIANTS);
     }
@@ -71,23 +69,17 @@ public class ItemPickaxeAssembly extends ItemAdvComponent implements ICADAssembl
     @Override
     @OnlyIn(Dist.CLIENT)
     public ModelResourceLocation getCADModel(ItemStack stack, ItemStack cad) {
-        return ModelHandler.INSTANCE.getResource(Psipherals.MODID, MODELS[Math.min(MODELS.length - 1, stack.getItemDamage())]);
+        return new ModelResourceLocation(Psipherals.MODID, MODELS[Math.min(MODELS.length - 1, stack.getDamage())]);
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public ResourceLocation getCadTexture(ItemStack stack, ItemStack cad) {
+        return new ResourceLocation(Psipherals.MODID, VARIANTS[Math.min(VARIANTS.length - 1, stack.getDamage())]);
     }
 
     @Override
     public EnumCADComponent getComponentType(ItemStack stack) {
         return EnumCADComponent.ASSEMBLY;
-    }
-
-    @NotNull
-    @Override
-    public String[] getVariants() {
-        return VARIANTS;
-    }
-
-    @NotNull
-    @Override
-    public String[] getExtraVariants() {
-        return MODELS;
     }
 }

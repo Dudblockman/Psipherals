@@ -1,6 +1,5 @@
 package com.dudblockman.psipherals.items;
 
-import com.dudblockman.psipherals.util.libs.ItemMaterials;
 import com.teamwizardry.librarianlib.features.base.item.IItemColorProvider;
 import com.teamwizardry.librarianlib.features.base.item.ItemModSword;
 import com.teamwizardry.librarianlib.features.helpers.NBTHelper;
@@ -9,7 +8,6 @@ import kotlin.jvm.functions.Function2;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
-import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.enchantment.EnchantmentHelper;
