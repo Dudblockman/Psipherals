@@ -10,7 +10,6 @@
  */
 package com.dudblockman.psipherals.util.libs;
 
-import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -25,7 +24,7 @@ public final class StringObfuscator {
         if(str != null)
             try {
                 MessageDigest md = MessageDigest.getInstance("SHA-256");
-                return new HexBinaryAdapter().marshal(md.digest(dontRainbowTableMeOrMySonEverAgain(str).getBytes()));
+                return new String(md.digest(dontRainbowTableMeOrMySonEverAgain(str).getBytes()));
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }

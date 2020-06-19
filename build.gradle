@@ -32,7 +32,7 @@ minecraft {
     mappings channel: 'snapshot', version: '20200225-1.15.1'
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
-    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.
@@ -47,7 +47,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                examplemod {
+                psipherals {
                     source sourceSets.main
                 }
             }
@@ -61,9 +61,10 @@ minecraft {
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
+            singleInstance(true)
 
             mods {
-                examplemod {
+                psipherals {
                     source sourceSets.main
                 }
             }
@@ -78,10 +79,10 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
-            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/')
+            args '--mod', 'psipherals', '--all', '--output', file('src/generated/resources/')
 
             mods {
-                examplemod {
+                psipherals {
                     source sourceSets.main
                 }
             }
@@ -122,8 +123,8 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-1.15.2:6.0.0.2:api")
     runtimeOnly fg.deobf("mezz.jei:jei-1.15.2:6.0.0.2")
 
-    compileOnly fg.deobf("vazkii.psi:Psi:r1.2-82.232")
-    runtimeOnly fg.deobf("vazkii.psi:Psi:r1.2-82.232")
+    compileOnly fg.deobf("vazkii.psi:Psi:r1.2-82.234")
+    runtimeOnly fg.deobf("vazkii.psi:Psi:r1.2-82.234")
 
     compileOnly fg.deobf("top.theillusivec4.curios:curios:FORGE-1.15.2-2.0:api")
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios:FORGE-1.15.2-2.0")
@@ -182,3 +183,4 @@ publishing {
         }
     }
 }
+defaultTasks 'clean', 'runData', 'build', 'incrementBuildNumber'

@@ -69,7 +69,7 @@ import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ItemAxeCad extends AxeItem implements ICAD, ISpellSettable, IItemColorProvider {
+public class ItemAxeCad extends AxeItem implements ICAD {
 
     private static final String TAG_BULLET_PREFIX = "bullet";
     private static final String TAG_SELECTED_SLOT = "selectedSlot";
@@ -85,7 +85,7 @@ public class ItemAxeCad extends AxeItem implements ICAD, ISpellSettable, IItemCo
 
     private static final Pattern FAKE_PLAYER_PATTERN = Pattern.compile("^(?:\\[.*])|(?:ComputerCraft)$");
 
-    public ItemAxeCad(String name) {
+    public ItemAxeCad(Item.Properties props) {
         super(new AdvPsimetalToolMaterial(), 5.0F, -3.0F, (new Item.Properties()).group(ItemGroup.TOOLS));
     }
 
@@ -376,7 +376,7 @@ public class ItemAxeCad extends AxeItem implements ICAD, ISpellSettable, IItemCo
         return did;
     }
 
-    private static class CraftingWrapper extends RecipeWrapper {
+    protected static class CraftingWrapper extends RecipeWrapper {
         CraftingWrapper() {
             super(new ItemStackHandler(1));
         }
@@ -586,32 +586,32 @@ public class ItemAxeCad extends AxeItem implements ICAD, ISpellSettable, IItemCo
         }
 
         // Iron Psimetal CAD
-        subItems.add(makeCAD(new ItemStack(Items.axeAssembly),
+        subItems.add(makeCAD(new ItemStack(Items.axeAssemblyIron),
                 new ItemStack(ModItems.cadCoreBasic),
                 new ItemStack(ModItems.cadSocketBasic),
                 new ItemStack(ModItems.cadBatteryBasic)));
         // Gold Psimetal CAD
-        subItems.add(makeCAD(new ItemStack(Items.axeAssembly),
+        subItems.add(makeCAD(new ItemStack(Items.axeAssemblyGold),
                 new ItemStack(ModItems.cadCoreBasic),
                 new ItemStack(ModItems.cadSocketBasic),
                 new ItemStack(ModItems.cadBatteryBasic)));
         // Psimetal CAD
-        subItems.add(makeCAD(new ItemStack(Items.axeAssembly),
+        subItems.add(makeCAD(new ItemStack(Items.axeAssemblyPsimetal),
                 new ItemStack(ModItems.cadCoreOverclocked),
                 new ItemStack(ModItems.cadSocketSignaling),
                 new ItemStack(ModItems.cadBatteryExtended)));
         // Ebony Psimetal CAD
-        subItems.add(makeCAD(new ItemStack(Items.axeAssembly),
+        subItems.add(makeCAD(new ItemStack(Items.axeAssemblyEbonyPsimetal),
                 new ItemStack(ModItems.cadCoreHyperClocked),
                 new ItemStack(ModItems.cadSocketTransmissive),
                 new ItemStack(ModItems.cadBatteryUltradense)));
         // Ivory Psimetal CAD
-        subItems.add(makeCAD(new ItemStack(Items.axeAssembly),
+        subItems.add(makeCAD(new ItemStack(Items.axeAssemblyIvoryPsimetal),
                 new ItemStack(ModItems.cadCoreHyperClocked),
                 new ItemStack(ModItems.cadSocketTransmissive),
                 new ItemStack(ModItems.cadBatteryUltradense)));
         // Creative CAD
-        subItems.add(makeCAD(new ItemStack(Items.axeAssembly),
+        subItems.add(makeCAD(new ItemStack(Items.axeAssemblyCreative),
                 new ItemStack(ModItems.cadCoreHyperClocked),
                 new ItemStack(ModItems.cadSocketTransmissive),
                 new ItemStack(ModItems.cadBatteryUltradense)));

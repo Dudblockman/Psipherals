@@ -23,8 +23,8 @@ public class ArrowSpellImmuneCapability implements ISpellImmune, ICapabilityProv
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == PsiAPI.SPELL_IMMUNE_CAPABILITY)
-            return entity.getTags().contains(EventHandler.TAG_SPELLIMMUNE) ? PsiAPI.SPELL_IMMUNE_CAPABILITY : null ;
+        if (cap == PsiAPI.SPELL_IMMUNE_CAPABILITY) //TODO
+            return null;
         return null;
     }
 

@@ -3,6 +3,7 @@ package com.dudblockman.psipherals.items;
 import com.dudblockman.psipherals.Psipherals;
 import com.dudblockman.psipherals.util.libs.StringObfuscator;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -10,16 +11,19 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import vazkii.psi.api.cad.EnumCADComponent;
 import vazkii.psi.api.cad.EnumCADStat;
 import vazkii.psi.api.cad.ICADAssembly;
+import vazkii.psi.common.item.component.ItemCADComponent;
 
 
 import java.util.List;
 
-public class ItemSwordAssembly extends ItemAdvComponent implements ICADAssembly {
+public class ItemSwordAssembly extends ItemCADComponent implements ICADAssembly {
 
     public static final String FLUGEL_TIARA_II_ELECTRIC_BOOGALOO = "53839016453E46E15E5DE8F8CE7AE737843767E7CEDAAC2D91F67E44C46CC513";
 
-    public ItemSwordAssembly (String name){
-        super(name, VARIANTS);
+    private final String model;
+    public ItemSwordAssembly(Item.Properties props, String model) {
+        super(props);
+        this.model = model;
     }
 
     public static final String[] VARIANTS = {
@@ -40,35 +44,13 @@ public class ItemSwordAssembly extends ItemAdvComponent implements ICADAssembly 
             "sword/sword_creative",
             "igalima",
     };
+
     @Override
     public void registerStats() {
-        // Iron
-        addStat(EnumCADStat.EFFICIENCY, 0, 70);
-        addStat(EnumCADStat.POTENCY, 0, 100);
-
-        // Gold
-        addStat(EnumCADStat.EFFICIENCY, 1, 65);
-        addStat(EnumCADStat.POTENCY, 1, 150);
-
-        // Psimetal
-        addStat(EnumCADStat.EFFICIENCY, 2, 80);
-        addStat(EnumCADStat.POTENCY, 2, 250);
-
-        // Ebony Psimetal
-        addStat(EnumCADStat.EFFICIENCY, 3, 90);
-        addStat(EnumCADStat.POTENCY, 3, 350);
-
-        // Ivory Psimetal
-        addStat(EnumCADStat.EFFICIENCY, 4, 95);
-        addStat(EnumCADStat.POTENCY, 4, 320);
-
-        // Creative
-        addStat(EnumCADStat.EFFICIENCY, 5, -1);
-        addStat(EnumCADStat.POTENCY, 5, -1);
-
-        // Hey stop looking at my code
-        addStat(EnumCADStat.EFFICIENCY, 6, 90);
-        addStat(EnumCADStat.POTENCY, 6, 350);
+        if(false) {
+            addStat(EnumCADStat.EFFICIENCY, 90);
+            addStat(EnumCADStat.POTENCY, 350);
+        }
     }
 
     @Override
@@ -83,7 +65,7 @@ public class ItemSwordAssembly extends ItemAdvComponent implements ICADAssembly 
     @Override
     @OnlyIn(Dist.CLIENT)
     public ModelResourceLocation getCADModel(ItemStack stack, ItemStack cad) {
-        return new ModelResourceLocation(Psipherals.MODID, MODELS[Math.min(MODELS.length - 1, stack.getDamage())]);
+        return new ModelResourceLocation(Psipherals.MODID, model);
     }
 
     @Override
