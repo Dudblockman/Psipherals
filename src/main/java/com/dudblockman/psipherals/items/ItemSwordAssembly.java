@@ -13,7 +13,6 @@ import vazkii.psi.api.cad.EnumCADStat;
 import vazkii.psi.api.cad.ICADAssembly;
 import vazkii.psi.common.item.component.ItemCADComponent;
 
-
 import java.util.List;
 
 public class ItemSwordAssembly extends ItemCADComponent implements ICADAssembly {

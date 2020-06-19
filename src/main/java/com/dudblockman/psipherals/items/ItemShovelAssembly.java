@@ -8,7 +8,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import vazkii.psi.api.cad.EnumCADComponent;
-import vazkii.psi.api.cad.EnumCADStat;
 import vazkii.psi.api.cad.ICADAssembly;
 import vazkii.psi.common.item.component.ItemCADComponent;
 
@@ -42,7 +41,7 @@ public class ItemShovelAssembly extends ItemCADComponent implements ICADAssembly
 
     @Override
     public ItemStack createCADStack(ItemStack stack, List<ItemStack> allComponents) {
-        return ItemAxeCad.makeCAD(allComponents);
+        return ItemShovelCad.makeCAD(allComponents);
     }
 
     @Override

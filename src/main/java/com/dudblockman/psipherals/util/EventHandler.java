@@ -1,19 +1,17 @@
 package com.dudblockman.psipherals.util;
 
 import com.dudblockman.psipherals.Psipherals;
-//import com.dudblockman.psipherals.entity.EntityPsiArrow;
 import com.dudblockman.psipherals.entity.capability.ArrowSpellImmuneCapability;
-//import com.teamwizardry.librarianlib.features.helpers.NBTHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import vazkii.psi.api.cad.ICAD;
-import vazkii.psi.common.entity.EntitySpellProjectile;
+import net.minecraftforge.fml.common.Mod;
+
+//import com.dudblockman.psipherals.entity.EntityPsiArrow;
+//import com.teamwizardry.librarianlib.features.helpers.NBTHelper;
 
 
 @Mod.EventBusSubscriber(modid = Psipherals.MODID)

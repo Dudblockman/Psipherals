@@ -4,8 +4,6 @@ import com.dudblockman.psipherals.Psipherals;
 import com.dudblockman.psipherals.items.Items;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import vazkii.psi.common.lib.LibMisc;
-import vazkii.psi.common.lib.LibResources;
 
 public class CreativeTab extends ItemGroup {
 

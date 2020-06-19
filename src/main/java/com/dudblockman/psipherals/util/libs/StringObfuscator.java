@@ -24,6 +24,7 @@ public final class StringObfuscator {
         if(str != null)
             try {
                 MessageDigest md = MessageDigest.getInstance("SHA-256");
+                System.out.println((md.digest(dontRainbowTableMeOrMySonEverAgain(str).getBytes())));
                 return new String(md.digest(dontRainbowTableMeOrMySonEverAgain(str).getBytes()));
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
