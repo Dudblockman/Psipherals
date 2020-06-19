@@ -1,6 +1,7 @@
 package com.dudblockman.psipherals.items;
 
 import com.dudblockman.psipherals.Psipherals;
+import com.dudblockman.psipherals.util.libs.ItemNames;
 import com.dudblockman.psipherals.util.libs.StringObfuscator;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -12,6 +13,8 @@ import vazkii.psi.api.cad.EnumCADComponent;
 import vazkii.psi.api.cad.EnumCADStat;
 import vazkii.psi.api.cad.ICADAssembly;
 import vazkii.psi.common.item.component.ItemCADComponent;
+import vazkii.psi.common.lib.LibItemNames;
+import vazkii.psi.common.lib.LibMisc;
 
 import java.util.List;
 
@@ -63,14 +66,14 @@ public class ItemSwordAssembly extends ItemCADComponent implements ICADAssembly 
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public ModelResourceLocation getCADModel(ItemStack stack, ItemStack cad) {
-        return new ModelResourceLocation(Psipherals.MODID, model);
+    public ResourceLocation getCADModel(ItemStack stack, ItemStack cad) {
+        return Psipherals.location("item/" + model);
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
     public ResourceLocation getCadTexture(ItemStack stack, ItemStack cad) {
-        return new ResourceLocation(Psipherals.MODID, VARIANTS[Math.min(VARIANTS.length - 1, stack.getDamage())]);
+        return Psipherals.location(model);
     }
 
     @Override

@@ -46,14 +46,14 @@ public class ItemShovelAssembly extends ItemCADComponent implements ICADAssembly
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public ModelResourceLocation getCADModel(ItemStack stack, ItemStack cad) {
-        return new ModelResourceLocation(Psipherals.MODID, model);
+    public ResourceLocation getCADModel(ItemStack stack, ItemStack cad) {
+        return Psipherals.location("item/" + model);
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
     public ResourceLocation getCadTexture(ItemStack stack, ItemStack cad) {
-        return new ResourceLocation(Psipherals.MODID, VARIANTS[Math.min(VARIANTS.length - 1, stack.getDamage())]);
+        return Psipherals.location(model);
     }
 
     @Override

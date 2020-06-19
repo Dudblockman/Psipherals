@@ -45,7 +45,7 @@ public class ItemAxeAssembly extends ItemCADComponent implements ICADAssembly {
     @Override
     @OnlyIn(Dist.CLIENT)
     public ResourceLocation getCADModel(ItemStack stack, ItemStack cad) {
-        return Psipherals.location("axe");
+        return Psipherals.location("item/" + model);
     }
 
     @Override

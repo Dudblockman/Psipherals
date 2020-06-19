@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "psipherals:items/blade",
-		"1": "psipherals:items/ebony_temp"
+		"0": "psi:items/cad_color",
+		"1": "minecraft:blocks/iron_block"
 	},
 	"elements": [
 		{
