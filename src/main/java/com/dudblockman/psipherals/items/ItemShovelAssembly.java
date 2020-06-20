@@ -21,24 +21,6 @@ public class ItemShovelAssembly extends ItemCADComponent implements ICADAssembly
         this.model = model;
     }
 
-    public static final String[] VARIANTS = {
-            "shovel/shovel_assembly_iron",
-            "shovel/shovel_assembly_gold",
-            "shovel/shovel_assembly_psimetal",
-            "shovel/shovel_assembly_ebony_psimetal",
-            "shovel/shovel_assembly_ivory_psimetal",
-            "shovel/shovel_assembly_creative"
-    };
-    public static final String[] MODELS = {
-            "shovel/shovel"
-            /*"shovel_iron",
-            "shovel_gold",
-            "shovel_psimetal",
-            "shovel_ebony_psimetal",
-            "shovel_ivory_psimetal",
-            "shovel_creative"*/
-    };
-
     @Override
     public ItemStack createCADStack(ItemStack stack, List<ItemStack> allComponents) {
         return ItemShovelCad.makeCAD(allComponents);

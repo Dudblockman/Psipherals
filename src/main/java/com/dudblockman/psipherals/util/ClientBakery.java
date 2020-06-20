@@ -65,5 +65,6 @@ public class ClientBakery {
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.AXE_CAD_IVORY_PSIMETAL));
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.AXE_CAD_CREATIVE));
 
+
     }
 }

@@ -20,24 +20,6 @@ public class ItemPickaxeAssembly extends ItemCADComponent implements ICADAssembl
         this.model = model;
     }
 
-    public static final String[] VARIANTS = {
-            "pickaxe/pickaxe_assembly_iron",
-            "pickaxe/pickaxe_assembly_gold",
-            "pickaxe/pickaxe_assembly_psimetal",
-            "pickaxe/pickaxe_assembly_ebony_psimetal",
-            "pickaxe/pickaxe_assembly_ivory_psimetal",
-            "pickaxe/pickaxe_assembly_creative"
-    };
-    public static final String[] MODELS = {
-            "pickaxe/pickaxe"
-            /*"pickaxe_iron",
-            "pickaxe_gold",
-            "pickaxe_psimetal",
-            "pickaxe_ebony_psimetal",
-            "pickaxe_ivory_psimetal",
-            "pickaxe_creative"*/
-    };
-
     @Override
     public ItemStack createCADStack(ItemStack stack, List<ItemStack> allComponents) {
         return ItemAxeCad.makeCAD(allComponents);

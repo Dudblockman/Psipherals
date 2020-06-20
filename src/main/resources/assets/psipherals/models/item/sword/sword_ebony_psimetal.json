@@ -4,6 +4,7 @@
 		"0": "psi:items/cad_color",
 		"1": "psipherals:items/ebony_temp"
 	},
+	"gui_light": "front",
 	"elements": [
 		{
 			"name": "handle",

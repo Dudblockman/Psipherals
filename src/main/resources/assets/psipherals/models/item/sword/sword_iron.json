@@ -4,6 +4,7 @@
 		"0": "psi:items/cad_color",
 		"1": "minecraft:blocks/iron_block"
 	},
+	"gui_light": "front",
 	"elements": [
 		{
 			"name": "handle",

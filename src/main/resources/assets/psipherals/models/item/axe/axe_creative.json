@@ -4,6 +4,7 @@
 		"0": "psipherals:items/blade",
 		"1": "psipherals:items/axe"
 	},
+	"gui_light": "front",
 	"elements": [
 		{
 			"name": "handle",

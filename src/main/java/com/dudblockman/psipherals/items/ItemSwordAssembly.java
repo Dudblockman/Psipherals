@@ -20,32 +20,13 @@ import java.util.List;
 
 public class ItemSwordAssembly extends ItemCADComponent implements ICADAssembly {
 
-    public static final String FLUGEL_TIARA_II_ELECTRIC_BOOGALOO = "53839016453E46E15E5DE8F8CE7AE737843767E7CEDAAC2D91F67E44C46CC513";
+    public static final String FLUGEL_TIARA_II_ELECTRIC_BOOGALOO = "9808f8f56ab3a6ef4d07dd9adb55a540604447451ba81f2d2919b4b6b2664798";
 
     private final String model;
     public ItemSwordAssembly(Item.Properties props, String model) {
         super(props);
         this.model = model;
     }
-
-    public static final String[] VARIANTS = {
-            "sword/sword_assembly_iron",
-            "sword/sword_assembly_gold",
-            "sword/sword_assembly_psimetal",
-            "sword/sword_assembly_ebony_psimetal",
-            "sword/sword_assembly_ivory_psimetal",
-            "sword/sword_assembly_creative",
-            "igalima",
-    };
-    public static final String[] MODELS = {
-            "sword/sword_iron",
-            "sword/sword_gold",
-            "sword/sword_psimetal",
-            "sword/sword_ebony_psimetal",
-            "sword/sword_ivory_psimetal",
-            "sword/sword_creative",
-            "igalima",
-    };
 
     @Override
     public void registerStats() {

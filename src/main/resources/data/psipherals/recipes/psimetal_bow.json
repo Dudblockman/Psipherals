@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "psipherals:psimetal_bow"
+  },
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " gS",
+    "iDS",
+    " gS"
+  ],
+  "key": {
+    "g": {
+      "item": "psi:psimetal"
+    },
+    "S": {
+      "item": "minecraft:string"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "D": {
+      "item": "psi:psigem"
+    }
+  }
+}

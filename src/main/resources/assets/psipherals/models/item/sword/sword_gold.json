@@ -4,6 +4,7 @@
 		"0": "psipherals:items/blade",
 		"1": "minecraft:blocks/gold_block"
 	},
+	"gui_light": "front",
 	"elements": [
 		{
 			"name": "handle",

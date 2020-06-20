@@ -1,6 +1,7 @@
 package com.dudblockman.psipherals;
 
 import com.dudblockman.psipherals.items.Items;
+import com.dudblockman.psipherals.items.StatRegistry;
 import com.dudblockman.psipherals.util.ClientBakery;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -8,8 +9,6 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import vazkii.psi.client.core.proxy.ClientProxy;
-import vazkii.psi.common.core.proxy.ServerProxy;
 
 //import com.dudblockman.psipherals.spell.base.SpellPieces;
 //import org.apache.logging.log4j.LogManager;
@@ -36,6 +35,7 @@ public class Psipherals {
     private void commonSetup(FMLCommonSetupEvent event) {
         //new CreativeTab();
         new Items();
+        StatRegistry.registerStats();
         //SpellPieces.init();
     }
     public static ResourceLocation location(String path) {
