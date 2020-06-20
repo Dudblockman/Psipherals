@@ -13,7 +13,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class Items {
     public static final ItemPsimetalBow psimetalBow = new ItemPsimetalBow(defaultBuilder(), ItemNames.PSIMETAL_BOW);
 
-    public static final Item swordCAD = new ItemAxeCad(defaultBuilder());
+    public static final Item swordCAD = new ItemSwordCad(defaultBuilder());
 
     public static final Item swordAssemblyIron = new ItemSwordAssembly(defaultBuilder(), ItemNames.SWORD_CAD_IRON);
     public static final Item swordAssemblyGold = new ItemSwordAssembly(defaultBuilder(), ItemNames.SWORD_CAD_GOLD);
@@ -22,7 +22,7 @@ public class Items {
     public static final Item swordAssemblyEbonyPsimetal = new ItemSwordAssembly(defaultBuilder(), ItemNames.SWORD_CAD_EBONY_PSIMETAL);
     public static final Item swordAssemblyCreative = new ItemSwordAssembly(defaultBuilder(), ItemNames.SWORD_CAD_CREATIVE);
 
-    public static final Item pickaxeCAD = new ItemAxeCad(defaultBuilder());
+    public static final Item pickaxeCAD = new ItemPickaxeCad(defaultBuilder());
 
     public static final Item pickaxeAssemblyIron = new ItemPickaxeAssembly(defaultBuilder(), ItemNames.PICKAXE_CAD_IRON);
     public static final Item pickaxeAssemblyGold = new ItemPickaxeAssembly(defaultBuilder(), ItemNames.PICKAXE_CAD_GOLD);
@@ -32,7 +32,7 @@ public class Items {
     public static final Item pickaxeAssemblyCreative = new ItemPickaxeAssembly(defaultBuilder(), ItemNames.PICKAXE_CAD_CREATIVE);
 
 
-    public static final Item shovelCAD = new ItemAxeCad(defaultBuilder());
+    public static final Item shovelCAD = new ItemShovelCad(defaultBuilder());
 
     public static final Item shovelAssemblyIron = new ItemShovelAssembly(defaultBuilder(), ItemNames.SHOVEL_CAD_IRON);
     public static final Item shovelAssemblyGold = new ItemShovelAssembly(defaultBuilder(), ItemNames.SHOVEL_CAD_GOLD);
