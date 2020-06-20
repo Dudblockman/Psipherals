@@ -1,7 +1,7 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "psipherals:items/blade",
+		"0": "psi:items/cad_color",
 		"1": "psipherals:items/red_string"
 	},
 	"gui_light": "front",

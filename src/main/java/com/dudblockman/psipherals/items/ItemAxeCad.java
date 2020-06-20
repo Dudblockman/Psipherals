@@ -82,7 +82,7 @@ public class ItemAxeCad extends AxeItem implements ICAD {
     private static final Pattern FAKE_PLAYER_PATTERN = Pattern.compile("^(?:\\[.*])|(?:ComputerCraft)$");
 
     public ItemAxeCad(Item.Properties props) {
-        super(new AdvPsimetalToolMaterial(), 5.0F, -3.0F, (new Item.Properties()).group(ItemGroup.TOOLS));
+        super(new AdvPsimetalToolMaterial(), 5.0F, -3.0F, props);
     }
 
     private ICADData getCADData(ItemStack stack) {

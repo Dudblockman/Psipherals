@@ -79,7 +79,7 @@ public class ItemPickaxeCad extends PickaxeItem implements ICAD {
     private static final Pattern FAKE_PLAYER_PATTERN = Pattern.compile("^(?:\\[.*])|(?:ComputerCraft)$");
 
     public ItemPickaxeCad(Item.Properties props) {
-        super(new AdvPsimetalToolMaterial(), 1, -2.8F, (new Item.Properties()).group(ItemGroup.TOOLS));
+        super(new AdvPsimetalToolMaterial(), 1, -2.8F, props);
     }
 
     private ICADData getCADData(ItemStack stack) {

@@ -80,7 +80,7 @@ public class ItemSwordCad extends SwordItem implements ICAD {
     private static final Pattern FAKE_PLAYER_PATTERN = Pattern.compile("^(?:\\[.*])|(?:ComputerCraft)$");
 
     public ItemSwordCad(Item.Properties props) {
-        super(new AdvPsimetalToolMaterial(), 3, -2.4F, (new Item.Properties()).group(ItemGroup.TOOLS));
+        super(new AdvPsimetalToolMaterial(), 3, -2.4F, props);
     }
 
     private ICADData getCADData(ItemStack stack) {

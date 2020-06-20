@@ -82,7 +82,7 @@ public class ItemShovelCad extends ShovelItem implements ICAD {
     private static final Pattern FAKE_PLAYER_PATTERN = Pattern.compile("^(?:\\[.*])|(?:ComputerCraft)$");
 
     public ItemShovelCad(Item.Properties props) {
-        super(new AdvPsimetalToolMaterial(), 5.0F, -3.0F, (new Item.Properties()).group(ItemGroup.TOOLS));
+        super(new AdvPsimetalToolMaterial(), 5.0F, -3.0F, props);
     }
 
     private ICADData getCADData(ItemStack stack) {
@@ -582,32 +582,32 @@ public class ItemShovelCad extends ShovelItem implements ICAD {
         }
 
         // Iron Psimetal CAD
-        subItems.add(makeCAD(new ItemStack(Items.axeAssemblyIron),
+        subItems.add(makeCAD(new ItemStack(Items.shovelAssemblyIron),
                 new ItemStack(ModItems.cadCoreBasic),
                 new ItemStack(ModItems.cadSocketBasic),
                 new ItemStack(ModItems.cadBatteryBasic)));
         // Gold Psimetal CAD
-        subItems.add(makeCAD(new ItemStack(Items.axeAssemblyGold),
+        subItems.add(makeCAD(new ItemStack(Items.shovelAssemblyGold),
                 new ItemStack(ModItems.cadCoreBasic),
                 new ItemStack(ModItems.cadSocketBasic),
                 new ItemStack(ModItems.cadBatteryBasic)));
         // Psimetal CAD
-        subItems.add(makeCAD(new ItemStack(Items.axeAssemblyPsimetal),
+        subItems.add(makeCAD(new ItemStack(Items.shovelAssemblyPsimetal),
                 new ItemStack(ModItems.cadCoreOverclocked),
                 new ItemStack(ModItems.cadSocketSignaling),
                 new ItemStack(ModItems.cadBatteryExtended)));
         // Ebony Psimetal CAD
-        subItems.add(makeCAD(new ItemStack(Items.axeAssemblyEbonyPsimetal),
+        subItems.add(makeCAD(new ItemStack(Items.shovelAssemblyEbonyPsimetal),
                 new ItemStack(ModItems.cadCoreHyperClocked),
                 new ItemStack(ModItems.cadSocketTransmissive),
                 new ItemStack(ModItems.cadBatteryUltradense)));
         // Ivory Psimetal CAD
-        subItems.add(makeCAD(new ItemStack(Items.axeAssemblyIvoryPsimetal),
+        subItems.add(makeCAD(new ItemStack(Items.shovelAssemblyIvoryPsimetal),
                 new ItemStack(ModItems.cadCoreHyperClocked),
                 new ItemStack(ModItems.cadSocketTransmissive),
                 new ItemStack(ModItems.cadBatteryUltradense)));
         // Creative CAD
-        subItems.add(makeCAD(new ItemStack(Items.axeAssemblyCreative),
+        subItems.add(makeCAD(new ItemStack(Items.shovelAssemblyCreative),
                 new ItemStack(ModItems.cadCoreHyperClocked),
                 new ItemStack(ModItems.cadSocketTransmissive),
                 new ItemStack(ModItems.cadBatteryUltradense)));

@@ -56,12 +56,13 @@ public class ClientBakery {
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.PICKAXE_CAD_IVORY_PSIMETAL));
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.PICKAXE_CAD_CREATIVE));
 
-        ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.SHOVEL_CAD_IRON));
+        /*ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.SHOVEL_CAD_IRON));
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.SHOVEL_CAD_GOLD));
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.SHOVEL_CAD_PSIMETAL));
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.SHOVEL_CAD_EBONY_PSIMETAL));
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.SHOVEL_CAD_IVORY_PSIMETAL));
-        ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.SHOVEL_CAD_CREATIVE));
+        ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.SHOVEL_CAD_CREATIVE));*/
+        ModelLoader.addSpecialModel(Psipherals.location("item/shovel/shovel"));
 
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.AXE_CAD_IRON));
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.AXE_CAD_GOLD));

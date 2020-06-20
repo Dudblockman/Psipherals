@@ -19,7 +19,7 @@ Fun and experimental additions to Psi
 [[dependencies.psipherals]]
     modId="psi"
     mandatory=true
-    versionRange="[r1.2-82,)"
+    versionRange="[r1.2-80,)"
     side="BOTH"
 
 [[dependencies.psipherals]]
