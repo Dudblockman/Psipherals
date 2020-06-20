@@ -4,6 +4,7 @@
 		"0": "psipherals:items/blade",
 		"1": "minecraft:blocks/command_block_front"
 	},
+	"gui_light": "front",
 	"elements": [
 		{
 			"name": "handle",

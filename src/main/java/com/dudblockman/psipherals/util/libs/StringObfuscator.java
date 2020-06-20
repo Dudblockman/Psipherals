@@ -10,7 +10,7 @@
  */
 package com.dudblockman.psipherals.util.libs;
 
-import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -21,11 +21,22 @@ public final class StringObfuscator {
         return getHash(str).equals(hash);
     }
 
+    private static String bytesToHex(byte[] hash) {
+        StringBuffer hexString = new StringBuffer();
+        for (int i = 0; i < hash.length; i++) {
+            String hex = Integer.toHexString(0xff & hash[i]);
+            if(hex.length() == 1) hexString.append('0');
+            hexString.append(hex);
+        }
+        return hexString.toString();
+    }
+
     private static String getHash(String str) {
         if(str != null)
             try {
                 MessageDigest md = MessageDigest.getInstance("SHA-256");
-                return new HexBinaryAdapter().marshal(md.digest(dontRainbowTableMeOrMySonEverAgain(str).getBytes()));
+                //System.out.println(bytesToHex(md.digest(dontRainbowTableMeOrMySonEverAgain(str).getBytes(StandardCharsets.UTF_8))));
+                return bytesToHex(md.digest(dontRainbowTableMeOrMySonEverAgain(str).getBytes()));
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }
@@ -35,7 +46,7 @@ public final class StringObfuscator {
     private static String dontRainbowTableMeOrMySonEverAgain(String str) throws NoSuchAlgorithmException {
         str += reverseString(str);
         SecureRandom rand = SecureRandom.getInstance("SHA1PRNG");
-        rand.setSeed(str.getBytes());
+        rand.setSeed(str.getBytes(StandardCharsets.UTF_8));
         int l = str.length();
         int steps = rand.nextInt(l);
         char[] chrs = str.toCharArray();

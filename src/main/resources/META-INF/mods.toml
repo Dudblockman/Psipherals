@@ -1,0 +1,30 @@
+modLoader="javafml"
+loaderVersion="[31,)"
+issueTrackerURL="https://github.com/Dudblockman/psipherals"
+
+[[mods]]
+modId="psipherals"
+displayName="Psionic Peripherals"
+version="${version}"
+authors="Dudblockman"
+description='''
+Fun and experimental additions to Psi
+'''
+[[dependencies.psipherals]]
+    modId="patchouli"
+    mandatory=true
+    versionRange="[1.15.2-1.2-27,)"
+    side="BOTH"
+
+[[dependencies.psipherals]]
+    modId="psi"
+    mandatory=true
+    versionRange="[r1.2-82,)"
+    side="BOTH"
+
+[[dependencies.psipherals]]
+    modId="forge"
+    mandatory=true
+    versionRange="[31.1.65,)"
+    ordering="AFTER"
+    side="BOTH"

@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "psipherals:pickaxe/pickaxe_assembly_ebony_psimetal"
+  },
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " i ",
+    "iTi",
+    " i "
+  ],
+  "key": {
+    "T": {
+      "item": "psi:psimetal_pickaxe"
+    },
+    "i": {
+      "item": "psi:ebony_psimetal"
+    }
+  }
+}

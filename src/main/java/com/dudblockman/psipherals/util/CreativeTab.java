@@ -1,14 +1,20 @@
 package com.dudblockman.psipherals.util;
 
+import com.dudblockman.psipherals.Psipherals;
 import com.dudblockman.psipherals.items.Items;
-import com.teamwizardry.librarianlib.features.base.ModCreativeTab;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.NotNull;
 
-public class CreativeTab extends ModCreativeTab {
-    @NotNull
+public class CreativeTab extends ItemGroup {
+
+    public static final CreativeTab INSTANCE = new CreativeTab();
+
+    public CreativeTab() {
+        super(Psipherals.MODID);
+    }
+
     @Override
-    public ItemStack getIconStack() {
+    public ItemStack createIcon() {
         return new ItemStack(Items.psimetalBow);
     }
 }

@@ -1,7 +1,7 @@
 /*package com.dudblockman.psipherals.entity;
 
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.projectile.EntityTippedArrow;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -20,13 +20,13 @@ import vazkii.psi.common.entity.EntitySpellProjectile;
 import vazkii.psi.common.item.ItemSpellBullet;
 import vazkii.psi.common.item.ItemSpellDrive;
 
-public class EntityPsiArrow extends EntityTippedArrow implements ISpellImmune, IDetonationHandler {
+public class EntityPsiArrow extends ArrowEntity implements ISpellImmune, IDetonationHandler {
     ItemStack spellBullet;
     SpellContext context;
     public EntityPsiArrow(World worldIn) {
         super(worldIn);
     }
-    public EntityPsiArrow(World worldIn, EntityLivingBase shooter) {
+    public EntityPsiArrow(World worldIn, LivingEntity shooter) {
         super(worldIn, shooter);
     }
     public EntityPsiArrow(World worldIn, double x, double y, double z) {
