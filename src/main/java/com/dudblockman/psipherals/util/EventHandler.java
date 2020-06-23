@@ -5,7 +5,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
+import top.theillusivec4.curios.api.CuriosAPI;
+import top.theillusivec4.curios.api.imc.CurioIMCMessage;
 import vazkii.psi.common.entity.EntitySpellProjectile;
 
 //import com.dudblockman.psipherals.entity.EntityPsiArrow;

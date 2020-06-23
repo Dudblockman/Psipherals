@@ -66,4 +66,6 @@ public class ItemNames {
     public static final String AXE_CAD_IVORY_PSIMETAL = "axe/axe_ivory_psimetal";
     public static final String AXE_CAD_EBONY_PSIMETAL = "axe/axe_ebony_psimetal";
     public static final String AXE_CAD_CREATIVE = "axe/axe_creative";
+
+    public static final String PSIONIC_AMULET = "psi_amulet";
 }

@@ -126,7 +126,7 @@ dependencies {
     compileOnly fg.deobf("vazkii.psi:Psi:r1.2-82.234")
     runtimeOnly fg.deobf("vazkii.psi:Psi:r1.2-82.234")
 
-    compileOnly fg.deobf("top.theillusivec4.curios:curios:FORGE-1.15.2-2.0:api")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios:FORGE-1.15.2-2.0")
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios:FORGE-1.15.2-2.0")
 
     // For more info...

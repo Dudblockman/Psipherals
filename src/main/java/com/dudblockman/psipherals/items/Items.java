@@ -51,6 +51,8 @@ public class Items {
     public static final Item axeAssemblyEbonyPsimetal = new ItemAxeAssembly(defaultBuilder(), ItemNames.AXE_CAD_EBONY_PSIMETAL);
     public static final Item axeAssemblyCreative = new ItemAxeAssembly(defaultBuilder(), ItemNames.AXE_CAD_CREATIVE);
 
+    public static final Item psiAmulet = new ItemPsionicAmulet(defaultBuilder());
+
     //public static final ItemBowCad bowCAD = new ItemBowCad(ItemNames.PSIMETAL_BOW_ADVANCED);
     public static Item.Properties defaultBuilder() {
         return new Item.Properties().group(CreativeTab.INSTANCE);
@@ -100,5 +102,7 @@ public class Items {
         r.register(axeAssemblyIvoryPsimetal.setRegistryName(Psipherals.MODID, ItemNames.AXE_ASSEMBLY_IVORY_PSIMETAL));
         r.register(axeAssemblyEbonyPsimetal.setRegistryName(Psipherals.MODID, ItemNames.AXE_ASSEMBLY_EBONY_PSIMETAL));
         r.register(axeAssemblyCreative.setRegistryName(Psipherals.MODID, ItemNames.AXE_ASSEMBLY_CREATIVE));
+
+        r.register(psiAmulet.setRegistryName(Psipherals.MODID, ItemNames.PSIONIC_AMULET));
     }
 }

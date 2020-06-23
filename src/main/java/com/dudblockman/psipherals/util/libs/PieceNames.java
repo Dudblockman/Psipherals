@@ -1,6 +1,8 @@
 package com.dudblockman.psipherals.util.libs;
 
 public class PieceNames {
+    public static final String TRIGGER_AMULET = "trick_trigger_amulet";
+
     public static final String REDIRECT_MOTION = "trick_redirect_motion";
 
     public static final String SAVE_BINARY = "trick_save_binary";
