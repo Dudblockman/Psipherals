@@ -240,7 +240,7 @@ public class ItemShovelCad extends ShovelItem implements ICAD {
                 setCADComponent(playerCad, dyeStack);
             }
         }
-        boolean did = cast(worldIn, playerIn, data, bullet, itemStackIn, 40, 25, 0.5F, ctx -> ctx.castFrom = hand);
+        boolean did = ItemCAD.cast(worldIn, playerIn, data, bullet, itemStackIn, 40, 25, 0.5F, ctx -> ctx.castFrom = hand);
 
         if (!data.overflowed && bullet.isEmpty() && craft(playerCad, playerIn, null)) {
             worldIn.playSound(null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), PsiSoundHandler.cadShoot, SoundCategory.PLAYERS, 0.5F, (float) (0.5 + Math.random() * 0.5));
@@ -253,86 +253,6 @@ public class ItemShovelCad extends ShovelItem implements ICAD {
         }
 
         return new ActionResult<>(did ? ActionResultType.PASS : ActionResultType.PASS, itemStackIn);
-    }
-
-    public static boolean cast(World world, PlayerEntity player, PlayerDataHandler.PlayerData data, ItemStack bullet, ItemStack cad, int cd, int particles, float sound, Consumer<SpellContext> predicate) {
-        if (!data.overflowed && data.getAvailablePsi() > 0 && !cad.isEmpty() && !bullet.isEmpty() && ISpellAcceptor.hasSpell(bullet) && isTruePlayer(player)) {
-            ISpellAcceptor spellContainer = ISpellAcceptor.acceptor(bullet);
-            Spell spell = spellContainer.getSpell();
-            SpellContext context = new SpellContext().setPlayer(player).setSpell(spell);
-            if (predicate != null) {
-                predicate.accept(context);
-            }
-
-            if (context.isValid()) {
-                if (context.cspell.metadata.evaluateAgainst(cad)) {
-                    int cost = getRealCost(cad, bullet, context.cspell.metadata.stats.get(EnumSpellStat.COST));
-                    PreSpellCastEvent event = new PreSpellCastEvent(cost, sound, particles, cd, spell, context, player, data, cad, bullet);
-                    if (MinecraftForge.EVENT_BUS.post(event)) {
-                        String cancelMessage = event.getCancellationMessage();
-                        if (cancelMessage != null && !cancelMessage.isEmpty()) {
-                            player.sendMessage(new TranslationTextComponent(cancelMessage).setStyle(new Style().setColor(TextFormatting.RED)));
-                        }
-                        return false;
-                    }
-
-                    cd = event.getCooldown();
-                    particles = event.getParticles();
-                    sound = event.getSound();
-                    cost = event.getCost();
-
-                    spell = event.getSpell();
-                    context = event.getContext();
-
-                    if (cost > 0) {
-                        data.deductPsi(cost, cd, true);
-                    }
-
-                    if (cost != 0 && sound > 0) {
-                        if (!world.isRemote) {
-                            world.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), PsiSoundHandler.cadShoot, SoundCategory.PLAYERS, sound, (float) (0.5 + Math.random() * 0.5));
-                        } else {
-                            int color = Psi.proxy.getColorForCAD(cad);
-                            float r = PsiRenderHelper.r(color) / 255F;
-                            float g = PsiRenderHelper.g(color) / 255F;
-                            float b = PsiRenderHelper.b(color) / 255F;
-                            for (int i = 0; i < particles; i++) {
-                                double x = player.getPosX() + (Math.random() - 0.5) * 2.1 * player.getWidth();
-                                double y = player.getPosY() - player.getYOffset();
-                                double z = player.getPosZ() + (Math.random() - 0.5) * 2.1 * player.getWidth();
-                                float grav = -0.15F - (float) Math.random() * 0.03F;
-                                Psi.proxy.sparkleFX(x, y, z, r, g, b, grav, 0.25F, 15);
-                            }
-
-                            double x = player.getPosX();
-                            double y = player.getPosY() + player.getEyeHeight() - 0.1;
-                            double z = player.getPosZ();
-                            Vector3 lookOrig = new Vector3(player.getLookVec());
-                            for (int i = 0; i < 25; i++) {
-                                Vector3 look = lookOrig.copy();
-                                double spread = 0.25;
-                                look.x += (Math.random() - 0.5) * spread;
-                                look.y += (Math.random() - 0.5) * spread;
-                                look.z += (Math.random() - 0.5) * spread;
-                                look.normalize().multiply(0.15);
-
-                                Psi.proxy.sparkleFX(x, y, z, r, g, b, (float) look.x, (float) look.y, (float) look.z, 0.3F, 5);
-                            }
-                        }
-                    }
-
-                    if (!world.isRemote) {
-                        spellContainer.castSpell(context);
-                    }
-                    MinecraftForge.EVENT_BUS.post(new SpellCastEvent(spell, context, player, data, cad, bullet));
-                    return true;
-                } else if (!world.isRemote) {
-                    player.sendMessage(new TranslationTextComponent("psimisc.weak_cad").setStyle(new Style().setColor(TextFormatting.RED)));
-                }
-            }
-        }
-
-        return false;
     }
 
     @Override
@@ -370,49 +290,6 @@ public class ItemShovelCad extends ShovelItem implements ICAD {
         }
 
         return did;
-    }
-
-    protected static class CraftingWrapper extends RecipeWrapper {
-        CraftingWrapper() {
-            super(new ItemStackHandler(1));
-        }
-
-        void setStack(ItemStack stack) {
-            inv.setStackInSlot(0, stack);
-        }
-    }
-
-    public static int getRealCost(ItemStack stack, ItemStack bullet, int cost) {
-        if (!stack.isEmpty() && stack.getItem() instanceof ICAD) {
-            int eff = ((ICAD) stack.getItem()).getStatValue(stack, EnumCADStat.EFFICIENCY);
-            if (eff == -1) {
-                return -1;
-            }
-            if (eff == 0) {
-                return cost;
-            }
-
-            double effPercentile = (double) eff / 100;
-            double procCost = cost / effPercentile;
-            if (!bullet.isEmpty() && ISpellAcceptor.isContainer(bullet)) {
-                procCost *= ISpellAcceptor.acceptor(bullet).getCostModifier();
-            }
-
-            return (int) procCost;
-        }
-
-        return cost;
-    }
-
-    public static boolean isTruePlayer(Entity e) {
-        if (!(e instanceof PlayerEntity)) {
-            return false;
-        }
-
-        PlayerEntity player = (PlayerEntity) e;
-
-        String name = player.getName().getString();
-        return !(player instanceof FakePlayer || FAKE_PLAYER_PATTERN.matcher(name).matches());
     }
 
     public static void setComponent(ItemStack stack, ItemStack componentStack) {
