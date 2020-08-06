@@ -1,100 +1,82 @@
-/*package com.dudblockman.psipherals.entity;
+package com.dudblockman.psipherals.entity;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.IPacket;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.world.World;
-import vazkii.psi.api.PsiAPI;
-import vazkii.psi.api.cad.EnumCADComponent;
-import vazkii.psi.api.cad.ICAD;
-import vazkii.psi.api.spell.ISpellImmune;
-import vazkii.psi.api.spell.Spell;
-import vazkii.psi.api.spell.SpellContext;
-import vazkii.psi.api.spell.detonator.IDetonationHandler;
-import vazkii.psi.common.entity.EntitySpellCharge;
-import vazkii.psi.common.entity.EntitySpellGrenade;
-import vazkii.psi.common.entity.EntitySpellMine;
+import net.minecraftforge.fml.network.NetworkHooks;
+import vazkii.psi.common.Psi;
 import vazkii.psi.common.entity.EntitySpellProjectile;
-import vazkii.psi.common.item.ItemSpellBullet;
-import vazkii.psi.common.item.ItemSpellDrive;
 
-public class EntityPsiArrow extends ArrowEntity implements ISpellImmune, IDetonationHandler {
-    ItemStack spellBullet;
-    SpellContext context;
-    public EntityPsiArrow(World worldIn) {
-        super(worldIn);
+
+public class EntityPsiArrow extends AbstractArrowEntity {
+
+    private static final String TAG_COLORIZER = "colorizer";
+    private static final DataParameter<ItemStack> COLORIZER_DATA = EntityDataManager.createKey(EntitySpellProjectile.class, DataSerializers.ITEMSTACK);
+
+    public EntityPsiArrow (EntityType<? extends AbstractArrowEntity> type, World world) {
+        super(type, world);
     }
     public EntityPsiArrow(World worldIn, LivingEntity shooter) {
-        super(worldIn, shooter);
-    }
-    public EntityPsiArrow(World worldIn, double x, double y, double z) {
-        super(worldIn, x, y, z);
+        super(Entities.arrowEntityType, shooter, worldIn);
     }
 
-    protected void castSpell(ItemStack stack, SpellContext context) {
-        ItemStack cad = PsiAPI.getPlayerCAD(context.caster);
-        ItemStack colorizer = ((ICAD) cad.getItem()).getComponentInSlot(cad, EnumCADComponent.DYE);
+    @Override
+    public IPacket<?> createSpawnPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
+    }
 
-        EntitySpellProjectile projectile = null;
+    protected ItemStack getArrowStack() {
+        return ItemStack.EMPTY;
+    }
 
-        switch (stack.getItemDamage()) {
-            case 1: // Basic
-                //context.cspell.safeExecute(context);
-                break;
 
-            case 3: // Projectile
-                projectile = new EntitySpellProjectile(context.caster.getEntityWorld(), context.caster);
-                break;
+    public EntityPsiArrow setInfo(ItemStack colorizer) {
+        dataManager.set(COLORIZER_DATA, colorizer);
+        return this;
+    }
+    @Override
+    protected void registerData() {
+        super.registerData();
+        dataManager.register(COLORIZER_DATA, ItemStack.EMPTY);
+    }
 
-            case 5: // Loopcast
-                break;
-
-            case 7: // Spell Circle
-                break;
-
-            case 9: // Grenade
-                projectile = new EntitySpellGrenade(context.caster.getEntityWorld(), context.caster);
-                break;
-
-            case 11: // Charge
-                projectile = new EntitySpellCharge(context.caster.getEntityWorld(), context.caster);
-                break;
-
-            case 13: // Mine
-                projectile = new EntitySpellMine(context.caster.getEntityWorld(), context.caster);
-                break;
+    @Override
+    public void writeAdditional(CompoundNBT tagCompound) {
+        super.writeAdditional(tagCompound);
+        CompoundNBT colorizerCmp = new CompoundNBT();
+        ItemStack colorizer = dataManager.get(COLORIZER_DATA);
+        if (!colorizer.isEmpty()) {
+            colorizerCmp = colorizer.write(colorizerCmp);
         }
+        tagCompound.put(TAG_COLORIZER, colorizerCmp);
+    }
 
-        if (projectile != null) {
-            projectile.setInfo(context.caster, colorizer, stack);
-            projectile.setPosition(this.posX, this.posY, this.posZ);
-            projectile.context = context;
-            projectile.getEntityWorld().spawnEntity(projectile);
+    @Override
+    public void readAdditional(CompoundNBT tagCompound) {
+        super.readAdditional(tagCompound);
+
+        CompoundNBT colorizerCmp = tagCompound.getCompound(TAG_COLORIZER);
+        ItemStack colorizer = ItemStack.read(colorizerCmp);
+        dataManager.set(COLORIZER_DATA, colorizer);
+    }
+
+    public int getColor () {
+        ItemStack colorizer = dataManager.get(COLORIZER_DATA);
+        return Psi.proxy.getColorForColorizer(colorizer);
+    }
+    @Override
+    public void updatePassenger(Entity passenger) {
+        super.updatePassenger(passenger);
+        if (this.isPassenger(passenger) && (passenger instanceof EntitySpellProjectile)) {
+            passenger.setPosition(this.getPosX(), this.getPosY(), this.getPosZ());
         }
-    }
-    @Override
-    protected void onHit(RayTraceResult raytraceResultIn) {
-        super.onHit(raytraceResultIn);
-        if (spellBullet != null && context != null) {
-            Spell spell = ItemSpellDrive.getSpell(spellBullet);
-
-        }
-    }
-    @Override
-    public boolean isImmune() {
-        return true;
-    }
-
-    @Override
-    public Vec3d objectLocus() {
-        return this.getPositionVector();
-    }
-
-    @Override
-    public void detonate() {
-
     }
 }
-*/

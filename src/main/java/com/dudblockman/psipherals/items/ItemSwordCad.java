@@ -65,20 +65,6 @@ import java.util.regex.Pattern;
 
 public class ItemSwordCad extends SwordItem implements ICAD {
 
-    private static final String TAG_BULLET_PREFIX = "bullet";
-    private static final String TAG_SELECTED_SLOT = "selectedSlot";
-
-    // Legacy tags
-    private static final String TAG_TIME_LEGACY = "time";
-    private static final String TAG_STORED_PSI_LEGACY = "storedPsi";
-
-    private static final String TAG_X_LEGACY = "x";
-    private static final String TAG_Y_LEGACY = "y";
-    private static final String TAG_Z_LEGACY = "z";
-    private static final Pattern VECTOR_PREFIX_PATTERN = Pattern.compile("^storedVector(\\d+)$");
-
-    private static final Pattern FAKE_PLAYER_PATTERN = Pattern.compile("^(?:\\[.*])|(?:ComputerCraft)$");
-
     public ItemSwordCad(Item.Properties props) {
         super(new AdvPsimetalToolMaterial(), 3, -2.4F, props);
     }
@@ -167,36 +153,7 @@ public class ItemSwordCad extends SwordItem implements ICAD {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entityIn, int itemSlot, boolean isSelected) {
-        CompoundNBT compound = stack.getOrCreateTag();
-
         stack.getCapability(PsiAPI.CAD_DATA_CAPABILITY).ifPresent(data -> {
-            if (compound.contains(TAG_TIME_LEGACY, Constants.NBT.TAG_ANY_NUMERIC)) {
-                data.setTime(compound.getInt(TAG_TIME_LEGACY));
-                data.markDirty(true);
-                compound.remove(TAG_TIME_LEGACY);
-            }
-
-            if (compound.contains(TAG_STORED_PSI_LEGACY, Constants.NBT.TAG_ANY_NUMERIC)) {
-                data.setBattery(compound.getInt(TAG_STORED_PSI_LEGACY));
-                data.markDirty(true);
-                compound.remove(TAG_STORED_PSI_LEGACY);
-            }
-
-            Set<String> keys = new HashSet<>(compound.keySet());
-
-            for (String key : keys) {
-                Matcher matcher = VECTOR_PREFIX_PATTERN.matcher(key);
-                if (matcher.find()) {
-                    CompoundNBT vec = compound.getCompound(key);
-                    compound.remove(key);
-                    int memory = Integer.parseInt(matcher.group(1));
-                    Vector3 vector = new Vector3(vec.getDouble(TAG_X_LEGACY),
-                            vec.getDouble(TAG_Y_LEGACY),
-                            vec.getDouble(TAG_Z_LEGACY));
-                    data.setSavedVector(memory, vector);
-                }
-            }
-
             if (entityIn instanceof ServerPlayerEntity && data.isDirty()) {
                 ServerPlayerEntity player = (ServerPlayerEntity) entityIn;
                 MessageRegister.sendToPlayer(new MessageCADDataSync(data), player);
@@ -457,16 +414,6 @@ public class ItemSwordCad extends SwordItem implements ICAD {
             return;
         }
 
-        // Iron Psimetal CAD
-        subItems.add(makeCAD(new ItemStack(Items.swordAssemblyIron),
-                new ItemStack(ModItems.cadCoreBasic),
-                new ItemStack(ModItems.cadSocketBasic),
-                new ItemStack(ModItems.cadBatteryBasic)));
-        // Gold Psimetal CAD
-        subItems.add(makeCAD(new ItemStack(Items.swordAssemblyGold),
-                new ItemStack(ModItems.cadCoreBasic),
-                new ItemStack(ModItems.cadSocketBasic),
-                new ItemStack(ModItems.cadBatteryBasic)));
         // Psimetal CAD
         subItems.add(makeCAD(new ItemStack(Items.swordAssemblyPsimetal),
                 new ItemStack(ModItems.cadCoreOverclocked),

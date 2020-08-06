@@ -1,6 +1,8 @@
 package com.dudblockman.psipherals.util;
 
 import com.dudblockman.psipherals.Psipherals;
+import com.dudblockman.psipherals.entity.Entities;
+import com.dudblockman.psipherals.entity.RenderPsiArrow;
 import com.dudblockman.psipherals.items.*;
 import com.dudblockman.psipherals.util.libs.ItemNames;
 import net.minecraft.client.Minecraft;
@@ -13,6 +15,7 @@ import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.DeferredWorkQueue;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -21,16 +24,18 @@ import vazkii.psi.client.model.ModelCAD;
 import java.util.Objects;
 
 @OnlyIn(Dist.CLIENT)
-public class ClientBakery {
+public class ClientProxy implements IProxy {
 
     public void registerHandlers() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::modelBake);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::addCADModels);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::loadComplete);
+
     }
 
     private void clientSetup(FMLClientSetupEvent event) {
+        RenderingRegistry.registerEntityRenderingHandler(Entities.arrowEntityType, RenderPsiArrow::new);
         //ModelBakery.LOCATIONS_BUILTIN_TEXTURES.addAll(PsiAPI.getAllSpellPieceMaterial());
     }
     private void modelBake(ModelBakeEvent event) {
@@ -42,34 +47,28 @@ public class ClientBakery {
     }
 
     private void addCADModels(ModelRegistryEvent event) {
-        ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.SWORD_CAD_IRON));
-        ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.SWORD_CAD_GOLD));
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.SWORD_CAD_PSIMETAL));
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.SWORD_CAD_EBONY_PSIMETAL));
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.SWORD_CAD_IVORY_PSIMETAL));
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.SWORD_CAD_CREATIVE));
 
-        ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.PICKAXE_CAD_IRON));
-        ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.PICKAXE_CAD_GOLD));
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.PICKAXE_CAD_PSIMETAL));
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.PICKAXE_CAD_EBONY_PSIMETAL));
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.PICKAXE_CAD_IVORY_PSIMETAL));
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.PICKAXE_CAD_CREATIVE));
 
-        /*ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.SHOVEL_CAD_IRON));
-        ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.SHOVEL_CAD_GOLD));
-        ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.SHOVEL_CAD_PSIMETAL));
+        /*        ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.SHOVEL_CAD_PSIMETAL));
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.SHOVEL_CAD_EBONY_PSIMETAL));
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.SHOVEL_CAD_IVORY_PSIMETAL));
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.SHOVEL_CAD_CREATIVE));*/
         ModelLoader.addSpecialModel(Psipherals.location("item/shovel/shovel"));
 
-        ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.AXE_CAD_IRON));
-        ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.AXE_CAD_GOLD));
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.AXE_CAD_PSIMETAL));
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.AXE_CAD_EBONY_PSIMETAL));
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.AXE_CAD_IVORY_PSIMETAL));
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.AXE_CAD_CREATIVE));
+
+        ModelLoader.addSpecialModel(Psipherals.location("item/igalima"));
 
 
     }
@@ -83,5 +82,3 @@ public class ClientBakery {
         });
     }
 }
-
-

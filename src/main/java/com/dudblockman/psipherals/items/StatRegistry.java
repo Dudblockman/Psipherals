@@ -8,24 +8,6 @@ public class StatRegistry {
         registerAssemblyStats();
     }
     public static void registerAssemblyStats() {
-        ItemCADComponent.addStatToStack(Items.swordAssemblyIron, EnumCADStat.EFFICIENCY,70);
-        ItemCADComponent.addStatToStack(Items.swordAssemblyIron, EnumCADStat.POTENCY,100);
-        ItemCADComponent.addStatToStack(Items.pickaxeAssemblyIron, EnumCADStat.EFFICIENCY,70);
-        ItemCADComponent.addStatToStack(Items.pickaxeAssemblyIron, EnumCADStat.POTENCY,100);
-        ItemCADComponent.addStatToStack(Items.shovelAssemblyIron, EnumCADStat.EFFICIENCY,70);
-        ItemCADComponent.addStatToStack(Items.shovelAssemblyIron, EnumCADStat.POTENCY,100);
-        ItemCADComponent.addStatToStack(Items.axeAssemblyIron, EnumCADStat.EFFICIENCY,70);
-        ItemCADComponent.addStatToStack(Items.axeAssemblyIron, EnumCADStat.POTENCY,100);
-
-        ItemCADComponent.addStatToStack(Items.swordAssemblyGold, EnumCADStat.EFFICIENCY,75);
-        ItemCADComponent.addStatToStack(Items.swordAssemblyGold, EnumCADStat.POTENCY,175);
-        ItemCADComponent.addStatToStack(Items.pickaxeAssemblyGold, EnumCADStat.EFFICIENCY,75);
-        ItemCADComponent.addStatToStack(Items.pickaxeAssemblyGold, EnumCADStat.POTENCY,175);
-        ItemCADComponent.addStatToStack(Items.shovelAssemblyGold, EnumCADStat.EFFICIENCY,75);
-        ItemCADComponent.addStatToStack(Items.shovelAssemblyGold, EnumCADStat.POTENCY,175);
-        ItemCADComponent.addStatToStack(Items.axeAssemblyGold, EnumCADStat.EFFICIENCY,75);
-        ItemCADComponent.addStatToStack(Items.axeAssemblyGold, EnumCADStat.POTENCY,175);
-
         ItemCADComponent.addStatToStack(Items.swordAssemblyPsimetal, EnumCADStat.EFFICIENCY,85);
         ItemCADComponent.addStatToStack(Items.swordAssemblyPsimetal, EnumCADStat.POTENCY,250);
         ItemCADComponent.addStatToStack(Items.pickaxeAssemblyPsimetal, EnumCADStat.EFFICIENCY,85);
@@ -61,6 +43,10 @@ public class StatRegistry {
         ItemCADComponent.addStatToStack(Items.shovelAssemblyCreative, EnumCADStat.POTENCY,-1);
         ItemCADComponent.addStatToStack(Items.axeAssemblyCreative, EnumCADStat.EFFICIENCY,-1);
         ItemCADComponent.addStatToStack(Items.axeAssemblyCreative, EnumCADStat.POTENCY,-1);
+
+
+        ItemCADComponent.addStatToStack(Items.dessAssembly, EnumCADStat.EFFICIENCY,90);
+        ItemCADComponent.addStatToStack(Items.dessAssembly, EnumCADStat.POTENCY,350);
 
     }
 }

@@ -1,9 +1,12 @@
 package com.dudblockman.psipherals;
 
+import com.dudblockman.psipherals.entity.Entities;
 import com.dudblockman.psipherals.items.Items;
 import com.dudblockman.psipherals.items.StatRegistry;
 import com.dudblockman.psipherals.spell.base.SpellPieces;
-import com.dudblockman.psipherals.util.ClientBakery;
+import com.dudblockman.psipherals.util.ClientProxy;
+import com.dudblockman.psipherals.util.IProxy;
+import com.dudblockman.psipherals.util.ServerProxy;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -30,14 +33,13 @@ public class Psipherals {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
         MinecraftForge.EVENT_BUS.register(this);
-        ClientBakery proxy = DistExecutor.runForDist(() -> ClientBakery::new, null);
-        if (proxy != null)
-            proxy.registerHandlers();
+        IProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> ServerProxy::new);
+        proxy.registerHandlers();
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
-        //new CreativeTab();
         new Items();
+        new Entities();
         StatRegistry.registerStats();
         SpellPieces.init();
     }

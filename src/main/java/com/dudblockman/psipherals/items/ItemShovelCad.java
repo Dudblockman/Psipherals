@@ -27,20 +27,17 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.network.PacketDistributor;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 import vazkii.psi.api.PsiAPI;
 import vazkii.psi.api.cad.*;
-import vazkii.psi.api.internal.PsiRenderHelper;
 import vazkii.psi.api.internal.TooltipHelper;
 import vazkii.psi.api.internal.Vector3;
 import vazkii.psi.api.recipe.ITrickRecipe;
-import vazkii.psi.api.spell.*;
+import vazkii.psi.api.spell.PieceGroupAdvancementComplete;
+import vazkii.psi.api.spell.SpellContext;
+import vazkii.psi.api.spell.SpellRuntimeException;
 import vazkii.psi.api.spell.piece.PieceCraftingTrick;
 import vazkii.psi.client.core.handler.ContributorSpellCircleHandler;
-import vazkii.psi.common.Psi;
 import vazkii.psi.common.block.BlockProgrammer;
 import vazkii.psi.common.block.base.ModBlocks;
 import vazkii.psi.common.core.handler.ConfigHandler;
@@ -59,27 +56,13 @@ import vazkii.psi.common.spell.trick.block.PieceTrickBreakBlock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
-import java.util.function.Consumer;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ItemShovelCad extends ShovelItem implements ICAD {
-
-    private static final String TAG_BULLET_PREFIX = "bullet";
-    private static final String TAG_SELECTED_SLOT = "selectedSlot";
-
-    // Legacy tags
-    private static final String TAG_TIME_LEGACY = "time";
-    private static final String TAG_STORED_PSI_LEGACY = "storedPsi";
-
-    private static final String TAG_X_LEGACY = "x";
-    private static final String TAG_Y_LEGACY = "y";
-    private static final String TAG_Z_LEGACY = "z";
-    private static final Pattern VECTOR_PREFIX_PATTERN = Pattern.compile("^storedVector(\\d+)$");
-
-    private static final Pattern FAKE_PLAYER_PATTERN = Pattern.compile("^(?:\\[.*])|(?:ComputerCraft)$");
 
     public ItemShovelCad(Item.Properties props) {
         super(new AdvPsimetalToolMaterial(), 5.0F, -3.0F, props);
@@ -169,36 +152,7 @@ public class ItemShovelCad extends ShovelItem implements ICAD {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entityIn, int itemSlot, boolean isSelected) {
-        CompoundNBT compound = stack.getOrCreateTag();
-
         stack.getCapability(PsiAPI.CAD_DATA_CAPABILITY).ifPresent(data -> {
-            if (compound.contains(TAG_TIME_LEGACY, Constants.NBT.TAG_ANY_NUMERIC)) {
-                data.setTime(compound.getInt(TAG_TIME_LEGACY));
-                data.markDirty(true);
-                compound.remove(TAG_TIME_LEGACY);
-            }
-
-            if (compound.contains(TAG_STORED_PSI_LEGACY, Constants.NBT.TAG_ANY_NUMERIC)) {
-                data.setBattery(compound.getInt(TAG_STORED_PSI_LEGACY));
-                data.markDirty(true);
-                compound.remove(TAG_STORED_PSI_LEGACY);
-            }
-
-            Set<String> keys = new HashSet<>(compound.keySet());
-
-            for (String key : keys) {
-                Matcher matcher = VECTOR_PREFIX_PATTERN.matcher(key);
-                if (matcher.find()) {
-                    CompoundNBT vec = compound.getCompound(key);
-                    compound.remove(key);
-                    int memory = Integer.parseInt(matcher.group(1));
-                    Vector3 vector = new Vector3(vec.getDouble(TAG_X_LEGACY),
-                            vec.getDouble(TAG_Y_LEGACY),
-                            vec.getDouble(TAG_Z_LEGACY));
-                    data.setSavedVector(memory, vector);
-                }
-            }
-
             if (entityIn instanceof ServerPlayerEntity && data.isDirty()) {
                 ServerPlayerEntity player = (ServerPlayerEntity) entityIn;
                 MessageRegister.sendToPlayer(new MessageCADDataSync(data), player);
@@ -458,16 +412,6 @@ public class ItemShovelCad extends ShovelItem implements ICAD {
             return;
         }
 
-        // Iron Psimetal CAD
-        subItems.add(makeCAD(new ItemStack(Items.shovelAssemblyIron),
-                new ItemStack(ModItems.cadCoreBasic),
-                new ItemStack(ModItems.cadSocketBasic),
-                new ItemStack(ModItems.cadBatteryBasic)));
-        // Gold Psimetal CAD
-        subItems.add(makeCAD(new ItemStack(Items.shovelAssemblyGold),
-                new ItemStack(ModItems.cadCoreBasic),
-                new ItemStack(ModItems.cadSocketBasic),
-                new ItemStack(ModItems.cadBatteryBasic)));
         // Psimetal CAD
         subItems.add(makeCAD(new ItemStack(Items.shovelAssemblyPsimetal),
                 new ItemStack(ModItems.cadCoreOverclocked),

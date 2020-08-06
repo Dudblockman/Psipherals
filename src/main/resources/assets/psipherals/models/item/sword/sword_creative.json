@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"0": "psi:items/cad_color",
-		"1": "minecraft:blocks/command_block_front"
+		"1": "minecraft:block/command_block_front"
 	},
 	"gui_light": "front",
 	"elements": [

@@ -1,8 +1,6 @@
 package com.dudblockman.psipherals.spell.base;
 
 import com.dudblockman.psipherals.Psipherals;
-import com.dudblockman.psipherals.spell.trick.internal.TrickExecuteAmulet;
-import com.dudblockman.psipherals.util.libs.PieceNames;
 import net.minecraft.util.ResourceLocation;
 import vazkii.psi.api.PsiAPI;
 import vazkii.psi.api.spell.Spell;
