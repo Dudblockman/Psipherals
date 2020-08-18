@@ -56,43 +56,43 @@ public class Items {
     public static void registerItems(RegistryEvent.Register<Item> evt) {
 
         IForgeRegistry<Item> r = evt.getRegistry();
-        r.register(psimetalBow.setRegistryName(Psipherals.MODID, ItemNames.PSIMETAL_BOW));
+        r.register(psimetalBow.setRegistryName(Psipherals.location(ItemNames.PSIMETAL_BOW)));
 
-        r.register(bowCAD.setRegistryName(Psipherals.MODID, ItemNames.PSIMETAL_BOW_ADVANCED));
+        r.register(bowCAD.setRegistryName(Psipherals.location(ItemNames.PSIMETAL_BOW_ADVANCED)));
 
-        r.register(swordCAD.setRegistryName(Psipherals.MODID, ItemNames.PSIMETAL_SWORD_ADVANCED));
+        r.register(swordCAD.setRegistryName(Psipherals.location(ItemNames.PSIMETAL_SWORD_ADVANCED)));
 
-        r.register(swordAssemblyPsimetal.setRegistryName(Psipherals.MODID, ItemNames.SWORD_ASSEMBLY_PSIMETAL));
-        r.register(swordAssemblyIvoryPsimetal.setRegistryName(Psipherals.MODID, ItemNames.SWORD_ASSEMBLY_IVORY_PSIMETAL));
-        r.register(swordAssemblyEbonyPsimetal.setRegistryName(Psipherals.MODID, ItemNames.SWORD_ASSEMBLY_EBONY_PSIMETAL));
-        r.register(swordAssemblyCreative.setRegistryName(Psipherals.MODID, ItemNames.SWORD_ASSEMBLY_CREATIVE));
-
-
-        r.register(pickaxeCAD.setRegistryName(Psipherals.MODID, ItemNames.PSIMETAL_PICKAXE_ADVANCED));
-
-        r.register(pickaxeAssemblyPsimetal.setRegistryName(Psipherals.MODID, ItemNames.PICKAXE_ASSEMBLY_PSIMETAL));
-        r.register(pickaxeAssemblyIvoryPsimetal.setRegistryName(Psipherals.MODID, ItemNames.PICKAXE_ASSEMBLY_IVORY_PSIMETAL));
-        r.register(pickaxeAssemblyEbonyPsimetal.setRegistryName(Psipherals.MODID, ItemNames.PICKAXE_ASSEMBLY_EBONY_PSIMETAL));
-        r.register(pickaxeAssemblyCreative.setRegistryName(Psipherals.MODID, ItemNames.PICKAXE_ASSEMBLY_CREATIVE));
+        r.register(swordAssemblyPsimetal.setRegistryName(Psipherals.location(ItemNames.SWORD_ASSEMBLY_PSIMETAL)));
+        r.register(swordAssemblyIvoryPsimetal.setRegistryName(Psipherals.location(ItemNames.SWORD_ASSEMBLY_IVORY_PSIMETAL)));
+        r.register(swordAssemblyEbonyPsimetal.setRegistryName(Psipherals.location(ItemNames.SWORD_ASSEMBLY_EBONY_PSIMETAL)));
+        r.register(swordAssemblyCreative.setRegistryName(Psipherals.location(ItemNames.SWORD_ASSEMBLY_CREATIVE)));
 
 
-        r.register(shovelCAD.setRegistryName(Psipherals.MODID, ItemNames.PSIMETAL_SHOVEL_ADVANCED));
+        r.register(pickaxeCAD.setRegistryName(Psipherals.location(ItemNames.PSIMETAL_PICKAXE_ADVANCED)));
 
-        r.register(shovelAssemblyPsimetal.setRegistryName(Psipherals.MODID, ItemNames.SHOVEL_ASSEMBLY_PSIMETAL));
-        r.register(shovelAssemblyIvoryPsimetal.setRegistryName(Psipherals.MODID, ItemNames.SHOVEL_ASSEMBLY_IVORY_PSIMETAL));
-        r.register(shovelAssemblyEbonyPsimetal.setRegistryName(Psipherals.MODID, ItemNames.SHOVEL_ASSEMBLY_EBONY_PSIMETAL));
-        r.register(shovelAssemblyCreative.setRegistryName(Psipherals.MODID, ItemNames.SHOVEL_ASSEMBLY_CREATIVE));
+        r.register(pickaxeAssemblyPsimetal.setRegistryName(Psipherals.location(ItemNames.PICKAXE_ASSEMBLY_PSIMETAL)));
+        r.register(pickaxeAssemblyIvoryPsimetal.setRegistryName(Psipherals.location(ItemNames.PICKAXE_ASSEMBLY_IVORY_PSIMETAL)));
+        r.register(pickaxeAssemblyEbonyPsimetal.setRegistryName(Psipherals.location(ItemNames.PICKAXE_ASSEMBLY_EBONY_PSIMETAL)));
+        r.register(pickaxeAssemblyCreative.setRegistryName(Psipherals.location(ItemNames.PICKAXE_ASSEMBLY_CREATIVE)));
 
 
-        r.register(axeCAD.setRegistryName(Psipherals.MODID, ItemNames.PSIMETAL_AXE_ADVANCED));
+        r.register(shovelCAD.setRegistryName(Psipherals.location(ItemNames.PSIMETAL_SHOVEL_ADVANCED)));
 
-        r.register(axeAssemblyPsimetal.setRegistryName(Psipherals.MODID, ItemNames.AXE_ASSEMBLY_PSIMETAL));
-        r.register(axeAssemblyIvoryPsimetal.setRegistryName(Psipherals.MODID, ItemNames.AXE_ASSEMBLY_IVORY_PSIMETAL));
-        r.register(axeAssemblyEbonyPsimetal.setRegistryName(Psipherals.MODID, ItemNames.AXE_ASSEMBLY_EBONY_PSIMETAL));
-        r.register(axeAssemblyCreative.setRegistryName(Psipherals.MODID, ItemNames.AXE_ASSEMBLY_CREATIVE));
+        r.register(shovelAssemblyPsimetal.setRegistryName(Psipherals.location(ItemNames.SHOVEL_ASSEMBLY_PSIMETAL)));
+        r.register(shovelAssemblyIvoryPsimetal.setRegistryName(Psipherals.location(ItemNames.SHOVEL_ASSEMBLY_IVORY_PSIMETAL)));
+        r.register(shovelAssemblyEbonyPsimetal.setRegistryName(Psipherals.location(ItemNames.SHOVEL_ASSEMBLY_EBONY_PSIMETAL)));
+        r.register(shovelAssemblyCreative.setRegistryName(Psipherals.location(ItemNames.SHOVEL_ASSEMBLY_CREATIVE)));
 
-        r.register(psiAmulet.setRegistryName(Psipherals.MODID, ItemNames.PSIONIC_AMULET));
 
-        r.register(dessAssembly.setRegistryName(Psipherals.MODID, "igalima"));
+        r.register(axeCAD.setRegistryName(Psipherals.location(ItemNames.PSIMETAL_AXE_ADVANCED)));
+
+        r.register(axeAssemblyPsimetal.setRegistryName(Psipherals.location(ItemNames.AXE_ASSEMBLY_PSIMETAL)));
+        r.register(axeAssemblyIvoryPsimetal.setRegistryName(Psipherals.location(ItemNames.AXE_ASSEMBLY_IVORY_PSIMETAL)));
+        r.register(axeAssemblyEbonyPsimetal.setRegistryName(Psipherals.location(ItemNames.AXE_ASSEMBLY_EBONY_PSIMETAL)));
+        r.register(axeAssemblyCreative.setRegistryName(Psipherals.location(ItemNames.AXE_ASSEMBLY_CREATIVE)));
+
+        r.register(psiAmulet.setRegistryName(Psipherals.location(ItemNames.PSIONIC_AMULET)));
+
+        r.register(dessAssembly.setRegistryName(Psipherals.location("igalima")));
     }
 }

@@ -58,24 +58,12 @@ import vazkii.psi.common.spell.trick.block.PieceTrickBreakBlock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ItemBowCad extends BowItem implements ICAD {
-    private static final String TAG_BULLET_PREFIX = "bullet";
-    private static final String TAG_SELECTED_SLOT = "selectedSlot";
-
-    // Legacy tags
-    private static final String TAG_TIME_LEGACY = "time";
-    private static final String TAG_STORED_PSI_LEGACY = "storedPsi";
-
-    private static final String TAG_X_LEGACY = "x";
-    private static final String TAG_Y_LEGACY = "y";
-    private static final String TAG_Z_LEGACY = "z";
-    private static final Pattern VECTOR_PREFIX_PATTERN = Pattern.compile("^storedVector(\\d+)$");
-
 
     public ItemBowCad(Item.Properties props) {
         super(props);
@@ -101,36 +89,7 @@ public class ItemBowCad extends BowItem implements ICAD {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entityIn, int itemSlot, boolean isSelected) {
-        CompoundNBT compound = stack.getOrCreateTag();
-
         stack.getCapability(PsiAPI.CAD_DATA_CAPABILITY).ifPresent(data -> {
-            if (compound.contains(TAG_TIME_LEGACY, Constants.NBT.TAG_ANY_NUMERIC)) {
-                data.setTime(compound.getInt(TAG_TIME_LEGACY));
-                data.markDirty(true);
-                compound.remove(TAG_TIME_LEGACY);
-            }
-
-            if (compound.contains(TAG_STORED_PSI_LEGACY, Constants.NBT.TAG_ANY_NUMERIC)) {
-                data.setBattery(compound.getInt(TAG_STORED_PSI_LEGACY));
-                data.markDirty(true);
-                compound.remove(TAG_STORED_PSI_LEGACY);
-            }
-
-            Set<String> keys = new HashSet<>(compound.keySet());
-
-            for (String key : keys) {
-                Matcher matcher = VECTOR_PREFIX_PATTERN.matcher(key);
-                if (matcher.find()) {
-                    CompoundNBT vec = compound.getCompound(key);
-                    compound.remove(key);
-                    int memory = Integer.parseInt(matcher.group(1));
-                    Vector3 vector = new Vector3(vec.getDouble(TAG_X_LEGACY),
-                            vec.getDouble(TAG_Y_LEGACY),
-                            vec.getDouble(TAG_Z_LEGACY));
-                    data.setSavedVector(memory, vector);
-                }
-            }
-
             if (entityIn instanceof ServerPlayerEntity && data.isDirty()) {
                 ServerPlayerEntity player = (ServerPlayerEntity) entityIn;
                 MessageRegister.sendToPlayer(new MessageCADDataSync(data), player);
@@ -154,9 +113,8 @@ public class ItemBowCad extends BowItem implements ICAD {
                     PlayerDataHandler.PlayerData data = PlayerDataHandler.get(playerentity);
                     ItemStack playerCad = PsiAPI.getPlayerCAD(playerentity);
                     if (!playerCad.isEmpty()) {
-                        //ArrowItem arrowitem = (ArrowItem) (itemstack.getItem() instanceof ArrowItem ? itemstack.getItem() : net.minecraft.item.Items.ARROW);
-                        AbstractArrowEntity abstractarrowentity = new EntityPsiArrow(worldIn,playerentity).setInfo(getComponentInSlot(playerCad, EnumCADComponent.DYE));//arrowitem.createArrow(worldIn, itemstack, playerentity);
-                        //abstractarrowentity = customeArrow(abstractarrowentity);
+                        AbstractArrowEntity abstractarrowentity = new EntityPsiArrow(worldIn,playerentity).setInfo(getComponentInSlot(playerCad, EnumCADComponent.DYE));
+                        abstractarrowentity = customeArrow(abstractarrowentity);
                         abstractarrowentity.shoot(playerentity, playerentity.rotationPitch, playerentity.rotationYaw, 0.0F, f * 3.0F, 1.0F);
                         if (f == 1.0F) {
                             abstractarrowentity.setIsCritical(true);
@@ -204,8 +162,6 @@ public class ItemBowCad extends BowItem implements ICAD {
                         }
                         worldIn.addEntity(abstractarrowentity);
                     }
-                    //}
-
                 }
 
                 worldIn.playSound(null, playerentity.getPosX(), playerentity.getPosY(), playerentity.getPosZ(), SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
