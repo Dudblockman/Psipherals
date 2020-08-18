@@ -12,7 +12,6 @@ import vazkii.psi.common.spell.base.ModSpellPieces;
 
 public class SpellPieces {
     public static void init() {
-        //register(TrickExecuteAmulet.class, PieceNames.TRIGGER_AMULET, "null");
         //register(TrickKingCrimson.class, PieceNames.KING_CRIMSON, LibPieceGroups.MOVEMENT);
     }
     public static ModSpellPieces.PieceContainer register(Class<? extends SpellPiece> clazz, String name, String group) {

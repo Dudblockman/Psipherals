@@ -60,8 +60,8 @@ public class ItemPsimetalBow extends BowItem implements IPsimetalTool {
                     if (!worldIn.isRemote) {
                         ArrowItem arrowitem = (ArrowItem) (itemstack.getItem() instanceof ArrowItem ? itemstack.getItem() : Items.ARROW);
                         AbstractArrowEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
-                        abstractarrowentity = customeArrow(abstractarrowentity);
-                        abstractarrowentity.shoot(playerentity, playerentity.rotationPitch, playerentity.rotationYaw, 0.0F, f * 3.0F, 1.0F);
+                        abstractarrowentity = customArrow(abstractarrowentity);
+                        abstractarrowentity.setProperties(playerentity, playerentity.rotationPitch, playerentity.rotationYaw, 0.0F, f * 3.0F, 1.0F);
                         if (f == 1.0F) {
                             abstractarrowentity.setIsCritical(true);
                         }
@@ -89,7 +89,7 @@ public class ItemPsimetalBow extends BowItem implements IPsimetalTool {
 
                         //Spellcasting Logic here
 
-                        //castSpell(playerentity, stack, new Vec3d(playerentity.getPosX(), playerentity.getPosY(), playerentity.getPosZ()), abstractarrowentity);
+                        //castSpell(playerentity, stack, new Vec3d(playerentity.getX(), playerentity.getY(), playerentity.getZ()), abstractarrowentity);
                         //if (isEnabled(stack)) {
                             PlayerDataHandler.PlayerData data = PlayerDataHandler.get(playerentity);
                             ItemStack playerCad = PsiAPI.getPlayerCAD(playerentity);
@@ -102,7 +102,7 @@ public class ItemPsimetalBow extends BowItem implements IPsimetalTool {
                                 });
 
                                 float radiusVal = 0.2f;
-                                AxisAlignedBB region = new AxisAlignedBB(playerentity.getPosX() - radiusVal, playerentity.getPosY() + playerentity.getEyeHeight() - radiusVal, playerentity.getPosZ() - radiusVal, playerentity.getPosX() + radiusVal, playerentity.getPosY() + playerentity.getEyeHeight() + radiusVal, playerentity.getPosZ() + radiusVal);
+                                AxisAlignedBB region = new AxisAlignedBB(playerentity.getX() - radiusVal, playerentity.getY() + playerentity.getEyeHeight() - radiusVal, playerentity.getZ() - radiusVal, playerentity.getX() + radiusVal, playerentity.getY() + playerentity.getEyeHeight() + radiusVal, playerentity.getZ() + radiusVal);
 
                                 List<EntitySpellProjectile> spells = playerentity.world.getEntitiesWithinAABB(EntitySpellProjectile.class, region, (e) -> ((e != null) && (e.context.caster == playerentity) && (e.ticksExisted <= 1)));
                                 for (EntitySpellProjectile spell : spells) {
@@ -115,7 +115,7 @@ public class ItemPsimetalBow extends BowItem implements IPsimetalTool {
                         worldIn.addEntity(abstractarrowentity);
                     }
 
-                    worldIn.playSound(null, playerentity.getPosX(), playerentity.getPosY(), playerentity.getPosZ(), SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+                    worldIn.playSound(null, playerentity.getX(), playerentity.getY(), playerentity.getZ(), SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
                     if (!flag1 && !playerentity.abilities.isCreativeMode) {
                         itemstack.shrink(1);
                         if (itemstack.isEmpty()) {
@@ -146,7 +146,7 @@ public class ItemPsimetalBow extends BowItem implements IPsimetalTool {
 
     @Override
     public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-        IPsimetalTool.regen(stack, entityIn, isSelected);
+        IPsimetalTool.regen(stack, entityIn);
     }
 
     @Nullable

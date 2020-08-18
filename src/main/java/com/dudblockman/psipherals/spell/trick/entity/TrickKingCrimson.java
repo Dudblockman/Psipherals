@@ -1,19 +1,16 @@
 package com.dudblockman.psipherals.spell.trick.entity;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import vazkii.psi.api.internal.Vector3;
 import vazkii.psi.api.spell.*;
 import vazkii.psi.api.spell.param.ParamEntity;
 import vazkii.psi.api.spell.param.ParamNumber;
 import vazkii.psi.api.spell.piece.PieceTrick;
 import vazkii.psi.common.core.handler.PlayerDataHandler;
-import vazkii.psi.common.spell.trick.entity.PieceTrickAddMotion;
 
 public class TrickKingCrimson extends PieceTrick {
 
@@ -48,7 +45,7 @@ public class TrickKingCrimson extends PieceTrick {
             throw new SpellRuntimeException(SpellRuntimeException.OUTSIDE_RADIUS);
         }
 
-        Vec3d motion = targetVal.getMotion();
+        Vector3d motion = targetVal.getMotion();
         if (targetVal instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) targetVal;
             PlayerDataHandler.PlayerData data = PlayerDataHandler.get(player);
@@ -56,7 +53,7 @@ public class TrickKingCrimson extends PieceTrick {
                 Vector3 last = data.eidosChangelog.get(data.eidosChangelog.size() - 2);
                 Vector3 vec = Vector3.fromEntity(targetVal).sub(last);
                 if (vec.mag() < 10) {
-                    motion = vec.toVec3D();
+                    motion = new Vector3d(vec.x,vec.y,vec.z);
                 }
             }
         }
@@ -65,7 +62,7 @@ public class TrickKingCrimson extends PieceTrick {
         double offZ = motion.z * timeVal;
         int adjustY = 0;
         for (int i = -(int)offY; i > 0; i--) {
-            BlockPos pos = new BlockPos(targetVal.getPosX() + offX, targetVal.getPosY() + offY + adjustY, targetVal.getPosZ() + offZ);
+            BlockPos pos = new BlockPos(targetVal.getX() + offX, targetVal.getY() + offY + adjustY, targetVal.getZ() + offZ);
             BlockState state = context.caster.getEntityWorld().getBlockState(pos);
             if (state.isAir(context.caster.getEntityWorld(), pos) || state.getMaterial().isReplaceable()) {
                 break;
@@ -73,7 +70,7 @@ public class TrickKingCrimson extends PieceTrick {
             adjustY++;
         }
 
-        targetVal.setPositionAndUpdate(targetVal.getPosX() + offX, adjustY == 0 ? targetVal.getPosY() + offY + adjustY : (int)(targetVal.getPosY() + offY + adjustY), targetVal.getPosZ() + offZ);
+        targetVal.setPositionAndUpdate(targetVal.getX() + offX, adjustY == 0 ? targetVal.getY() + offY + adjustY : (int)(targetVal.getY() + offY + adjustY), targetVal.getZ() + offZ);
         return null;
     }
 }

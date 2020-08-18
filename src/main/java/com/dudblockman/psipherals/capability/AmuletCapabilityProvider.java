@@ -7,8 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import top.theillusivec4.curios.api.capability.CuriosCapability;
-import top.theillusivec4.curios.api.capability.ICurio;
+import top.theillusivec4.curios.api.CuriosCapability;
+import top.theillusivec4.curios.api.type.capability.ICurio;
 import vazkii.psi.api.PsiAPI;
 import vazkii.psi.api.cad.ISocketable;
 import vazkii.psi.api.spell.CompiledSpell;
@@ -92,8 +92,9 @@ public class AmuletCapabilityProvider extends ToolSocketable implements ICurio {
     public boolean isCADOnlyContainer() {
         return true;
     }
+
     @Override
-    public void onCurioTick(String identifier, int index, LivingEntity livingEntity ) {
+    public void curioTick(String identifier, int index, LivingEntity livingEntity ) {
         if (!(livingEntity instanceof  PlayerEntity))
             return;
         PlayerEntity player = (PlayerEntity) livingEntity;

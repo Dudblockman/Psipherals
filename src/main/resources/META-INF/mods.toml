@@ -13,18 +13,25 @@ Fun and experimental additions to Psi
 [[dependencies.psipherals]]
     modId="patchouli"
     mandatory=true
-    versionRange="[1.15.2-1.2-27,)"
+    versionRange="[1.16-39,)"
     side="BOTH"
 
 [[dependencies.psipherals]]
     modId="psi"
     mandatory=true
-    versionRange="[r1.2-80,)"
+    versionRange="[r1.2-83,)"
     side="BOTH"
 
 [[dependencies.psipherals]]
     modId="forge"
     mandatory=true
-    versionRange="[31.1.65,)"
+    versionRange="[32.0.108,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.psipherals]]
+    modId="curios"
+    mandatory=true
+    versionRange="[FORGE-1.16.1-3.0,)"
     ordering="AFTER"
     side="BOTH"

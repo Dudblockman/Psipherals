@@ -76,7 +76,7 @@ public class EntityPsiArrow extends AbstractArrowEntity {
     public void updatePassenger(Entity passenger) {
         super.updatePassenger(passenger);
         if (this.isPassenger(passenger) && (passenger instanceof EntitySpellProjectile)) {
-            passenger.setPosition(this.getPosX(), this.getPosY(), this.getPosZ());
+            passenger.setPosition(this.getX(), this.getY(), this.getZ());
         }
     }
 }
