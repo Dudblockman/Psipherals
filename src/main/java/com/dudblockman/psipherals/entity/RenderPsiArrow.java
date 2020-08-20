@@ -52,7 +52,7 @@ public class RenderPsiArrow extends EntityRenderer<EntityPsiArrow> {
         p_225623_4_.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(45.0F));
         p_225623_4_.scale(0.05625F, 0.05625F, 0.05625F);
         p_225623_4_.translate(-4.0D, 0.0D, 0.0D);
-        IVertexBuilder ivertexbuilder = p_225623_5_.getBuffer(RenderType.getEntityCutout(this.getEntityTexture(p_225623_1_)));
+        IVertexBuilder ivertexbuilder = p_225623_5_.getBuffer(RenderType.getEntityTranslucent(this.getEntityTexture(p_225623_1_)));
         MatrixStack.Entry matrixstack$entry = p_225623_4_.peek();
         Matrix4f matrix4f = matrixstack$entry.getModel();
         Matrix3f matrix3f = matrixstack$entry.getNormal();

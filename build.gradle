@@ -20,7 +20,7 @@ apply plugin: 'pmd'
 ext.configFile = file('build.properties')
 ext.config = parseConfig(configFile)
 
-def mc_version = "1.16.1"
+def mc_version = "1.16.2"
 version = "${config.version}-${config.build_number}"
 group = "dudblockman.${config.mod_id}"
 archivesBaseName = config.mod_name
@@ -113,19 +113,20 @@ dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft group: 'net.minecraftforge', name: 'forge', version: "${mc_version}-32.0.108"
+    minecraft group: 'net.minecraftforge', name: 'forge', version: "${mc_version}-33.0.5"
 
-    compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.16-39:api")
-    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16-39")
+    compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.16-40:api")
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16-40")
 
-    compileOnly fg.deobf("mezz.jei:jei-1.16.1:7.0.0.2:api")
-    runtimeOnly fg.deobf("mezz.jei:jei-1.16.1:7.0.0.2")
+    compileOnly fg.deobf("mezz.jei:jei-1.16.2:7.1.0.11:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.16.2:7.1.0.11")
 
-    compileOnly fg.deobf("vazkii.psi:Psi:r1.2-83.253")
-    runtimeOnly fg.deobf("vazkii.psi:Psi:r1.2-83.253")
+    //compile files('libs/file_name.jar') // For one .jar file in folder
+    compileOnly fg.deobf("vazkii.psi:Psi:1.16-84.254")
+    runtimeOnly fg.deobf("vazkii.psi:Psi:1.16-84.254")
 
-    compileOnly fg.deobf("top.theillusivec4.curios:curios:FORGE-1.16.1-3.0")
-    runtimeOnly fg.deobf("top.theillusivec4.curios:curios:FORGE-1.16.1-3.0")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.2-4.0.0.0")
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.2-4.0.0.0")
 
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html

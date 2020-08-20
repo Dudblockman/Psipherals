@@ -1,0 +1,12 @@
+{
+  "result": {
+    "item": "psipherals:axe/axe_assembly_psimetal"
+  },
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "psi:psimetal_axe"
+  },
+  "addition":{
+    "item": "minecraft:netherite_ingot"
+  }
+}

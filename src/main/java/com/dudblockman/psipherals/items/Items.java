@@ -13,35 +13,35 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class Items {
     public static final ItemPsimetalBow psimetalBow = new ItemPsimetalBow(defaultBuilder(), ItemNames.PSIMETAL_BOW);
 
-    public static final Item swordCAD = new ItemSwordCad(defaultBuilder());
+    public static final Item swordCAD = new ItemSwordCad(fireproofBuilder());
 
-    public static final Item swordAssemblyPsimetal = new ItemSwordAssembly(defaultBuilder(), ItemNames.SWORD_CAD_PSIMETAL);
-    public static final Item swordAssemblyIvoryPsimetal = new ItemSwordAssembly(defaultBuilder(), ItemNames.SWORD_CAD_IVORY_PSIMETAL);
-    public static final Item swordAssemblyEbonyPsimetal = new ItemSwordAssembly(defaultBuilder(), ItemNames.SWORD_CAD_EBONY_PSIMETAL);
-    public static final Item swordAssemblyCreative = new ItemSwordAssembly(defaultBuilder(), ItemNames.SWORD_CAD_CREATIVE);
+    public static final Item swordAssemblyPsimetal = new ItemSwordAssembly(fireproofBuilder(), ItemNames.SWORD_CAD_PSIMETAL);
+    public static final Item swordAssemblyIvoryPsimetal = new ItemSwordAssembly(fireproofBuilder(), ItemNames.SWORD_CAD_IVORY_PSIMETAL);
+    public static final Item swordAssemblyEbonyPsimetal = new ItemSwordAssembly(fireproofBuilder(), ItemNames.SWORD_CAD_EBONY_PSIMETAL);
+    public static final Item swordAssemblyCreative = new ItemSwordAssembly(fireproofBuilder(), ItemNames.SWORD_CAD_CREATIVE);
 
-    public static final Item pickaxeCAD = new ItemPickaxeCad(defaultBuilder());
+    public static final Item pickaxeCAD = new ItemPickaxeCad(fireproofBuilder());
 
-    public static final Item pickaxeAssemblyPsimetal = new ItemPickaxeAssembly(defaultBuilder(), ItemNames.PICKAXE_CAD_PSIMETAL);
-    public static final Item pickaxeAssemblyIvoryPsimetal = new ItemPickaxeAssembly(defaultBuilder(), ItemNames.PICKAXE_CAD_IVORY_PSIMETAL);
-    public static final Item pickaxeAssemblyEbonyPsimetal = new ItemPickaxeAssembly(defaultBuilder(), ItemNames.PICKAXE_CAD_EBONY_PSIMETAL);
-    public static final Item pickaxeAssemblyCreative = new ItemPickaxeAssembly(defaultBuilder(), ItemNames.PICKAXE_CAD_CREATIVE);
-
-
-    public static final Item shovelCAD = new ItemShovelCad(defaultBuilder());
-
-    public static final Item shovelAssemblyPsimetal = new ItemShovelAssembly(defaultBuilder(), ItemNames.SHOVEL_CAD_PSIMETAL);
-    public static final Item shovelAssemblyIvoryPsimetal = new ItemShovelAssembly(defaultBuilder(), ItemNames.SHOVEL_CAD_IVORY_PSIMETAL);
-    public static final Item shovelAssemblyEbonyPsimetal = new ItemShovelAssembly(defaultBuilder(), ItemNames.SHOVEL_CAD_EBONY_PSIMETAL);
-    public static final Item shovelAssemblyCreative = new ItemShovelAssembly(defaultBuilder(), ItemNames.SHOVEL_CAD_CREATIVE);
+    public static final Item pickaxeAssemblyPsimetal = new ItemPickaxeAssembly(fireproofBuilder(), ItemNames.PICKAXE_CAD_PSIMETAL);
+    public static final Item pickaxeAssemblyIvoryPsimetal = new ItemPickaxeAssembly(fireproofBuilder(), ItemNames.PICKAXE_CAD_IVORY_PSIMETAL);
+    public static final Item pickaxeAssemblyEbonyPsimetal = new ItemPickaxeAssembly(fireproofBuilder(), ItemNames.PICKAXE_CAD_EBONY_PSIMETAL);
+    public static final Item pickaxeAssemblyCreative = new ItemPickaxeAssembly(fireproofBuilder(), ItemNames.PICKAXE_CAD_CREATIVE);
 
 
-    public static final Item axeCAD = new ItemAxeCad(defaultBuilder());
+    public static final Item shovelCAD = new ItemShovelCad(fireproofBuilder());
 
-    public static final Item axeAssemblyPsimetal = new ItemAxeAssembly(defaultBuilder(), ItemNames.AXE_CAD_PSIMETAL);
-    public static final Item axeAssemblyIvoryPsimetal = new ItemAxeAssembly(defaultBuilder(), ItemNames.AXE_CAD_IVORY_PSIMETAL);
-    public static final Item axeAssemblyEbonyPsimetal = new ItemAxeAssembly(defaultBuilder(), ItemNames.AXE_CAD_EBONY_PSIMETAL);
-    public static final Item axeAssemblyCreative = new ItemAxeAssembly(defaultBuilder(), ItemNames.AXE_CAD_CREATIVE);
+    public static final Item shovelAssemblyPsimetal = new ItemShovelAssembly(fireproofBuilder(), ItemNames.SHOVEL_CAD_PSIMETAL);
+    public static final Item shovelAssemblyIvoryPsimetal = new ItemShovelAssembly(fireproofBuilder(), ItemNames.SHOVEL_CAD_IVORY_PSIMETAL);
+    public static final Item shovelAssemblyEbonyPsimetal = new ItemShovelAssembly(fireproofBuilder(), ItemNames.SHOVEL_CAD_EBONY_PSIMETAL);
+    public static final Item shovelAssemblyCreative = new ItemShovelAssembly(fireproofBuilder(), ItemNames.SHOVEL_CAD_CREATIVE);
+
+
+    public static final Item axeCAD = new ItemAxeCad(fireproofBuilder());
+
+    public static final Item axeAssemblyPsimetal = new ItemAxeAssembly(fireproofBuilder(), ItemNames.AXE_CAD_PSIMETAL);
+    public static final Item axeAssemblyIvoryPsimetal = new ItemAxeAssembly(fireproofBuilder(), ItemNames.AXE_CAD_IVORY_PSIMETAL);
+    public static final Item axeAssemblyEbonyPsimetal = new ItemAxeAssembly(fireproofBuilder(), ItemNames.AXE_CAD_EBONY_PSIMETAL);
+    public static final Item axeAssemblyCreative = new ItemAxeAssembly(fireproofBuilder(), ItemNames.AXE_CAD_CREATIVE);
 
     public static final Item psiAmulet = new ItemPsionicAmulet(defaultBuilder());
 
@@ -51,6 +51,7 @@ public class Items {
     public static Item.Properties defaultBuilder() {
         return new Item.Properties().group(CreativeTab.INSTANCE);
     }
+    public static Item.Properties fireproofBuilder() { return defaultBuilder().fireproof(); }
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> evt) {

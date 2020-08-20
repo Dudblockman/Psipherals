@@ -1,0 +1,12 @@
+{
+  "result": {
+    "item": "psipherals:pickaxe/pickaxe_assembly_psimetal"
+  },
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "psi:psimetal_pickaxe"
+  },
+  "addition":{
+    "item": "minecraft:netherite_ingot"
+  }
+}
