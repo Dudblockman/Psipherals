@@ -1,0 +1,45 @@
+{
+  "name": "Advanced Psimetal tools",
+  "icon": "psi:psimetal_sword",
+  "category": "psipherals:main_category",
+  "pages": [
+    {
+      "type": "spotlight",
+      "item": "psipherals:psimetal_sword_advanced{componentASSEMBLY: {id: \"psipherals:sword/sword_assembly_psimetal\", Count: 1b}}",
+      "text": "psipherals.book.page.tools.1"
+    },
+    {
+      "type": "smithing",
+      "text": "psipherals.book.page.tools.2",
+      "recipe": "psipherals:sword_assembly_psimetal"
+    },
+    {
+      "type": "smithing",
+      "recipe": "psipherals:pickaxe_assembly_psimetal",
+      "recipe2": "psipherals:axe_assembly_psimetal"
+    },
+    {
+      "type": "empty"
+    },
+    {
+      "type": "spotlight",
+      "item": "psipherals:psimetal_sword_advanced{componentASSEMBLY: {id: \"psipherals:sword/sword_assembly_ebony_psimetal\", Count: 1b}}",
+      "text": "psipherals.book.page.tools.3"
+    },
+    {
+      "type": "smithing",
+      "recipe": "psipherals:sword_assembly_ivory_psimetal",
+      "recipe2": "psipherals:sword_assembly_ebony_psimetal"
+    },
+    {
+      "type": "smithing",
+      "recipe": "psipherals:pickaxe_assembly_ivory_psimetal",
+      "recipe2": "psipherals:pickaxe_assembly_ebony_psimetal"
+    },
+    {
+      "type": "smithing",
+      "recipe": "psipherals:axe_assembly_ivory_psimetal",
+      "recipe2": "psipherals:axe_assembly_ebony_psimetal"
+    }
+  ]
+}

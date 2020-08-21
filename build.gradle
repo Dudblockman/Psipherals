@@ -121,9 +121,8 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-1.16.2:7.1.0.11:api")
     runtimeOnly fg.deobf("mezz.jei:jei-1.16.2:7.1.0.11")
 
-    //compile files('libs/file_name.jar') // For one .jar file in folder
-    compileOnly fg.deobf("vazkii.psi:Psi:1.16-84.254")
-    runtimeOnly fg.deobf("vazkii.psi:Psi:1.16-84.254")
+    compileOnly fg.deobf("vazkii.psi:Psi:1.16-84.255")
+    runtimeOnly fg.deobf("vazkii.psi:Psi:1.16-84.255")
 
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.2-4.0.0.0")
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.2-4.0.0.0")

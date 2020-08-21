@@ -27,15 +27,6 @@ public class Items {
     public static final Item pickaxeAssemblyEbonyPsimetal = new ItemPickaxeAssembly(fireproofBuilder(), ItemNames.PICKAXE_CAD_EBONY_PSIMETAL);
     public static final Item pickaxeAssemblyCreative = new ItemPickaxeAssembly(fireproofBuilder(), ItemNames.PICKAXE_CAD_CREATIVE);
 
-
-    public static final Item shovelCAD = new ItemShovelCad(fireproofBuilder());
-
-    public static final Item shovelAssemblyPsimetal = new ItemShovelAssembly(fireproofBuilder(), ItemNames.SHOVEL_CAD_PSIMETAL);
-    public static final Item shovelAssemblyIvoryPsimetal = new ItemShovelAssembly(fireproofBuilder(), ItemNames.SHOVEL_CAD_IVORY_PSIMETAL);
-    public static final Item shovelAssemblyEbonyPsimetal = new ItemShovelAssembly(fireproofBuilder(), ItemNames.SHOVEL_CAD_EBONY_PSIMETAL);
-    public static final Item shovelAssemblyCreative = new ItemShovelAssembly(fireproofBuilder(), ItemNames.SHOVEL_CAD_CREATIVE);
-
-
     public static final Item axeCAD = new ItemAxeCad(fireproofBuilder());
 
     public static final Item axeAssemblyPsimetal = new ItemAxeAssembly(fireproofBuilder(), ItemNames.AXE_CAD_PSIMETAL);
@@ -75,14 +66,6 @@ public class Items {
         r.register(pickaxeAssemblyIvoryPsimetal.setRegistryName(Psipherals.location(ItemNames.PICKAXE_ASSEMBLY_IVORY_PSIMETAL)));
         r.register(pickaxeAssemblyEbonyPsimetal.setRegistryName(Psipherals.location(ItemNames.PICKAXE_ASSEMBLY_EBONY_PSIMETAL)));
         r.register(pickaxeAssemblyCreative.setRegistryName(Psipherals.location(ItemNames.PICKAXE_ASSEMBLY_CREATIVE)));
-
-
-        r.register(shovelCAD.setRegistryName(Psipherals.location(ItemNames.PSIMETAL_SHOVEL_ADVANCED)));
-
-        r.register(shovelAssemblyPsimetal.setRegistryName(Psipherals.location(ItemNames.SHOVEL_ASSEMBLY_PSIMETAL)));
-        r.register(shovelAssemblyIvoryPsimetal.setRegistryName(Psipherals.location(ItemNames.SHOVEL_ASSEMBLY_IVORY_PSIMETAL)));
-        r.register(shovelAssemblyEbonyPsimetal.setRegistryName(Psipherals.location(ItemNames.SHOVEL_ASSEMBLY_EBONY_PSIMETAL)));
-        r.register(shovelAssemblyCreative.setRegistryName(Psipherals.location(ItemNames.SHOVEL_ASSEMBLY_CREATIVE)));
 
 
         r.register(axeCAD.setRegistryName(Psipherals.location(ItemNames.PSIMETAL_AXE_ADVANCED)));

@@ -1,0 +1,25 @@
+{
+  "name": "Psi Amulet",
+  "icon": "psipherals:psi_amulet",
+  "category": "psipherals:main_category",
+  "pages": [
+    {
+      "type": "spotlight",
+      "item": "psipherals:psi_amulet",
+      "text": "psipherals.book.page.amulet.1"
+    },
+    {
+      "type": "crafting",
+      "text": "psipherals.book.page.amulet.2",
+      "recipe": "psipherals:psi_amulet"
+    },
+    {
+      "type": "text",
+      "text": "psipherals.book.page.amulet.3"
+    },
+    {
+      "type": "text",
+      "text": "psipherals.book.page.amulet.4"
+    }
+  ]
+}
