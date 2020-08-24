@@ -1,5 +1,6 @@
 package com.dudblockman.psipherals.items;
 
+import com.dudblockman.psipherals.spell.selector.SelectorAltFire;
 import com.dudblockman.psipherals.util.libs.AdvPsimetalToolMaterial;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -25,18 +26,15 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.network.PacketDistributor;
 import vazkii.psi.api.PsiAPI;
 import vazkii.psi.api.cad.*;
-import vazkii.psi.api.internal.PsiRenderHelper;
 import vazkii.psi.api.internal.TooltipHelper;
 import vazkii.psi.api.internal.Vector3;
 import vazkii.psi.api.recipe.ITrickRecipe;
 import vazkii.psi.api.spell.*;
 import vazkii.psi.api.spell.piece.PieceCraftingTrick;
 import vazkii.psi.client.core.handler.ContributorSpellCircleHandler;
-import vazkii.psi.common.Psi;
 import vazkii.psi.common.block.BlockProgrammer;
 import vazkii.psi.common.block.base.ModBlocks;
 import vazkii.psi.common.core.handler.ConfigHandler;
@@ -56,10 +54,7 @@ import vazkii.psi.common.spell.trick.block.PieceTrickBreakBlock;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
-import java.util.function.Consumer;
 import java.util.function.Predicate;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ItemSwordCad extends SwordItem implements ICAD {
 
@@ -89,6 +84,7 @@ public class ItemSwordCad extends SwordItem implements ICAD {
                 ItemStack bullet = ISocketable.socketable(itemstack).getSelectedBullet();
                 ItemCAD.cast(player.getEntityWorld(), player, data, bullet, playerCad, 5, 10, 0.05F,
                         (SpellContext context) -> {
+                            context.customData.put(SelectorAltFire.ALTFIREKEY, 1);
                             context.attackedEntity = target;
                             context.tool = itemstack;
                         });

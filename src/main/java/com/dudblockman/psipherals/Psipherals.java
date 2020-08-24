@@ -7,6 +7,7 @@ import com.dudblockman.psipherals.spell.base.SpellPieces;
 import com.dudblockman.psipherals.util.ClientProxy;
 import com.dudblockman.psipherals.util.IProxy;
 import com.dudblockman.psipherals.util.ServerProxy;
+import com.dudblockman.psipherals.util.network.MessageRegistry;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -42,6 +43,7 @@ public class Psipherals {
         new Entities();
         StatRegistry.registerStats();
         SpellPieces.init();
+        MessageRegistry.init();
     }
     public static ResourceLocation location(String path) {
         return new ResourceLocation(MODID, path);

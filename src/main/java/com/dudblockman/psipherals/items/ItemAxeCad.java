@@ -1,5 +1,6 @@
 package com.dudblockman.psipherals.items;
 
+import com.dudblockman.psipherals.spell.selector.SelectorAltFire;
 import com.dudblockman.psipherals.util.libs.AdvPsimetalToolMaterial;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -89,6 +90,7 @@ public class ItemAxeCad extends AxeItem implements ICAD {
                 ItemStack bullet = ISocketable.socketable(itemstack).getSelectedBullet();
                 ItemCAD.cast(player.getEntityWorld(), player, data, bullet, playerCad, 5, 10, 0.05F,
                         (SpellContext context) -> {
+                            context.customData.put(SelectorAltFire.ALTFIREKEY, 2);
                             context.attackedEntity = target;
                             context.tool = itemstack;
                         });
@@ -110,6 +112,7 @@ public class ItemAxeCad extends AxeItem implements ICAD {
             ItemStack bullet = sockets.getSelectedBullet();
             ItemCAD.cast(player.getEntityWorld(), player, data, bullet, playerCad, 5, 10, 0.05F, (SpellContext context) -> {
                 context.tool = itemstack;
+                context.customData.put(SelectorAltFire.ALTFIREKEY, 1);
                 context.positionBroken = IPsimetalTool.raytraceFromEntity(player.getEntityWorld(), player, RayTraceContext.FluidMode.NONE, player.getAttributes().getValue(ForgeMod.REACH_DISTANCE.get()));
             });
         }

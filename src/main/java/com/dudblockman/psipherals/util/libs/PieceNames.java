@@ -1,6 +1,8 @@
 package com.dudblockman.psipherals.util.libs;
 
 public class PieceNames {
+    public static final String ALT_FIRE = "selector_alt_fire";
+
     public static final String TRIGGER_AMULET = "trick_trigger_amulet";
 
     public static final String REDIRECT_MOTION = "trick_redirect_motion";
@@ -15,4 +17,5 @@ public class PieceNames {
     public static final String LIST_CON_UNION = "operator_list_conditional_union";
     public static final String LIST_CON_EXCLUSION = "operator_list_conditional_exclusion";
     public static final String LIST_CON_INTERSECTION = "operator_list_conditional_intersection";
+
 }

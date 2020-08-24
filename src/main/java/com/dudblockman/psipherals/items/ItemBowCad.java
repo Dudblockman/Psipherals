@@ -1,6 +1,7 @@
 package com.dudblockman.psipherals.items;
 
 import com.dudblockman.psipherals.entity.EntityPsiArrow;
+import com.dudblockman.psipherals.spell.selector.SelectorAltFire;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -148,6 +149,7 @@ public class ItemBowCad extends BowItem implements ICAD {
                         ItemStack bullet = sockets.getSelectedBullet();
                         ItemCAD.cast(playerentity.getEntityWorld(), playerentity, data, bullet, playerCad, 5, 10, 0.05F, (SpellContext context) -> {
                             context.tool = stack;
+                            context.customData.put(SelectorAltFire.ALTFIREKEY, 1);
                         });
 
                         float radiusVal = 0.2f;
@@ -179,15 +181,13 @@ public class ItemBowCad extends BowItem implements ICAD {
         return block == ModBlocks.programmer ? ((BlockProgrammer) block).setSpell(worldIn, pos, playerIn, stack) : ActionResultType.PASS;
     }
 
-    @Override
-    public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
-        if (entity instanceof PlayerEntity) {
-            PlayerEntity playerIn = (PlayerEntity) entity;
+    public boolean castSpell(LivingEntity entityLiving, ItemStack stack) {
+        if (entityLiving instanceof PlayerEntity) {
+            PlayerEntity playerIn = (PlayerEntity) entityLiving;
             World worldIn = playerIn.getEntityWorld();
-            ItemStack itemStackIn = playerIn.getHeldItem(Hand.MAIN_HAND);
             PlayerDataHandler.PlayerData data = PlayerDataHandler.get(playerIn);
             ItemStack playerCad = PsiAPI.getPlayerCAD(playerIn);
-            if (playerCad != itemStackIn) {
+            if (playerCad != stack) {
                 if (!worldIn.isRemote) {
                     playerIn.sendMessage(new TranslationTextComponent("psimisc.multiple_cads").setStyle(Style.EMPTY.withColor(TextFormatting.RED)), Util.NIL_UUID);
                 }
@@ -203,7 +203,7 @@ public class ItemBowCad extends BowItem implements ICAD {
                     setCADComponent(playerCad, dyeStack);
                 }
             }
-            boolean did = ItemCAD.cast(worldIn, playerIn, data, bullet, itemStackIn, 40, 25, 0.5F, ctx -> ctx.castFrom = Hand.MAIN_HAND);
+            boolean did = ItemCAD.cast(worldIn, playerIn, data, bullet, stack, 40, 25, 0.5F, ctx -> ctx.castFrom = Hand.MAIN_HAND);
 
             if (!data.overflowed && bullet.isEmpty() && craft(playerCad, playerIn, null)) {
                 worldIn.playSound(null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), PsiSoundHandler.cadShoot, SoundCategory.PLAYERS, 0.5F, (float) (0.5 + Math.random() * 0.5));

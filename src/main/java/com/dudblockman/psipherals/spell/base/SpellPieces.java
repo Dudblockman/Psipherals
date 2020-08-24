@@ -1,6 +1,7 @@
 package com.dudblockman.psipherals.spell.base;
 
 import com.dudblockman.psipherals.Psipherals;
+import com.dudblockman.psipherals.spell.selector.SelectorAltFire;
 import com.dudblockman.psipherals.spell.trick.entity.TrickKingCrimson;
 import com.dudblockman.psipherals.util.libs.PieceNames;
 import net.minecraft.util.ResourceLocation;
@@ -13,6 +14,7 @@ import vazkii.psi.common.spell.base.ModSpellPieces;
 public class SpellPieces {
     public static void init() {
         //register(TrickKingCrimson.class, PieceNames.KING_CRIMSON, LibPieceGroups.MOVEMENT);
+        register(SelectorAltFire.class, PieceNames.ALT_FIRE, LibPieceGroups.TOOL_CASTING);
     }
     public static ModSpellPieces.PieceContainer register(Class<? extends SpellPiece> clazz, String name, String group) {
         return register(clazz, name, group, false);

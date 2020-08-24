@@ -27,12 +27,12 @@
     "item.psipherals.psimetal_bow_advanced": "[WIP] Casting Assistant Device [WIP]",
     "item.psipherals.igalima": "Dess Scythe Assembly",
 
-    "psipherals.primary_spell_selected": "\u00a7dPrimary Spell Selected\u00a77: %s",
-    "psipherals.secondary_spell_selected": "\u00a7dSecondary Spell Selected\u00a77: %s",
+    "psipherals.primary_spell_selected": "\u00a7dPrimary Spell\u00a77: %s",
+    "psipherals.secondary_spell_selected": "\u00a7dSecondary Spell\u00a77: %s",
 
     "entity.psipherals.psi_arrow": "Arrow",
 
-    "psipherals.book.page.tools.1": "A Weaponized-Integraded CAD ($(thing)iCAD$(0)) is a hybrid between a $(l:items/tools)$(item)Psimetal tool$(0)$(/l) and a $(item)CAD$(0). To make one you will need a $(l:components/assembly)$(item)CAD Assembly$(0)$(/l). $(br2)To make an assembly, combine a $(l:items/tools)$(item)Psimetal tool$(0)$(/l) with a $(item)Netherite Ingot$(0) in the smithing table. You can use this assembly to create an $(thing)iCAD$(0) at the $(l:basics/cad_assembler)$(item)CAD Assembler$(0)$(/l)",
+    "psipherals.book.page.tools.1": "A Weaponized-Integraded CAD ($(thing)iCAD$(0)) is a hybrid between a $(l:items/tools)$(item)Psimetal tool$(0)$(/l) and a $(item)CAD$(0).$(br2)To make an $(thing)iCAD Assembly$(0), combine a $(l:items/tools)$(item)Psimetal tool$(0)$(/l) with a $(item)Netherite Ingot$(0) in the smithing table. You can use this assembly to create an $(thing)iCAD$(0) at the $(l:basics/cad_assembler)$(item)CAD Assembler$(0)$(/l)",
     "psipherals.book.page.tools.2": "This process even conserves enchantments on the tool, but be sure to remove spell bullets before the conversion to an assembly",
     "psipherals.book.page.tools.3": "You can make ebony and ivory variants by combining $(l:components/ebony_ivory)$(item)Ebony Psimetal Ingot$(0)$(/l) or $(l:components/ebony_ivory)$(item)Ivory Psimetal Ingot$(0)$(/l) with the $(thing)Psimetal iCAD Assembly$(0) variant of your choosing in the smithing table",
 
@@ -41,6 +41,6 @@
     "psipherals.book.page.amulet.3": "To set the $(thing)primary spell$(0), hold the amulet in your hand, press and hold the $(thing)Psi master keybind$(0) ($(k:psimisc.keybind)) and select the upper spell slot. Interacting with a $(l:basics/spell_programmer)$(item)Spell Programmer$(0)$(/l) will set the spell stored in the amulet. $(br2)While the $(thing)primary spell$(0) is selected, casting of the $(thing)secondary spell$(0) is disabled. Select the spell bullet from the radial menu to re-enable the casting of the $(thing)secondary spell$(0).",
     "psipherals.book.page.amulet.4": "Much like $(l:items/exosuit)$(item)Psimetal Leggings$(0)$(/l), the amulet casts a spell every game tick, but the amulet is no replacement. Trying to cast a spell every tick that has a cost through the amulet will relentlessly drain your psi. $(br2)Instead, the $(thing)primary spell$(0) should have a psi cost of zero and should be used almost exclusively for determining when the $(thing)secondary spell$(0) should be cast, creating your own custom spell activation condition.",
 
-    "psipherals.book.page.bow.1": "The $(thing)Psimetal Bow$(0) is a type of $(l:items/tools)$(item)Psimetal Tool$(0)$(/l) and confers many of the same properties listed in $(l:items/tools)their entry$(/l). $(br2)Instead of casting spells upon breaking blocks or attacking entities, the spell is cast upon firing an $(item)Arrow$(0) from the bow.",
+    "psipherals.book.page.bow.1": "The $(thing)Psimetal Bow$(0) is a type of $(l:items/tools)$(item)Psimetal Tool$(0)$(/l) and confers many of the same properties listed in $(l:items/tools)their entry$(/l). $(br2)Instead of casting spells upon breaking blocks or attacking entities, the spell is cast upon firing the bow.",
     "psipherals.book.page.bow.2": "If a bullet such as a $(l:items/projectile_bullet)$(item)Projectile Spell Bullet$(0)$(/l) is used with the bow, the resulting spell projectile is attached to the arrow and $(piece)Selector: Attack Target$(0) will return the entity you hit with the arrow."
 }
