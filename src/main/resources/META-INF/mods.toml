@@ -19,7 +19,7 @@ Fun and experimental additions to Psi
 [[dependencies.psipherals]]
     modId="psi"
     mandatory=true
-    versionRange="[r1.2-80,)"
+    versionRange="[r1.2-83,)"
     side="BOTH"
 
 [[dependencies.psipherals]]
@@ -27,4 +27,10 @@ Fun and experimental additions to Psi
     mandatory=true
     versionRange="[31.1.65,)"
     ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.psipherals]]
+    modId="curios"
+    mandatory=true
+    versionRange="[FORGE-1.16.2-4.0.0.1,)"
     side="BOTH"
