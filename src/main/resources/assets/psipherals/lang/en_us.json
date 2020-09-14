@@ -8,34 +8,31 @@
     "item.psipherals.psimetal_shovel_advanced": "Casting Assistant Device",
     "item.psipherals.psimetal_axe_advanced": "Casting Assistant Device",
 
-    "item.psipherals.sword.sword_assembly_iron": "Iron Sword Assembly",
-    "item.psipherals.sword.sword_assembly_gold": "Gold Sword Assembly",
     "item.psipherals.sword.sword_assembly_psimetal": "Psimetal Sword Assembly",
     "item.psipherals.sword.sword_assembly_ebony_psimetal": "Ebony Sword Assembly",
     "item.psipherals.sword.sword_assembly_ivory_psimetal": "Ivory Sword Assembly",
     "item.psipherals.sword.sword_assembly_creative": "Creative Sword Assembly",
 
-    "item.psipherals.pickaxe.pickaxe_assembly_iron": "Iron Pickaxe Assembly",
-    "item.psipherals.pickaxe.pickaxe_assembly_gold": "Gold Pickaxe Assembly",
     "item.psipherals.pickaxe.pickaxe_assembly_psimetal": "Psimetal Pickaxe Assembly",
     "item.psipherals.pickaxe.pickaxe_assembly_ebony_psimetal": "Ebony Pickaxe Assembly",
     "item.psipherals.pickaxe.pickaxe_assembly_ivory_psimetal": "Ivory Pickaxe Assembly",
     "item.psipherals.pickaxe.pickaxe_assembly_creative": "Creative Pickaxe Assembly",
 
-    "item.psipherals.shovel.shovel_assembly_iron": "Iron Shovel Assembly",
-    "item.psipherals.shovel.shovel_assembly_gold": "Gold Shovel Assembly",
     "item.psipherals.shovel.shovel_assembly_psimetal": "Psimetal Shovel Assembly",
     "item.psipherals.shovel.shovel_assembly_ebony_psimetal": "Ebony Shovel Assembly",
     "item.psipherals.shovel.shovel_assembly_ivory_psimetal": "Ivory Shovel Assembly",
     "item.psipherals.shovel.shovel_assembly_creative": "Creative Shovel Assembly",
 
-    "item.psipherals.axe.axe_assembly_iron": "Iron Axe Assembly",
-    "item.psipherals.axe.axe_assembly_gold": "Gold Axe Assembly",
     "item.psipherals.axe.axe_assembly_psimetal": "Psimetal Axe Assembly",
     "item.psipherals.axe.axe_assembly_ebony_psimetal": "Ebony Axe Assembly",
     "item.psipherals.axe.axe_assembly_ivory_psimetal": "Ivory Axe Assembly",
     "item.psipherals.axe.axe_assembly_creative": "Creative Axe Assembly",
 
+    "item.psipherals.psi_amulet": "Psimetal Amulet",
+
     "item.psipherals.psimetal_bow_advanced": "[WIP] Casting Assistant Device [WIP]",
-    "item.psipherals.igalima": "Dess Scythe Assembly"
+    "item.psipherals.igalima": "Dess Scythe Assembly",
+
+
+    "entity.psipherals.psi_arrow": "Arrow"
 }

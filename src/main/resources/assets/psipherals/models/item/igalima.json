@@ -4,6 +4,7 @@
 		"1": "psipherals:items/igalima",
 		"particle": "psipherals:items/igalima"
 	},
+	"gui_light": "front",
 	"elements": [
 		{
 			"name": "BladeRoot",

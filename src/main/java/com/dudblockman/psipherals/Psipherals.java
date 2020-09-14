@@ -1,18 +1,23 @@
 package com.dudblockman.psipherals;
 
+import com.dudblockman.psipherals.entity.Entities;
 import com.dudblockman.psipherals.items.Items;
 import com.dudblockman.psipherals.items.StatRegistry;
-import com.dudblockman.psipherals.util.ClientBakery;
+import com.dudblockman.psipherals.spell.base.SpellPieces;
+import com.dudblockman.psipherals.util.ClientProxy;
+import com.dudblockman.psipherals.util.IProxy;
+import com.dudblockman.psipherals.util.ServerProxy;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-
-//import com.dudblockman.psipherals.spell.base.SpellPieces;
-//import org.apache.logging.log4j.LogManager;
-//import org.apache.logging.log4j.Logger;
+import top.theillusivec4.curios.api.CuriosAPI;
+import top.theillusivec4.curios.api.imc.CurioIMCMessage;
 
 @Mod("psipherals")
 public class Psipherals {
@@ -26,19 +31,23 @@ public class Psipherals {
     public Psipherals() {
         INSTANCE = this;
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
         MinecraftForge.EVENT_BUS.register(this);
-        ClientBakery proxy = DistExecutor.runForDist(() -> ClientBakery::new, null);
-        if (proxy != null)
-            proxy.registerHandlers();
+        IProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> ServerProxy::new);
+        proxy.registerHandlers();
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
-        //new CreativeTab();
         new Items();
+        new Entities();
         StatRegistry.registerStats();
-        //SpellPieces.init();
+        SpellPieces.init();
     }
     public static ResourceLocation location(String path) {
         return new ResourceLocation(MODID, path);
+    }
+
+    public void enqueueIMC(InterModEnqueueEvent evt) {
+        InterModComms.sendTo("curios", CuriosAPI.IMC.REGISTER_TYPE, () -> new CurioIMCMessage("necklace"));
     }
 }

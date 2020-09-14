@@ -3,6 +3,7 @@ package com.dudblockman.psipherals.items;
 import com.dudblockman.psipherals.Psipherals;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -21,7 +22,11 @@ public class ItemAxeAssembly extends ItemCADComponent implements ICADAssembly {
 
     @Override
     public ItemStack createCADStack(ItemStack stack, List<ItemStack> allComponents) {
-        return ItemAxeCad.makeCAD(allComponents);
+        ListNBT enchants = stack.getEnchantmentTagList();
+        ItemStack CAD = ItemSwordCad.makeCAD(allComponents);
+        CAD.getOrCreateTag();
+        CAD.getTag().put("Enchantments", enchants);
+        return CAD;
     }
 
     @Override

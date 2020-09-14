@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "psipherals:psi_amulet"
+  },
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " SS",
+    "giS",
+    "Dg "
+  ],
+  "key": {
+    "g": {
+      "item": "psi:psimetal"
+    },
+    "S": {
+      "item": "minecraft:string"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "D": {
+      "item": "psi:psigem"
+    }
+  }
+}

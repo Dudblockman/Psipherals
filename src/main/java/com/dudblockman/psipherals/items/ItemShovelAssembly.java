@@ -1,9 +1,9 @@
 package com.dudblockman.psipherals.items;
 
 import com.dudblockman.psipherals.Psipherals;
-import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -23,13 +23,17 @@ public class ItemShovelAssembly extends ItemCADComponent implements ICADAssembly
 
     @Override
     public ItemStack createCADStack(ItemStack stack, List<ItemStack> allComponents) {
-        return ItemShovelCad.makeCAD(allComponents);
+        ListNBT enchants = stack.getEnchantmentTagList();
+        ItemStack CAD = ItemSwordCad.makeCAD(allComponents);
+        CAD.getOrCreateTag();
+        CAD.getTag().put("Enchantments", enchants);
+        return CAD;
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
     public ResourceLocation getCADModel(ItemStack stack, ItemStack cad) {
-        return Psipherals.location("item/" + model);
+        return Psipherals.location("item/shovel/shovel");
     }
 
     @Override
