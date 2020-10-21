@@ -1,6 +1,6 @@
 {
 	"parent": "psipherals:item/psimetal_bow",
 	"textures": {
-		"layer0": "psipherals:items/psimetal_bow_pulling_0"
+		"layer0": "psipherals:item/psimetal_bow_pulling_0"
 	}
 }

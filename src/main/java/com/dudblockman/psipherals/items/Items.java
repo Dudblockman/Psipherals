@@ -1,6 +1,7 @@
 package com.dudblockman.psipherals.items;
 
 import com.dudblockman.psipherals.Psipherals;
+import com.dudblockman.psipherals.spell.base.SpellPieces;
 import com.dudblockman.psipherals.util.CreativeTab;
 import com.dudblockman.psipherals.util.libs.ItemNames;
 import net.minecraft.item.Item;
@@ -46,6 +47,8 @@ public class Items {
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> evt) {
+
+        SpellPieces.init();
 
         IForgeRegistry<Item> r = evt.getRegistry();
         r.register(psimetalBow.setRegistryName(Psipherals.location(ItemNames.PSIMETAL_BOW)));

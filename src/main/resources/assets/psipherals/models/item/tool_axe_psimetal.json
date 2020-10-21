@@ -1,0 +1,6 @@
+{
+    "parent": "psipherals:item/assembly_axe",
+    "textures": {
+        "3": "psipherals:item/tool_assembly_psimetal"
+    }
+}

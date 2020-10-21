@@ -1,10 +1,10 @@
 {
   "result": {
-    "item": "psipherals:sword/sword_assembly_ebony_psimetal"
+    "item": "psipherals:sword_assembly_ebony"
   },
   "type": "minecraft:smithing",
   "base": {
-    "item": "psipherals:sword/sword_assembly_psimetal"
+    "item": "psipherals:sword_assembly_psimetal"
   },
   "addition":{
     "item": "psi:ebony_psimetal"

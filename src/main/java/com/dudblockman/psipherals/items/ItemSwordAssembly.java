@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ItemSwordAssembly extends ItemCADComponent implements ICADAssembly {
 
-    public static final String FLUGEL_TIARA_II_ELECTRIC_BOOGALOO = "9808f8f56ab3a6ef4d07dd9adb55a540604447451ba81f2d2919b4b6b2664798";
+    public static final String FLUGEL_TIARA_II_ELECTRIC_BOOGALOO = "d76a441dc5fd2ca08a4f27241f2f7509d28b201f28c62a5cd74f4a91c46ae822";
 
     private final String model;
     public ItemSwordAssembly(Item.Properties props, String model) {

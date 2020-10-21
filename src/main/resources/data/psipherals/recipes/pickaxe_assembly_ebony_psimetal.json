@@ -1,10 +1,10 @@
 {
   "result": {
-    "item": "psipherals:pickaxe/pickaxe_assembly_ebony_psimetal"
+    "item": "psipherals:pickaxe_assembly_ebony"
   },
   "type": "minecraft:smithing",
   "base": {
-    "item": "psipherals:pickaxe/pickaxe_assembly_psimetal"
+    "item": "psipherals:pickaxe_assembly_psimetal"
   },
   "addition":{
     "item": "psi:ebony_psimetal"

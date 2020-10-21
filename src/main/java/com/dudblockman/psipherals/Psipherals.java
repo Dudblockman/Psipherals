@@ -3,21 +3,18 @@ package com.dudblockman.psipherals;
 import com.dudblockman.psipherals.entity.Entities;
 import com.dudblockman.psipherals.items.Items;
 import com.dudblockman.psipherals.items.StatRegistry;
-import com.dudblockman.psipherals.spell.base.SpellPieces;
 import com.dudblockman.psipherals.util.ClientProxy;
 import com.dudblockman.psipherals.util.IProxy;
 import com.dudblockman.psipherals.util.ServerProxy;
 import com.dudblockman.psipherals.util.network.MessageRegistry;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotTypeMessage;
 
 @Mod("psipherals")
@@ -42,7 +39,6 @@ public class Psipherals {
         new Items();
         new Entities();
         StatRegistry.registerStats();
-        SpellPieces.init();
         MessageRegistry.init();
     }
     public static ResourceLocation location(String path) {

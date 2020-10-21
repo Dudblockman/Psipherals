@@ -1,10 +1,10 @@
 {
   "result": {
-    "item": "psipherals:axe/axe_assembly_ebony_psimetal"
+    "item": "psipherals:axe_assembly_ebony"
   },
   "type": "minecraft:smithing",
   "base": {
-    "item": "psipherals:axe/axe_assembly_psimetal"
+    "item": "psipherals:axe_assembly_psimetal"
   },
   "addition":{
     "item": "psi:ebony_psimetal"

@@ -1,7 +1,7 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"1": "psipherals:items/igalima",
+		"1": "psipherals:item/igalima",
 		"particle": "psipherals:items/igalima"
 	},
 	"gui_light": "front",

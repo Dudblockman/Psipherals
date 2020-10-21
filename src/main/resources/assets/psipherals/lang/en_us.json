@@ -7,20 +7,20 @@
     "item.psipherals.psimetal_pickaxe_advanced": "Casting Assistant Device",
     "item.psipherals.psimetal_axe_advanced": "Casting Assistant Device",
 
-    "item.psipherals.sword.sword_assembly_psimetal": "Psimetal Sword Assembly",
-    "item.psipherals.sword.sword_assembly_ebony_psimetal": "Ebony Sword Assembly",
-    "item.psipherals.sword.sword_assembly_ivory_psimetal": "Ivory Sword Assembly",
-    "item.psipherals.sword.sword_assembly_creative": "Creative Sword Assembly",
+    "item.psipherals.sword_assembly_psimetal": "Psimetal Sword Assembly",
+    "item.psipherals.sword_assembly_ebony": "Ebony Sword Assembly",
+    "item.psipherals.sword_assembly_ivory": "Ivory Sword Assembly",
+    "item.psipherals.sword_assembly_creative": "Creative Sword Assembly",
 
-    "item.psipherals.pickaxe.pickaxe_assembly_psimetal": "Psimetal Pickaxe Assembly",
-    "item.psipherals.pickaxe.pickaxe_assembly_ebony_psimetal": "Ebony Pickaxe Assembly",
-    "item.psipherals.pickaxe.pickaxe_assembly_ivory_psimetal": "Ivory Pickaxe Assembly",
-    "item.psipherals.pickaxe.pickaxe_assembly_creative": "Creative Pickaxe Assembly",
+    "item.psipherals.pickaxe_assembly_psimetal": "Psimetal Pickaxe Assembly",
+    "item.psipherals.pickaxe_assembly_ebony": "Ebony Pickaxe Assembly",
+    "item.psipherals.pickaxe_assembly_ivory": "Ivory Pickaxe Assembly",
+    "item.psipherals.pickaxe_assembly_creative": "Creative Pickaxe Assembly",
 
-    "item.psipherals.axe.axe_assembly_psimetal": "Psimetal Axe Assembly",
-    "item.psipherals.axe.axe_assembly_ebony_psimetal": "Ebony Axe Assembly",
-    "item.psipherals.axe.axe_assembly_ivory_psimetal": "Ivory Axe Assembly",
-    "item.psipherals.axe.axe_assembly_creative": "Creative Axe Assembly",
+    "item.psipherals.axe_assembly_psimetal": "Psimetal Axe Assembly",
+    "item.psipherals.axe_assembly_ebony": "Ebony Axe Assembly",
+    "item.psipherals.axe_assembly_ivory": "Ivory Axe Assembly",
+    "item.psipherals.axe_assembly_creative": "Creative Axe Assembly",
 
     "item.psipherals.psi_amulet": "Psimetal Amulet",
 
@@ -32,6 +32,9 @@
 
     "entity.psipherals.psi_arrow": "Arrow",
 
+    "psipherals.spellpiece.selector_alt_fire": "Selector: Alternative Fire",
+    "psipherals.spellpiece.selector_alt_fire.desc": "Selects if the spell was cast normally or via the alternative casting modes of an iCAD (0 if normal, 1+ for alternate)",
+
     "psipherals.book.page.tools.1": "A Weaponized-Integraded CAD ($(thing)iCAD$(0)) is a hybrid between a $(l:items/tools)$(item)Psimetal tool$(0)$(/l) and a $(item)CAD$(0).$(br2)To make an $(thing)iCAD Assembly$(0), combine a $(l:items/tools)$(item)Psimetal tool$(0)$(/l) with a $(item)Netherite Ingot$(0) in the smithing table. You can use this assembly to create an $(thing)iCAD$(0) at the $(l:basics/cad_assembler)$(item)CAD Assembler$(0)$(/l)",
     "psipherals.book.page.tools.2": "This process even conserves enchantments on the tool, but be sure to remove spell bullets before the conversion to an assembly",
     "psipherals.book.page.tools.3": "You can make ebony and ivory variants by combining $(l:components/ebony_ivory)$(item)Ebony Psimetal Ingot$(0)$(/l) or $(l:components/ebony_ivory)$(item)Ivory Psimetal Ingot$(0)$(/l) with the $(thing)Psimetal iCAD Assembly$(0) variant of your choosing in the smithing table",
@@ -42,5 +45,7 @@
     "psipherals.book.page.amulet.4": "Much like $(l:items/exosuit)$(item)Psimetal Leggings$(0)$(/l), the amulet casts a spell every game tick, but the amulet is no replacement. Trying to cast a spell every tick that has a cost through the amulet will relentlessly drain your psi. $(br2)Instead, the $(thing)primary spell$(0) should have a psi cost of zero and should be used almost exclusively for determining when the $(thing)secondary spell$(0) should be cast, creating your own custom spell activation condition.",
 
     "psipherals.book.page.bow.1": "The $(thing)Psimetal Bow$(0) is a type of $(l:items/tools)$(item)Psimetal Tool$(0)$(/l) and confers many of the same properties listed in $(l:items/tools)their entry$(/l). $(br2)Instead of casting spells upon breaking blocks or attacking entities, the spell is cast upon firing the bow.",
-    "psipherals.book.page.bow.2": "If a bullet such as a $(l:items/projectile_bullet)$(item)Projectile Spell Bullet$(0)$(/l) is used with the bow, the resulting spell projectile is attached to the arrow and $(piece)Selector: Attack Target$(0) will return the entity you hit with the arrow."
+    "psipherals.book.page.bow.2": "If a bullet such as a $(l:items/projectile_bullet)$(item)Projectile Spell Bullet$(0)$(/l) is used with the bow, the resulting spell projectile is attached to the arrow and $(piece)Selector: Attack Target$(0) will return the entity you hit with the arrow.",
+
+    "psipherals.book.page.pieces.1": "An $(l:psipherals:main/tools)$(thing)iCAD$(0)$(/l) can cast spells in different contexts. If you desire your spells to react differently based on how they were cast from your $(l:psipherals:main/tools)$(thing)iCAD$(0)$(/l), the piece $(thing)Selector: Alternative Fire$(0) will return 0 if the spell was cast normally and a 1 if the spell was triggered via attacking or breaking a block.$(br2)The axe will return 1 if used to break a block and 2 if used to attack."
 }

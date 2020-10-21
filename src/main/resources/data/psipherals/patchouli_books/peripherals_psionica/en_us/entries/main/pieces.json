@@ -1,0 +1,11 @@
+{
+  "name": "Alternative Casting II",
+  "icon": "psipherals:textures/spell/selector_alt_fire.png",
+  "category": "psipherals:main_category",
+  "pages": [
+      {
+        "type": "text",
+        "text": "psipherals.book.page.pieces.1"
+      }
+  ]
+}

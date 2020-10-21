@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "spotlight",
-      "item": "psipherals:psimetal_sword_advanced{componentASSEMBLY: {id: \"psipherals:sword/sword_assembly_psimetal\", Count: 1b}}",
+      "item": "psipherals:psimetal_sword_advanced{componentASSEMBLY: {id: \"psipherals:sword_assembly_psimetal\", Count: 1b}}",
       "text": "psipherals.book.page.tools.1"
     },
     {
@@ -23,7 +23,7 @@
     },
     {
       "type": "spotlight",
-      "item": "psipherals:psimetal_sword_advanced{componentASSEMBLY: {id: \"psipherals:sword/sword_assembly_ebony_psimetal\", Count: 1b}}",
+      "item": "psipherals:psimetal_sword_advanced{componentASSEMBLY: {id: \"psipherals:sword_assembly_ebony\", Count: 1b}}",
       "text": "psipherals.book.page.tools.3"
     },
     {

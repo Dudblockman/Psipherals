@@ -1,10 +1,10 @@
 {
   "result": {
-    "item": "psipherals:pickaxe/pickaxe_assembly_ivory_psimetal"
+    "item": "psipherals:pickaxe_assembly_ivory"
   },
   "type": "minecraft:smithing",
   "base": {
-    "item": "psipherals:pickaxe/pickaxe_assembly_psimetal"
+    "item": "psipherals:pickaxe_assembly_psimetal"
   },
   "addition":{
     "item": "psi:ivory_psimetal"

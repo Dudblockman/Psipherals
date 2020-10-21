@@ -1,7 +1,7 @@
 {
 	"parent": "item/bow",
 	"textures": {
-		"layer0": "psipherals:items/psimetal_bow_advanced"
+		"layer0": "psipherals:item/psimetal_bow_advanced"
 	},
 	"overrides": [
 		{
