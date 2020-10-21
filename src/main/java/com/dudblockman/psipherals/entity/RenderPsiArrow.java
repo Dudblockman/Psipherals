@@ -13,7 +13,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Matrix3f;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3f;
-import vazkii.psi.api.internal.PsiRenderHelper;
 
 public class RenderPsiArrow extends EntityRenderer<EntityPsiArrow> {
     public RenderPsiArrow(EntityRendererManager renderManagerIn) {
@@ -40,9 +39,9 @@ public class RenderPsiArrow extends EntityRenderer<EntityPsiArrow> {
         float f7 = 0.3125F;
         float f8 = 0.05625F;
         int colorVal = p_225623_1_.getColor();
-        int r = PsiRenderHelper.r(colorVal);
-        int g = PsiRenderHelper.green(colorVal);
-        int b = PsiRenderHelper.b(colorVal);
+        int r = colorVal>> 16 & 255;
+        int g = colorVal >> 8 & 255;
+        int b = colorVal & 255;
         float f9 = (float)p_225623_1_.arrowShake - p_225623_3_;
         if (f9 > 0.0F) {
             float f10 = -MathHelper.sin(f9 * 3.0F) * f9;

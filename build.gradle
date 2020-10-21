@@ -118,14 +118,14 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft group: 'net.minecraftforge', name: 'forge', version: "${mc_version}-34.1.0"
 
-    compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.2-47-SNAPSHOT:api")
-    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.2-47-SNAPSHOT")
+    compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.2-48-SNAPSHOT:api")
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.2-48-SNAPSHOT")
 
     compileOnly fg.deobf("mezz.jei:jei-1.16.2:7.3.2.25:api")
     runtimeOnly fg.deobf("mezz.jei:jei-1.16.2:7.3.2.25")
 
-    compileOnly fg.deobf("vazkii.psi:Psi:1.16-85.275")
-    runtimeOnly fg.deobf("vazkii.psi:Psi:1.16-85.275")
+    compileOnly fg.deobf("vazkii.psi:Psi:1.16-85.281")
+    runtimeOnly fg.deobf("vazkii.psi:Psi:1.16-85.281")
 
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.3-4.0.2.0")
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.3-4.0.2.0")

@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "psipherals:item/assembly_ebony_pickaxe"
+		"layer0": "psipherals:items/assembly_ebony_pickaxe"
 	}
 }

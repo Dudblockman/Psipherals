@@ -3,7 +3,7 @@
 	"ambientocclusion": false,
 	"texture_size": [32, 32],
 	"textures": {
-		"4": "psipherals:item/tool_color"
+		"4": "psipherals:items/tool_color"
 	},
 	"gui_light": "front",
 	"elements": [

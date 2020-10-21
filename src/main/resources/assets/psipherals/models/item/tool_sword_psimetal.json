@@ -1,6 +1,6 @@
 {
     "parent": "psipherals:item/assembly_sword",
     "textures": {
-        "3": "psipherals:item/tool_assembly_psimetal"
+        "3": "psipherals:items/tool_assembly_psimetal"
     }
 }
