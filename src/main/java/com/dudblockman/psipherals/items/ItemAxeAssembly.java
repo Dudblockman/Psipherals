@@ -23,7 +23,7 @@ public class ItemAxeAssembly extends ItemCADComponent implements ICADAssembly {
     @Override
     public ItemStack createCADStack(ItemStack stack, List<ItemStack> allComponents) {
         ListNBT enchants = stack.getEnchantmentTagList();
-        ItemStack CAD = ItemSwordCad.makeCAD(allComponents);
+        ItemStack CAD = ItemAxeCad.makeCAD(allComponents);
         CAD.getOrCreateTag();
         CAD.getTag().put("Enchantments", enchants);
         return CAD;

@@ -23,7 +23,7 @@ public class ItemPickaxeAssembly extends ItemCADComponent implements ICADAssembl
     @Override
     public ItemStack createCADStack(ItemStack stack, List<ItemStack> allComponents) {
         ListNBT enchants = stack.getEnchantmentTagList();
-        ItemStack CAD = ItemSwordCad.makeCAD(allComponents);
+        ItemStack CAD = ItemPickaxeCad.makeCAD(allComponents);
         CAD.getOrCreateTag();
         CAD.getTag().put("Enchantments", enchants);
         return CAD;

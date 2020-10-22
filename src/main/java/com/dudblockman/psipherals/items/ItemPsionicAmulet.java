@@ -6,6 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -31,9 +32,9 @@ public class ItemPsionicAmulet extends Item {
     @Override
     public void addInformation(ItemStack stack, @Nullable World playerin, List<ITextComponent> tooltip, ITooltipFlag advanced) {
         TooltipHelper.tooltipIfShift(tooltip, () -> {
-            String key = "psimisc.none";
+            ITextComponent key = new TranslationTextComponent("psimisc.none");
             if (stack.getTag() != null && stack.getTag().contains("spell") && stack.getTag().getCompound("spell").contains("spellName")) {
-                key = stack.getTag().getCompound("spell").getString("spellName");
+                key = new StringTextComponent(stack.getTag().getCompound("spell").getString("spellName"));
             }
             tooltip.add(new TranslationTextComponent("psipherals.primary_spell_selected", key));
             ITextComponent componentName = ISocketable.getSocketedItemName(stack, "psimisc.none");
