@@ -21,3 +21,6 @@ build
 eclipse
 run
 /classes/
+/logs/debug.log
+/logs/latest.log
+/.vscode/launch.json

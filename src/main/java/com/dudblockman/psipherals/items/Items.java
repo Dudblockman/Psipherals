@@ -43,7 +43,7 @@ public class Items {
     public static Item.Properties defaultBuilder() {
         return new Item.Properties().group(CreativeTab.INSTANCE);
     }
-    public static Item.Properties fireproofBuilder() { return defaultBuilder().fireproof(); }
+    public static Item.Properties fireproofBuilder() { return defaultBuilder().isImmuneToFire(); }
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> evt) {

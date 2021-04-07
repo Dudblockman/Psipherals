@@ -36,7 +36,7 @@ import vazkii.psi.api.spell.PieceGroupAdvancementComplete;
 import vazkii.psi.api.spell.SpellContext;
 import vazkii.psi.api.spell.SpellRuntimeException;
 import vazkii.psi.api.spell.piece.PieceCraftingTrick;
-import vazkii.psi.client.core.handler.ContributorSpellCircleHandler;
+import vazkii.psi.common.core.handler.ContributorSpellCircleHandler;
 import vazkii.psi.common.block.BlockProgrammer;
 import vazkii.psi.common.block.base.ModBlocks;
 import vazkii.psi.common.core.handler.ConfigHandler;
@@ -85,7 +85,7 @@ public class ItemPickaxeCad extends PickaxeItem implements ICAD {
             ItemCAD.cast(player.getEntityWorld(), player, data, bullet, playerCad, 5, 10, 0.05F, (SpellContext context) -> {
                 context.tool = itemstack;
                 context.customData.put(SelectorAltFire.ALTFIREKEY, 1);
-                context.positionBroken = IPsimetalTool.raytraceFromEntity(player.getEntityWorld(), player, RayTraceContext.FluidMode.NONE, player.getAttributes().getValue(ForgeMod.REACH_DISTANCE.get()));
+                context.positionBroken = IPsimetalTool.raytraceFromEntity(player.getEntityWorld(), player, RayTraceContext.FluidMode.NONE, player.getAttributeManager().getAttributeValue(ForgeMod.REACH_DISTANCE.get()));
             });
         }
     }
@@ -154,7 +154,7 @@ public class ItemPickaxeCad extends PickaxeItem implements ICAD {
         ItemStack playerCad = PsiAPI.getPlayerCAD(playerIn);
         if (playerCad != itemStackIn) {
             if (!worldIn.isRemote) {
-                playerIn.sendMessage(new TranslationTextComponent("psimisc.multiple_cads").setStyle(Style.EMPTY.withColor(TextFormatting.RED)), Util.NIL_UUID);
+                playerIn.sendMessage(new TranslationTextComponent("psimisc.multiple_cads").setStyle(Style.EMPTY.setFormatting(TextFormatting.RED)), Util.DUMMY_UUID);
             }
             return new ActionResult<>(ActionResultType.SUCCESS, itemStackIn);
         }
@@ -171,7 +171,7 @@ public class ItemPickaxeCad extends PickaxeItem implements ICAD {
         boolean did = ItemCAD.cast(worldIn, playerIn, data, bullet, itemStackIn, 40, 25, 0.5F, ctx -> ctx.castFrom = hand);
 
         if (!data.overflowed && bullet.isEmpty() && craft(playerCad, playerIn, null)) {
-            worldIn.playSound(null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), PsiSoundHandler.cadShoot, SoundCategory.PLAYERS, 0.5F, (float) (0.5 + Math.random() * 0.5));
+            worldIn.playSound(null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), PsiSoundHandler.cadShoot, SoundCategory.PLAYERS, 0.5F, (float) (0.5 + Math.random() * 0.5));
             data.deductPsi(100, 60, true);
 
             if (!data.hasAdvancement(LibPieceGroups.FAKE_LEVEL_PSIDUST)) {
@@ -211,7 +211,7 @@ public class ItemPickaxeCad extends PickaxeItem implements ICAD {
                 item.setItem(outCopy);
                 did = true;
                 MessageVisualEffect msg = new MessageVisualEffect(ICADColorizer.DEFAULT_SPELL_COLOR,
-                        item.getX(), item.getY(), item.getZ(), item.getWidth(), item.getHeight(), item.getYOffset(),
+                        item.getPosX(), item.getPosY(), item.getPosZ(), item.getWidth(), item.getHeight(), item.getYOffset(),
                         MessageVisualEffect.TYPE_CRAFT);
                 MessageRegister.HANDLER.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> item), msg);
             }
@@ -410,33 +410,33 @@ public class ItemPickaxeCad extends PickaxeItem implements ICAD {
 
     @OnlyIn(Dist.CLIENT)
     @Override
-	public void addInformation(ItemStack stack, @Nullable World playerin, List<ITextComponent> tooltip, ITooltipFlag advanced) {
-		TooltipHelper.tooltipIfShift(tooltip, () -> {
-			ITextComponent componentName = ISocketable.getSocketedItemName(stack, "psimisc.none");
-			tooltip.add(new TranslationTextComponent("psimisc.spell_selected", componentName));
+    public void addInformation(ItemStack stack, @Nullable World playerin, List<ITextComponent> tooltip, ITooltipFlag advanced) {
+        TooltipHelper.tooltipIfShift(tooltip, () -> {
+            ITextComponent componentName = ISocketable.getSocketedItemName(stack, "psimisc.none");
+            tooltip.add(new TranslationTextComponent("psimisc.spell_selected", componentName));
 
-			for (EnumCADComponent componentType : EnumCADComponent.class.getEnumConstants()) {
-				ItemStack componentStack = getComponentInSlot(stack, componentType);
-				ITextComponent name = new TranslationTextComponent("psimisc.none");
-				if (!componentStack.isEmpty()) {
-					name = componentStack.getDisplayName();
-				}
+            for (EnumCADComponent componentType : EnumCADComponent.class.getEnumConstants()) {
+                ItemStack componentStack = getComponentInSlot(stack, componentType);
+                ITextComponent name = new TranslationTextComponent("psimisc.none");
+                if (!componentStack.isEmpty()) {
+                    name = componentStack.getDisplayName();
+                }
 
-				IFormattableTextComponent componentTypeName = new TranslationTextComponent(componentType.getName()).formatted(TextFormatting.GREEN);
-				tooltip.add(componentTypeName.append(": ").append(name));
+                IFormattableTextComponent componentTypeName = new TranslationTextComponent(componentType.getName()).mergeStyle(TextFormatting.GREEN);
+                tooltip.add(componentTypeName.appendString(": ").append(name));
 
-				for (EnumCADStat stat : EnumCADStat.class.getEnumConstants()) {
-					if (stat.getSourceType() == componentType) {
-						String shrt = stat.getName();
-						int statVal = getStatValue(stack, stat);
-						String statValStr = statVal == -1 ? "\u221E" : "" + statVal;
+                for (EnumCADStat stat : EnumCADStat.class.getEnumConstants()) {
+                    if (stat.getSourceType() == componentType) {
+                        String shrt = stat.getName();
+                        int statVal = getStatValue(stack, stat);
+                        String statValStr = statVal == -1 ? "\u221E" : "" + statVal;
 
-						tooltip.add(new TranslationTextComponent(shrt).formatted(TextFormatting.AQUA).append(": " + statValStr));
-					}
-				}
-			}
-		});
-	}
+                        tooltip.add(new TranslationTextComponent(shrt).mergeStyle(TextFormatting.AQUA).appendString(": " + statValStr));
+                    }
+                }
+            }
+        });
+    }
 
     @Nonnull
     @Override

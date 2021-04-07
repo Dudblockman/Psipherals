@@ -62,7 +62,7 @@ public class TrickKingCrimson extends PieceTrick {
         double offZ = motion.z * timeVal;
         int adjustY = 0;
         for (int i = -(int)offY; i > 0; i--) {
-            BlockPos pos = new BlockPos(targetVal.getX() + offX, targetVal.getY() + offY + adjustY, targetVal.getZ() + offZ);
+            BlockPos pos = new BlockPos(targetVal.getPosX() + offX, targetVal.getPosY() + offY + adjustY, targetVal.getPosZ() + offZ);
             BlockState state = context.caster.getEntityWorld().getBlockState(pos);
             if (state.isAir(context.caster.getEntityWorld(), pos) || state.getMaterial().isReplaceable()) {
                 break;
@@ -70,7 +70,7 @@ public class TrickKingCrimson extends PieceTrick {
             adjustY++;
         }
 
-        targetVal.setPositionAndUpdate(targetVal.getX() + offX, adjustY == 0 ? targetVal.getY() + offY + adjustY : (int)(targetVal.getY() + offY + adjustY), targetVal.getZ() + offZ);
+        targetVal.setPositionAndUpdate(targetVal.getPosX() + offX, adjustY == 0 ? targetVal.getPosY() + offY + adjustY : (int)(targetVal.getPosY() + offY + adjustY), targetVal.getPosZ() + offZ);
         return null;
     }
 }

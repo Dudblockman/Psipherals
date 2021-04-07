@@ -56,12 +56,12 @@ public class ClientProxy implements IProxy {
         }
     }
     private static void registerPropertyGetter(IItemProvider item, ResourceLocation id, IItemPropertyGetter propGetter) {
-        ItemModelsProperties.register(item.asItem(), id, propGetter);
+        ItemModelsProperties.registerProperty(item.asItem(), id, propGetter);
     }
 
     private static void registerPropertyGetters() {
-        IItemPropertyGetter pulling = ItemModelsProperties.get(net.minecraft.item.Items.BOW, new ResourceLocation("pulling"));
-        IItemPropertyGetter pull = ItemModelsProperties.get(net.minecraft.item.Items.BOW, new ResourceLocation("pull"));
+        IItemPropertyGetter pulling = ItemModelsProperties.func_239417_a_(net.minecraft.item.Items.BOW, new ResourceLocation("pulling"));
+        IItemPropertyGetter pull = ItemModelsProperties.func_239417_a_(net.minecraft.item.Items.BOW, new ResourceLocation("pull"));
         registerPropertyGetter(Items.psimetalBow, new ResourceLocation("pulling"), pulling);
         registerPropertyGetter(Items.psimetalBow, new ResourceLocation("pull"), pull);
         registerPropertyGetter(Items.bowCAD, new ResourceLocation("pulling"), pulling);

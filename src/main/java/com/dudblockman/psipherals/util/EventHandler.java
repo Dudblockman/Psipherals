@@ -24,7 +24,7 @@ public class EventHandler {
             for (Entity rider : projectile.getPassengers()) {
                 if (rider instanceof EntitySpellProjectile) {
                     rider.stopRiding();
-                    rider.setPosition(projectile.getX(),projectile.getY(),projectile.getZ());
+                    rider.setPosition(projectile.getPosX(),projectile.getPosY(),projectile.getPosZ());
                     rider.setMotion(projectile.getMotion());
                     rider.velocityChanged = true;
                 }

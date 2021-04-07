@@ -33,6 +33,6 @@ public class AdvPsimetalToolMaterial implements IItemTier {
 
     @Override
     public Ingredient getRepairMaterial() {
-        return Ingredient.fromTag(ItemTags.getCollection().func_241834_b(new ResourceLocation("forge", "ingots/psimetal")));//func_241834_b = getOrCreate
+        return Ingredient.fromTag(ItemTags.getCollection().getTagByID(new ResourceLocation("forge", "ingots/psimetal")));//func_241834_b = getOrCreate
     }
 }
