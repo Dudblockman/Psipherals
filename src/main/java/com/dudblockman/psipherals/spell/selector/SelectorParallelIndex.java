@@ -1,12 +1,10 @@
 package com.dudblockman.psipherals.spell.selector;
 
 import com.dudblockman.psipherals.spell.operator.OperatorParallel;
-import vazkii.psi.api.spell.CompiledSpell.Action;
 import vazkii.psi.api.spell.Spell;
 import vazkii.psi.api.spell.SpellContext;
 import vazkii.psi.api.spell.SpellRuntimeException;
 
-import java.util.Stack;
 
 public class SelectorParallelIndex extends SelectorParallel {
     public SelectorParallelIndex(Spell spell) {

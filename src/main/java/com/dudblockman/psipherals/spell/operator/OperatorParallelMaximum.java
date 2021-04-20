@@ -6,9 +6,6 @@ import vazkii.psi.api.spell.SpellContext;
 import vazkii.psi.api.spell.SpellRuntimeException;
 import vazkii.psi.api.spell.wrapper.EntityListWrapper;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class OperatorParallelMaximum extends OperatorParallel {
     public OperatorParallelMaximum(Spell spell) {
         super(spell);

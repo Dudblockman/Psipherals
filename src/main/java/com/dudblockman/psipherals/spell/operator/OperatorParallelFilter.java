@@ -1,7 +1,6 @@
 package com.dudblockman.psipherals.spell.operator;
 
 import net.minecraft.entity.Entity;
-import vazkii.psi.api.spell.CompiledSpell;
 import vazkii.psi.api.spell.Spell;
 import vazkii.psi.api.spell.SpellContext;
 import vazkii.psi.api.spell.SpellRuntimeException;

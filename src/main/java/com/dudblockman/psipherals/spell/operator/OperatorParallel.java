@@ -27,13 +27,12 @@ public abstract class OperatorParallel extends PieceOperator {
 
     public OperatorParallel(Spell spell) {
         super(spell);
-        inputs = new Vector<Double>();
     }
 
     public boolean processExecution(EntityListWrapper listVal, SpellContext context) throws SpellRuntimeException {
         if (!context.customData.containsKey(OperatorParallel.INDEX)) {
             if (listVal.size() == 0) {
-                return false;
+                return true;
             }
             CompiledSpell.Action thisAction = null;
             for (CompiledSpell.Action a : context.cspell.actions) {
@@ -51,11 +50,11 @@ public abstract class OperatorParallel extends PieceOperator {
                     context.actions.push(a);
                 }
             }
+            inputs = new Vector<Double>();
             context.customData.put(OperatorParallel.ENTITY, listVal.get(0));
             context.customData.put(OperatorParallel.INDEX, 0);
         } else {
             double input = this.getParamValue(context, target).doubleValue();
-            System.out.println(input);
             inputs.add(input);
             int index = (int) context.customData.get(OperatorParallel.INDEX);
             if (index+1 < listVal.size()) {
@@ -71,7 +70,8 @@ public abstract class OperatorParallel extends PieceOperator {
     }
     public void hackTheStack(SpellContext context) {
         Set<SpellPiece> updatePieces = new HashSet<>();
-        depthFirstSearch(this, new HashSet<>(), updatePieces, context);
+        SpellPiece updatedPiece = context.cspell.sourceSpell.grid.getPieceAtSideSafely(this.x, this.y, this.paramSides.get(target));
+        depthFirstSearch(updatedPiece, new HashSet<>(), updatePieces, context);
         updatePieces.remove(this);
         repeatedActions = new Stack<>();
         for (Action a : context.cspell.actions) {
@@ -79,9 +79,6 @@ public abstract class OperatorParallel extends PieceOperator {
                 context.actions.remove(a);
                 repeatedActions.push(a);
             }
-        }
-        for (Action a : repeatedActions) {
-            System.out.println(a.piece);
         }
     }
     protected boolean depthFirstSearch(SpellPiece piece, Set<SpellPiece> visited, Set<SpellPiece> found, SpellContext context) {
