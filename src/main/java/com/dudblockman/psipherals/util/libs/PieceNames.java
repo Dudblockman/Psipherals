@@ -19,6 +19,7 @@ public class PieceNames {
     public static final String LIST_CON_INTERSECTION = "operator_list_conditional_intersection";
 
     public static final String PARALLEL_FILTER = "operator_parallel_filter";
+    public static final String PARALLEL_MAXIMUM = "operator_parallel_maximum";
 
     public static final String PARALLEL_INDEX = "selector_parallel_index";
     public static final String PARALLEL_ENTITY = "selector_parallel_entity";
