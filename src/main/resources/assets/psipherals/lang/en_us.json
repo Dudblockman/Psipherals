@@ -35,6 +35,18 @@
     "psipherals.spellpiece.selector_alt_fire": "Selector: Alternative Fire",
     "psipherals.spellpiece.selector_alt_fire.desc": "Selects if the spell was cast normally or via the alternative casting modes of an iCAD (0 if normal, 1+ for alternate)",
 
+    "psipherals.spellpiece.selector_parallel_entity": "Selector: Parallel Entity",
+    "psipherals.spellpiece.selector_parallel_entity.desc": "Gets the current entity during parallel list operations",
+
+    "psipherals.spellpiece.selector_parallel_index": "Selector: Parallel Index",
+    "psipherals.spellpiece.selector_parallel_index.desc": "Gets the index of the current entity during parallel list operations",
+
+    "psipherals.spellpiece.operator_parallel_filter": "Operator: Parallel Filter",
+    "psipherals.spellpiece.operator_parallel_filter.desc": "Removes entities from list if they return a value not within (-1, 1) exclusive",
+
+    "psipherals.spellpiece.operator_parallel_maximum": "Operator: Parallel Maximum",
+    "psipherals.spellpiece.operator_parallel_maximum.desc": "Gets the entity that results in the greatest value",
+
     "psipherals.book.page.tools.1": "A Weaponized-Integraded CAD ($(thing)iCAD$(0)) is a hybrid between a $(l:items/tools)$(item)Psimetal tool$(0)$(/l) and a $(item)CAD$(0).$(br2)To make an $(thing)iCAD Assembly$(0), combine a $(l:items/tools)$(item)Psimetal tool$(0)$(/l) with a $(item)Netherite Ingot$(0) in the smithing table. You can use this assembly to create an $(thing)iCAD$(0) at the $(l:basics/cad_assembler)$(item)CAD Assembler$(0)$(/l)",
     "psipherals.book.page.tools.2": "This process even conserves enchantments on the tool, but be sure to remove spell bullets before the conversion to an assembly",
     "psipherals.book.page.tools.3": "You can make ebony and ivory variants by combining $(l:components/ebony_ivory)$(item)Ebony Psimetal Ingot$(0)$(/l) or $(l:components/ebony_ivory)$(item)Ivory Psimetal Ingot$(0)$(/l) with the $(thing)Psimetal iCAD Assembly$(0) variant of your choosing in the smithing table",
@@ -47,5 +59,13 @@
     "psipherals.book.page.bow.1": "The $(thing)Psimetal Bow$(0) is a type of $(l:items/tools)$(item)Psimetal Tool$(0)$(/l) and confers many of the same properties listed in $(l:items/tools)their entry$(/l). $(br2)Instead of casting spells upon breaking blocks or attacking entities, the spell is cast upon firing the bow.",
     "psipherals.book.page.bow.2": "If a bullet such as a $(l:items/projectile_bullet)$(item)Projectile Spell Bullet$(0)$(/l) is used with the bow, the resulting spell projectile is attached to the arrow and $(piece)Selector: Attack Target$(0) will return the entity you hit with the arrow.",
 
-    "psipherals.book.page.pieces.1": "An $(l:psipherals:main/tools)$(thing)iCAD$(0)$(/l) can cast spells in different contexts. If you desire your spells to react differently based on how they were cast from your $(l:psipherals:main/tools)$(thing)iCAD$(0)$(/l), the piece $(thing)Selector: Alternative Fire$(0) will return 0 if the spell was cast normally and a 1 if the spell was triggered via attacking or breaking a block.$(br2)The axe will return 1 if used to break a block and 2 if used to attack."
+    "psipherals.book.page.pieces.1": "An $(l:psipherals:main/tools)$(thing)iCAD$(0)$(/l) can cast spells in different contexts. If you desire your spells to react differently based on how they were cast from your $(l:psipherals:main/tools)$(thing)iCAD$(0)$(/l), the piece $(thing)Selector: Alternative Fire$(0) will return 0 if the spell was cast normally and a 1 if the spell was triggered via attacking or breaking a block.$(br2)The axe will return 1 if used to break a block and 2 if used to attack.",
+
+    "psipherals.book.page.parallel.1": "The Parallel set of pieces are used to process an entity list by re-evaluating their input for every item in the list. All parallel operators take an input of an entity list and a number.$(br2)These features do come with a restriction, however. They can only support lists up to a certain length, this length being determined by the projection of your CAD.",
+    "psipherals.book.page.parallel.2": "$(thing)Operator: Parallel Filter$(0) uses its numeric input to determine which entities should or shouldn't be kept in th list.$(br2)A value on the interval $(br)(-1 < x < 1) will result in the associated entity being retained in the list, while a value outside of that interval will be rejected.",
+    "psipherals.book.page.parallel.3": "$(thing)Operator: Parallel Maximum$(0) returns the entity that results in the highest value paased into the numeric input.$(br2)You could combine this with vector subtraction and magnitude to create your own version of closest to point, or create your own criteria.",
+    "psipherals.book.page.parallel.4": "$(thing)Selector: Parallel Entity$(0) returns the entity that the current Parallel Operator is acting upon.$(br)All pieces that reside between the parallel selectors and the operator will be reevaluated for each entity on the list.$(br2)These pieces will not function if the same one is utilized by multiple operators.",
+    "psipherals.book.page.parallel.5": "$(thing)Selector: Parallel Index$(0) functions similarly to Selector: Loopcast Index, returning an integer starting from 0 representing which item on the list you are currently working with during the parallel processing.",
+    "psipherals.book.page.parallel.6": "An example spell using $(thing)Operator: Parallel Filter$(0) to return a list of all nearby injured creatures.",
+    "psipherals.book.page.parallel.7": "An example spell using $(thing)Operator: Parallel Maximum$(0) to smite the highest enemy near you."
 }

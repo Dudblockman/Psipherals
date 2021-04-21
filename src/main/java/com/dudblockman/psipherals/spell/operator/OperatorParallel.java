@@ -22,7 +22,7 @@ public abstract class OperatorParallel extends PieceOperator {
     public void initParams() {
         super.initParams();
         addParam(entList = new ParamEntityListWrapper(SpellParam.GENERIC_NAME_LIST, SpellParam.GREEN, false, false));
-        addParam(target = new ParamNumber(SpellParam.GENERIC_NAME_TARGET, SpellParam.BLUE, false, false));
+        addParam(target = new ParamNumber(SpellParam.GENERIC_NAME_NUMBER, SpellParam.BLUE, false, false));
     }
 
     public OperatorParallel(Spell spell) {

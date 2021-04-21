@@ -20,9 +20,8 @@ public class SelectorParallelEntity extends SelectorParallel {
     public Object execute(SpellContext context) throws SpellRuntimeException {
         if (context.customData.containsKey(OperatorParallel.ENTITY)) {
             return context.customData.get(OperatorParallel.ENTITY);
-        } else if (!this.TriggerParallel(context)) {
-            throw new SpellRuntimeException("Not Parallel");
         }
+        this.TriggerParallel(context);
         return null;
     }
 }

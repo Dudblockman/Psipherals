@@ -20,9 +20,8 @@ public class SelectorParallelIndex extends SelectorParallel {
     public Object execute(SpellContext context) throws SpellRuntimeException {
         if (context.customData.containsKey(OperatorParallel.INDEX)) {
             return context.customData.get(OperatorParallel.INDEX);
-        } else if (!this.TriggerParallel(context)) {
-            throw new SpellRuntimeException("Not Parallel");
         }
+        this.TriggerParallel(context);
         return null;
     }
 }

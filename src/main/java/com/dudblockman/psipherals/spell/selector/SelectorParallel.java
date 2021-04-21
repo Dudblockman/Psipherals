@@ -1,10 +1,7 @@
 package com.dudblockman.psipherals.spell.selector;
 
 import com.dudblockman.psipherals.spell.operator.OperatorParallel;
-import vazkii.psi.api.spell.Spell;
-import vazkii.psi.api.spell.SpellContext;
-import vazkii.psi.api.spell.SpellParam;
-import vazkii.psi.api.spell.SpellPiece;
+import vazkii.psi.api.spell.*;
 import vazkii.psi.api.spell.piece.PieceSelector;
 
 import java.util.HashSet;
@@ -16,7 +13,7 @@ public abstract class SelectorParallel extends PieceSelector {
     public SelectorParallel(Spell spell) {
         super(spell);
     }
-    public boolean TriggerParallel(SpellContext context) {
+    public boolean TriggerParallel(SpellContext context) throws SpellRuntimeException {
         OperatorParallel operator = getParallelOperator(this, context);
         if (operator != null) {
             operator.hackTheStack(context);
@@ -24,7 +21,7 @@ public abstract class SelectorParallel extends PieceSelector {
         }
         return false;
     }
-    protected OperatorParallel getParallelOperator(SpellPiece start, SpellContext context) {
+    protected OperatorParallel getParallelOperator(SpellPiece start, SpellContext context) throws SpellRuntimeException {
         Set<SpellPiece> visited = new HashSet<>();
         Queue<SpellPiece> queue = new LinkedList<SpellPiece>();
 
@@ -56,7 +53,7 @@ public abstract class SelectorParallel extends PieceSelector {
                     }
                     if (next instanceof OperatorParallel) {
                         if (parallelPiece != null && !visited.contains(parallelPiece)) {
-                            return null;
+                            throw new SpellRuntimeException("Used in multiple parallel contexts");
                         }
                         parallelPiece = (OperatorParallel) next;
                     } else {
@@ -64,6 +61,9 @@ public abstract class SelectorParallel extends PieceSelector {
                     }
                 }
             }
+        }
+        if (parallelPiece == null) {
+            throw new SpellRuntimeException("Used outside parallel context");
         }
         return parallelPiece;
     }

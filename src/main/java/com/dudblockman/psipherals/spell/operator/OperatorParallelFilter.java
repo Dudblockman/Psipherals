@@ -20,7 +20,7 @@ public class OperatorParallelFilter extends OperatorParallel {
         if (this.processExecution(listVal, context)) {
             List<Entity> newList = new ArrayList<>();
             for (int i = 0; i < listVal.size(); i++) {
-                if (Math.abs(this.inputs.get(i)) >= 1) {
+                if (Math.abs(this.inputs.get(i)) < 1) {
                     newList.add(listVal.get(i));
                 }
             }
