@@ -86,7 +86,7 @@ public abstract class OperatorParallel extends PieceOperator {
         if (piece instanceof SelectorParallel) {
             isUpdated = true;
         }
-        if (!visited.add(piece)) {
+        if (!visited.add(piece) || piece instanceof OperatorParallel) {
             return isUpdated;
         }
 
