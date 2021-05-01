@@ -25,7 +25,7 @@ public class TrickFork extends PieceTrick {
         addParam(position = new ParamVector(SpellParam.GENERIC_NAME_POSITION, SpellParam.BLUE, false, false));
         addParam(direction = new ParamVector(SpellParam.GENERIC_NAME_DIRECTION, SpellParam.GREEN, false, false));
     }
-    private SpellContext copyContext(SpellContext original) {
+    private SpellContext forkContext(SpellContext original) {
         SpellContext newContext = new SpellContext();
         newContext.caster = original.caster;
         newContext.focalPoint = original.focalPoint;
@@ -47,7 +47,7 @@ public class TrickFork extends PieceTrick {
         for (int i = 0; i < 9; i++) {
             System.arraycopy(original.evaluatedObjects[i], 0, newContext.evaluatedObjects[i], 0, 9);
         }
-        System.out.println("Copied");
+        original.stopped = true;
         return newContext;
     }
     @Override
@@ -66,9 +66,8 @@ public class TrickFork extends PieceTrick {
         ItemStack cad = PsiAPI.getPlayerCAD(context.caster);
         ItemStack colorizer = ((ICAD) cad.getItem()).getComponentInSlot(cad, EnumCADComponent.DYE);
         EntitySpellProjectile projectile = new EntitySpellProjectile(context.caster.getEntityWorld(), context.caster);
-        projectile.setInfo(context.caster, colorizer, ItemStack.EMPTY); //May have issues
-        projectile.context = copyContext(context); //TODO use copy constructor
-        context.stopped = true;
+        projectile.setInfo(context.caster, colorizer, ItemStack.EMPTY);
+        projectile.context = forkContext(context);
 
         float f = 0.75F;
         Vector3 motion = directionVal.normalize().multiply(f);
