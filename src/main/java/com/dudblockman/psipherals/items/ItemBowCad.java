@@ -136,9 +136,8 @@ public class ItemBowCad extends BowItem implements ICAD {
                         cost += EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) == 0 ? 750 : 0;
                         data.deductPsi(cost, 0, true, false);
 
-                        if (true) {
-                            abstractarrowentity.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
-                        }
+                        abstractarrowentity.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
+
 
                         //Spellcasting Logic here
 

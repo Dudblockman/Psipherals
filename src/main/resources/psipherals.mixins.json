@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_8",
+  "package": "com.dudblockman.psipherals.mixins",
+  "refmap": "psipherals.refmap.json",
+  "mixins": [
+    "PlayerBurnoutMixin"
+  ],
+  "client": [
+    "SpellCostMixin"
+  ],
+  "server": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

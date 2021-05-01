@@ -47,6 +47,9 @@
     "psipherals.spellpiece.operator_parallel_maximum": "Operator: Parallel Maximum",
     "psipherals.spellpiece.operator_parallel_maximum.desc": "Gets the entity that results in the greatest value",
 
+    "psipherals.spellpiece.trick_king_crimson": "Trick: King Crimson",
+    "psipherals.spellpiece.trick_king_crimson.desc": "Erases time and leaps past it",
+
     "psipherals.book.page.tools.1": "A Weaponized-Integraded CAD ($(thing)iCAD$(0)) is a hybrid between a $(l:items/tools)$(item)Psimetal tool$(0)$(/l) and a $(item)CAD$(0).$(br2)To make an $(thing)iCAD Assembly$(0), combine a $(l:items/tools)$(item)Psimetal tool$(0)$(/l) with a $(item)Netherite Ingot$(0) in the smithing table. You can use this assembly to create an $(thing)iCAD$(0) at the $(l:basics/cad_assembler)$(item)CAD Assembler$(0)$(/l)",
     "psipherals.book.page.tools.2": "This process even conserves enchantments on the tool, but be sure to remove spell bullets before the conversion to an assembly",
     "psipherals.book.page.tools.3": "You can make ebony and ivory variants by combining $(l:components/ebony_ivory)$(item)Ebony Psimetal Ingot$(0)$(/l) or $(l:components/ebony_ivory)$(item)Ivory Psimetal Ingot$(0)$(/l) with the $(thing)Psimetal iCAD Assembly$(0) variant of your choosing in the smithing table",

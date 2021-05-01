@@ -8,6 +8,8 @@ public class PieceNames {
     public static final String REDIRECT_MOTION = "trick_redirect_motion";
     public static final String KING_CRIMSON = "trick_king_crimson";
 
+    public static final String FORK = "trick_fork";
+
     public static final String SAVE_BINARY = "trick_save_binary";
     public static final String LOAD_BINARY = "selector_saved_binary";
 
@@ -23,4 +25,6 @@ public class PieceNames {
 
     public static final String PARALLEL_INDEX = "selector_parallel_index";
     public static final String PARALLEL_ENTITY = "selector_parallel_entity";
+
+    public static final String OVERCLOCK = "cad_overclock";
 }
