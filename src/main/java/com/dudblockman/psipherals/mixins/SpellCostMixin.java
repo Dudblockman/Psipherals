@@ -32,6 +32,7 @@ public class SpellCostMixin {
 
     private static final ThreadLocal<EnumSpellStat> currentStat = new ThreadLocal<>();
     @Inject(
+            remap = false,
             method = "lambda$renderButton$0",
             at = @At(
                     value = "INVOKE",
@@ -46,6 +47,7 @@ public class SpellCostMixin {
     }
 
     @ModifyArg(
+            remap = false,
             method = "lambda$renderButton$0",
             at = @At(
                     value = "INVOKE",

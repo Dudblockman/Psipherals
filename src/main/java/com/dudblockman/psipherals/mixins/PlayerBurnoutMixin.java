@@ -13,7 +13,7 @@ public abstract class PlayerBurnoutMixin {
     private static final String TAG_BURNOUT_PSI = "psipherals.burnoutPsi";
 
     private static final int maxBurnout = 10000;
-    private static final double recoveryRate = 0.05;
+    private static final double recoveryRate = 0.01;
 
     public int burnoutPsi;
 
@@ -22,24 +22,32 @@ public abstract class PlayerBurnoutMixin {
     @Shadow
     public int regen;
 
-    @Shadow public abstract void deductPsi(int psi, int cd, boolean sync, boolean shatter);
+    @Shadow public abstract void deductPsi(int psi, int cd, boolean sync);
+
+    @Shadow public int availablePsi;
 
     @Inject(
+            remap = false,
             method = "Lvazkii/psi/common/core/handler/PlayerDataHandler$PlayerData;tick()V",
             at = @At(
-                    value = "TAIL"
+                    value = "HEAD"
             )
     )
     public void decreaseBurnout(CallbackInfo ci) {
         if (burnoutPsi > 0) {
             int deduction = (int) Math.ceil(burnoutPsi * recoveryRate);
             if (!(regenCooldown > 0) || deduction > regen) {
+                if (availablePsi - deduction < 0) {
+                    deduction *= 10; // For 10 ticks worth of draw damage to compensate for i-frames
+                    deduction += 125; // Ensure at least 1/2 heart of damage
+                }
                 burnoutPsi = Math.max(0, burnoutPsi - deduction);
-                deductPsi(deduction,0,true,true);
+                deductPsi(deduction+4,0,true);
             }
         }
     }
     @Inject(
+            remap = false,
             method = "writeToNBT(Lnet/minecraft/nbt/CompoundNBT;)V",
             at = @At(
                     value = "HEAD"
@@ -49,6 +57,7 @@ public abstract class PlayerBurnoutMixin {
         cmp.putInt(TAG_BURNOUT_PSI, burnoutPsi);
     }
     @Inject(
+            remap = false,
             method = "readFromNBT(Lnet/minecraft/nbt/CompoundNBT;)V",
             at = @At(
                     value = "HEAD"

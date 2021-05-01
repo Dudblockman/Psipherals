@@ -47,6 +47,7 @@ public class TrickFork extends PieceTrick {
         for (int i = 0; i < 9; i++) {
             System.arraycopy(original.evaluatedObjects[i], 0, newContext.evaluatedObjects[i], 0, 9);
         }
+        System.out.println("Copied");
         return newContext;
     }
     @Override
@@ -67,11 +68,15 @@ public class TrickFork extends PieceTrick {
         EntitySpellProjectile projectile = new EntitySpellProjectile(context.caster.getEntityWorld(), context.caster);
         projectile.setInfo(context.caster, colorizer, ItemStack.EMPTY); //May have issues
         projectile.context = copyContext(context); //TODO use copy constructor
-        projectile.getEntityWorld().addEntity(projectile);
-        float f = 1.5F;
+        context.stopped = true;
+
+        float f = 0.75F;
         Vector3 motion = directionVal.normalize().multiply(f);
         projectile.setPosition(positionVal.x,positionVal.y,positionVal.z);
         projectile.setVelocity(motion.x, motion.y, motion.z);
+
+        projectile.getEntityWorld().addEntity(projectile);
+        projectile.context.setFocalPoint(projectile);
         return null;
     }
 }

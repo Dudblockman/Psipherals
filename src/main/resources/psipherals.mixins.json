@@ -5,6 +5,7 @@
   "package": "com.dudblockman.psipherals.mixins",
   "refmap": "psipherals.refmap.json",
   "mixins": [
+    "ForkProjectileMixin",
     "PlayerBurnoutMixin"
   ],
   "client": [
