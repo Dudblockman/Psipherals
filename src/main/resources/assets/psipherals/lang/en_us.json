@@ -24,6 +24,8 @@
 
     "item.psipherals.psi_amulet": "Psimetal Amulet",
 
+    "item.psipherals.spell_bullet_penta_grenade": "Grenade Spell Bullet MKII",
+
     "item.psipherals.psimetal_bow_advanced": "[WIP] Casting Assistant Device [WIP]",
     "item.psipherals.igalima": "Dess Scythe Assembly",
 
@@ -49,6 +51,12 @@
 
     "psipherals.spellpiece.trick_king_crimson": "Trick: King Crimson",
     "psipherals.spellpiece.trick_king_crimson.desc": "Erases time and leaps past it",
+
+    "psipherals.spellpiece.trick_fork": "Trick: Fork",
+    "psipherals.spellpiece.trick_fork.desc": "Creates a spell projectile with the rest of the current spell on it",
+
+    "psipherals.spellpiece.cad_overclock": "Limit Breaker",
+    "psipherals.spellpiece.cad_overclock.desc": "Increases spellcasting ability at cost of reducing regen",
 
     "psipherals.book.page.tools.1": "A Weaponized-Integraded CAD ($(thing)iCAD$(0)) is a hybrid between a $(l:items/tools)$(item)Psimetal tool$(0)$(/l) and a $(item)CAD$(0).$(br2)To make an $(thing)iCAD Assembly$(0), combine a $(l:items/tools)$(item)Psimetal tool$(0)$(/l) with a $(item)Netherite Ingot$(0) in the smithing table. You can use this assembly to create an $(thing)iCAD$(0) at the $(l:basics/cad_assembler)$(item)CAD Assembler$(0)$(/l)",
     "psipherals.book.page.tools.2": "This process even conserves enchantments on the tool, but be sure to remove spell bullets before the conversion to an assembly",

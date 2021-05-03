@@ -41,4 +41,5 @@ public class ItemNames {
 
     public static final String PSIONIC_AMULET = "psi_amulet";
 
+    public static final String PENTA_GRENADE = "spell_bullet_penta_grenade";
 }

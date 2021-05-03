@@ -36,7 +36,7 @@ public class SpellCostMixin {
             method = "lambda$renderButton$0",
             at = @At(
                     value = "INVOKE",
-                    target = "Ljava/util/Map;get(Ljava/lang/Object;)Ljava/lang/Object;"
+                    target = "Lvazkii/psi/api/spell/SpellMetadata;getStat(Lvazkii/psi/api/spell/EnumSpellStat;)I"
             ),
             locals = LocalCapture.CAPTURE_FAILHARD,
             require = 1
@@ -61,7 +61,7 @@ public class SpellCostMixin {
             SpellMetadata meta = parent.compileResult.left().get().metadata;
             if (meta.getFlag(PieceCADOverclock.OVERCLOCK)) {
                 ItemStack cad = PsiAPI.getPlayerCAD(parent.getMinecraft().player);
-                int val = meta.stats.get(currentStat.get());
+                int val = meta.getStat(currentStat.get());
                 EnumCADStat cadStat = currentStat.get().getTarget();
                 int cadVal = 0;
                 if (cadStat == null) {
@@ -73,7 +73,7 @@ public class SpellCostMixin {
                 String s = "" + val;
                 switch (currentStat.get()) {
                     case COST:
-                        int cost = ItemCAD.getRealCost(cad, ItemStack.EMPTY, meta.stats.get(EnumSpellStat.COST));
+                        int cost = ItemCAD.getRealCost(cad, ItemStack.EMPTY, meta.getStat(EnumSpellStat.COST));
                         int newCost = (int) (cost * PieceCADOverclock.DISCOUNT_MULTIPLIER);
                         int burnout = (int) (cost * PieceCADOverclock.BURNOUT_MULTIPLIER);
                         return s + " (" + newCost + "+\u00A7c" + burnout + "\u00A7r)";

@@ -1,0 +1,12 @@
+{
+  "result": {
+    "item": "psipherals:spell_bullet_penta_grenade"
+  },
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "psi:spell_bullet_grenade"
+    }
+  ]
+}
+

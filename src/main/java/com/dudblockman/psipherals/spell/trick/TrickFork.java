@@ -5,10 +5,7 @@ import vazkii.psi.api.PsiAPI;
 import vazkii.psi.api.cad.EnumCADComponent;
 import vazkii.psi.api.cad.ICAD;
 import vazkii.psi.api.internal.Vector3;
-import vazkii.psi.api.spell.Spell;
-import vazkii.psi.api.spell.SpellContext;
-import vazkii.psi.api.spell.SpellParam;
-import vazkii.psi.api.spell.SpellRuntimeException;
+import vazkii.psi.api.spell.*;
 import vazkii.psi.api.spell.param.ParamVector;
 import vazkii.psi.api.spell.piece.PieceTrick;
 import vazkii.psi.common.entity.EntitySpellProjectile;
@@ -24,6 +21,14 @@ public class TrickFork extends PieceTrick {
     public void initParams() {
         addParam(position = new ParamVector(SpellParam.GENERIC_NAME_POSITION, SpellParam.BLUE, false, false));
         addParam(direction = new ParamVector(SpellParam.GENERIC_NAME_DIRECTION, SpellParam.GREEN, false, false));
+    }
+    @Override
+    public void addToMetadata(SpellMetadata meta) throws SpellCompilationException {
+        super.addToMetadata(meta);
+
+        meta.addStat(EnumSpellStat.POTENCY, 30);
+        meta.addStat(EnumSpellStat.COST, 5);
+        meta.compoundStatMultiplier(EnumSpellStat.COST, 1.05);
     }
     private SpellContext forkContext(SpellContext original) {
         SpellContext newContext = new SpellContext();

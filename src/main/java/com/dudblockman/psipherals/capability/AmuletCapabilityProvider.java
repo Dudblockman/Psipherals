@@ -1,6 +1,7 @@
 package com.dudblockman.psipherals.capability;
 
 import com.dudblockman.psipherals.spell.trick.internal.TrickExecuteAmulet;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -10,7 +11,6 @@ import net.minecraftforge.common.util.LazyOptional;
 import top.theillusivec4.curios.api.CuriosCapability;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 import vazkii.psi.api.PsiAPI;
-import vazkii.psi.api.cad.ISocketable;
 import vazkii.psi.api.spell.CompiledSpell;
 import vazkii.psi.api.spell.ISpellAcceptor;
 import vazkii.psi.api.spell.Spell;
@@ -22,6 +22,7 @@ import vazkii.psi.common.item.tool.ToolSocketable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 
 public class AmuletCapabilityProvider extends ToolSocketable implements ICurio {
 
@@ -42,10 +43,6 @@ public class AmuletCapabilityProvider extends ToolSocketable implements ICurio {
             return capOptional.cast();
         }
         return LazyOptional.empty();
-    }
-    @Override
-    public boolean showSlotInRadialMenu(int slot) {
-        return this.isSocketSlotAvailable(slot-1);
     }
 
     @Override
@@ -71,12 +68,13 @@ public class AmuletCapabilityProvider extends ToolSocketable implements ICurio {
     }
 
     @Override
-    public void castSpell(SpellContext context) {
+    public ArrayList<Entity> castSpell(SpellContext context) {
         if (!(context.cspell.actions.firstElement().piece instanceof TrickExecuteAmulet)) {
             CompiledSpell.Action newAction = context.cspell.new Action(new TrickExecuteAmulet(null));
             context.cspell.actions.add(0,newAction);
         }
         context.cspell.safeExecute(context);
+        return null;
     }
 
     @Override

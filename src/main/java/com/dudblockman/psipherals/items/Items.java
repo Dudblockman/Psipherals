@@ -39,6 +39,8 @@ public class Items {
 
     public static final Item dessAssembly = new ItemSwordAssembly(new Item.Properties(),"igalima");
 
+    public static final Item pentaGrenadeSpellBullet = new ItemPentaGrenadeSpellBullet(defaultBuilder());
+
     public static final ItemBowCad bowCAD = new ItemBowCad(defaultBuilder());
     public static Item.Properties defaultBuilder() {
         return new Item.Properties().group(CreativeTab.INSTANCE);
@@ -81,5 +83,7 @@ public class Items {
         r.register(psiAmulet.setRegistryName(Psipherals.location(ItemNames.PSIONIC_AMULET)));
 
         r.register(dessAssembly.setRegistryName(Psipherals.location("igalima")));
+
+        r.register(pentaGrenadeSpellBullet.setRegistryName(Psipherals.location(ItemNames.PENTA_GRENADE)));
     }
 }
