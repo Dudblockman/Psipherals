@@ -41,7 +41,7 @@ minecraft {
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
-            property 'mixin.env.disableRefMap', 'true'
+
             arg "-mixin.config=" + config.mod_id + ".mixins.json"
             property 'mixin.debug.export', 'true'
 
@@ -60,7 +60,7 @@ minecraft {
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
-            property 'mixin.env.disableRefMap', 'true'
+
             arg "-mixin.config=" + config.mod_id + ".mixins.json"
             property 'mixin.debug.export', 'true'
 
@@ -187,4 +187,4 @@ mixin {
     add sourceSets.main, "${config.mod_id}.refmap.json"
 }
 
-defaultTasks 'clean', 'runData', 'build', 'incrementBuildNumber'
+defaultTasks 'clean', 'runData', 'build'
