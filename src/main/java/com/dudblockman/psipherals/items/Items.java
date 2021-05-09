@@ -13,6 +13,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 @Mod.EventBusSubscriber(modid = Psipherals.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Items {
     public static final ItemPsimetalBow psimetalBow = new ItemPsimetalBow(defaultBuilder(), ItemNames.PSIMETAL_BOW);
+    public static final ItemPsimetalCrossbow psimetalCrossbow = new ItemPsimetalCrossbow(defaultBuilder());
 
     public static final Item swordCAD = new ItemSwordCad(fireproofBuilder());
 
@@ -54,6 +55,7 @@ public class Items {
 
         IForgeRegistry<Item> r = evt.getRegistry();
         r.register(psimetalBow.setRegistryName(Psipherals.location(ItemNames.PSIMETAL_BOW)));
+        r.register(psimetalCrossbow.setRegistryName(Psipherals.location(ItemNames.PSIMETAL_CROSSBOW)));
 
         r.register(bowCAD.setRegistryName(Psipherals.location(ItemNames.PSIMETAL_BOW_ADVANCED)));
 

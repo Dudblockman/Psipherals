@@ -1,0 +1,6 @@
+{
+  "parent": "psipherals:item/psimetal_crossbow",
+  "textures": {
+    "layer0": "psipherals:items/crossbow_draw_1"
+  }
+}

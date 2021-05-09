@@ -19,6 +19,10 @@ public class MessageRegistry {
                 .encoder(MessageBowCast::encode)
                 .decoder(MessageBowCast::new)
                 .consumer(MessageBowCast::receive).add();
+        HANDLER.messageBuilder(MessageShatter.class, id++)
+                .encoder(MessageShatter::encode)
+                .decoder(MessageShatter::new)
+                .consumer(MessageShatter::receive).add();
     }
     public static void sendToPlayer(Object msg, PlayerEntity player) {
         ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;

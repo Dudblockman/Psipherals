@@ -78,8 +78,8 @@ public class SpellCostMixin {
                         int burnout = (int) (cost * PieceCADOverclock.BURNOUT_MULTIPLIER);
                         return s + " (" + newCost + "+\u00A7c" + burnout + "\u00A7r)";
                     case POTENCY:
-                        s = s + "/" + (cadVal == -1 ? "\u221E" : (int) Math.ceil(cadVal * PieceCADOverclock.POTENCY_MULTIPLIER));
-                        if (val <= (int) Math.ceil(cadVal * PieceCADOverclock.POTENCY_MULTIPLIER)) {
+                        s = s + "/" + (cadVal == -1 ? "\u221E" : (int) Math.ceil(((int) (cadVal * PieceCADOverclock.POTENCY_MULTIPLIER)) / (PieceCADOverclock.POTENCY_MULTIPLIER * PieceCADOverclock.POTENCY_MULTIPLIER)));
+                        if ((int) (val * PieceCADOverclock.POTENCY_MULTIPLIER) <=  cadVal){
                             s = "\u00A7f" + s;
                         }
                         return s;
