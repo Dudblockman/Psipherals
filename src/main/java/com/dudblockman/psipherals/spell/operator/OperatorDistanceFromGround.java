@@ -17,7 +17,7 @@ import vazkii.psi.common.core.helpers.SpellHelpers;
 
 public class OperatorDistanceFromGround extends PieceOperator {
 
-    private SpellParam target;
+    private SpellParam<Vector3> target;
 
     public OperatorDistanceFromGround(Spell spell) {
         super(spell);

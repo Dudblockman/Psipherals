@@ -6,7 +6,6 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ICrossbowUser;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.entity.projectile.FireworkRocketEntity;
@@ -14,22 +13,16 @@ import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.*;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import vazkii.psi.api.PsiAPI;
 import vazkii.psi.api.cad.ISocketable;
@@ -37,18 +30,16 @@ import vazkii.psi.api.spell.*;
 import vazkii.psi.common.core.handler.PlayerDataHandler;
 import vazkii.psi.common.entity.EntitySpellProjectile;
 import vazkii.psi.common.item.ItemCAD;
-import vazkii.psi.common.item.ItemSpellBullet;
 import vazkii.psi.common.item.tool.IPsimetalTool;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ItemPsimetalCrossbow extends CrossbowItem implements IPsimetalTool {
 
     public ItemPsimetalCrossbow(Properties propertiesIn) {
-        super(propertiesIn);
+        super(propertiesIn.maxDamage(326));
     }
 
     @Override
@@ -156,7 +147,7 @@ public class ItemPsimetalCrossbow extends CrossbowItem implements IPsimetalTool 
     }
 
     private static void attachSpell(PlayerEntity player, ItemStack stack, ProjectileEntity projectile) {
-        if (stack.getTag() != null && stack.getTag().contains("castBullet")) {
+        if (ItemCAD.isTruePlayer(player) && stack.getTag() != null && stack.getTag().contains("castBullet") ) {
             CompoundNBT stackTag = stack.getTag();
             CompoundNBT tag = (CompoundNBT) stackTag.get("castBullet");
 
@@ -190,19 +181,20 @@ public class ItemPsimetalCrossbow extends CrossbowItem implements IPsimetalTool 
         if (!playerCad.isEmpty()) {
             ISocketable sockets = ISocketable.socketable(crossbow);
             ItemStack bullet = sockets.getSelectedBullet();
+            if (!data.overflowed && !bullet.isEmpty() && ISpellAcceptor.hasSpell(bullet) && ItemCAD.isTruePlayer(player)) {
+                ISpellAcceptor spellContainer = ISpellAcceptor.acceptor(bullet);
+                Spell spell = spellContainer.getSpell();
+                SpellContext context = (new SpellContext()).setPlayer(player).setSpell(spell);
 
-            ISpellAcceptor spellContainer = ISpellAcceptor.acceptor(bullet);
-            Spell spell = spellContainer.getSpell();
-            SpellContext context = (new SpellContext()).setPlayer(player).setSpell(spell);
-
-            int cost = ItemCAD.getRealCost(playerCad, bullet, context.cspell.metadata.getStat(EnumSpellStat.COST));
-            if (EnchantmentHelper.getEnchantments(crossbow).containsKey(Enchantments.MULTISHOT)) {
-                cost *= 3;
+                int cost = ItemCAD.getRealCost(playerCad, bullet, context.cspell.metadata.getStat(EnumSpellStat.COST));
+                if (EnchantmentHelper.getEnchantments(crossbow).containsKey(Enchantments.MULTISHOT)) {
+                    cost *= 3;
+                }
+                data.deductPsi(cost, 5, true);
+                CompoundNBT tag = new CompoundNBT();
+                bullet.write(tag);
+                compoundnbt.put("castBullet", tag);
             }
-            data.deductPsi(cost, 5, true);
-            CompoundNBT tag = new CompoundNBT();
-            bullet.write(tag);
-            compoundnbt.put("castBullet",tag);
         }
         crossbow.setTag(compoundnbt);
 
