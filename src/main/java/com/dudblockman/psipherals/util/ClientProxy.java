@@ -66,6 +66,15 @@ public class ClientProxy implements IProxy {
         registerPropertyGetter(Items.psimetalBow, new ResourceLocation("pull"), pull);
         registerPropertyGetter(Items.bowCAD, new ResourceLocation("pulling"), pulling);
         registerPropertyGetter(Items.bowCAD, new ResourceLocation("pull"), pull);
+
+        IItemPropertyGetter cpulling = ItemModelsProperties.func_239417_a_(net.minecraft.item.Items.CROSSBOW, new ResourceLocation("pulling"));
+        IItemPropertyGetter cpull = ItemModelsProperties.func_239417_a_(net.minecraft.item.Items.CROSSBOW, new ResourceLocation("pull"));
+        IItemPropertyGetter charged = ItemModelsProperties.func_239417_a_(net.minecraft.item.Items.CROSSBOW, new ResourceLocation("charged"));
+        IItemPropertyGetter firework = ItemModelsProperties.func_239417_a_(net.minecraft.item.Items.CROSSBOW, new ResourceLocation("firework"));
+        registerPropertyGetter(Items.psimetalCrossbow, new ResourceLocation("pulling"), cpulling);
+        registerPropertyGetter(Items.psimetalCrossbow, new ResourceLocation("pull"), cpull);
+        registerPropertyGetter(Items.psimetalCrossbow, new ResourceLocation("charged"), charged);
+        registerPropertyGetter(Items.psimetalCrossbow, new ResourceLocation("firework"), firework);
     }
     private void addCADModels(ModelRegistryEvent event) {
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.SWORD_CAD_PSIMETAL));

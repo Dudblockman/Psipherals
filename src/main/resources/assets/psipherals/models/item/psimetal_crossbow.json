@@ -30,34 +30,34 @@
       "predicate": {
         "pulling": 1
       },
-      "model": "psipherals:item/crossbow_pulling_0"
+      "model": "psipherals:item/psimetal_crossbow_draw_0"
     },
     {
       "predicate": {
         "pulling": 1,
         "pull": 0.58
       },
-      "model": "psipherals:item/crossbow_pulling_1"
+      "model": "psipherals:item/psimetal_crossbow_draw_1"
     },
     {
       "predicate": {
         "pulling": 1,
         "pull": 1.0
       },
-      "model": "psipherals:item/crossbow_pulling_2"
+      "model": "psipherals:item/psimetal_crossbow_draw_2"
     },
     {
       "predicate": {
         "charged": 1
       },
-      "model": "psipherals:item/crossbow_arrow"
+      "model": "psipherals:item/psimetal_crossbow_arrow"
     },
     {
       "predicate": {
         "charged": 1,
         "firework": 1
       },
-      "model": "psipherals:item/crossbow_firework"
+      "model": "psipherals:item/psimetal_crossbow_firework"
     }
   ]
 }
