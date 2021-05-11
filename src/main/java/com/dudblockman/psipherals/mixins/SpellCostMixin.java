@@ -61,7 +61,7 @@ public class SpellCostMixin {
             SpellMetadata meta = parent.compileResult.left().get().metadata;
             if (meta.getFlag(PieceCADOverclock.OVERCLOCK)) {
                 ItemStack cad = PsiAPI.getPlayerCAD(parent.getMinecraft().player);
-                int val = meta.getStat(currentStat.get());
+                int val = (int) Math.ceil(meta.getStat(currentStat.get()) / meta.getStatMultiplier(currentStat.get()));
                 EnumCADStat cadStat = currentStat.get().getTarget();
                 int cadVal = 0;
                 if (cadStat == null) {
@@ -78,7 +78,7 @@ public class SpellCostMixin {
                         int burnout = (int) (cost * PieceCADOverclock.BURNOUT_MULTIPLIER);
                         return s + " (" + newCost + "+\u00A7c" + burnout + "\u00A7r)";
                     case POTENCY:
-                        s = s + "/" + (cadVal == -1 ? "\u221E" : (int) Math.ceil(((int) (cadVal * PieceCADOverclock.POTENCY_MULTIPLIER)) / (PieceCADOverclock.POTENCY_MULTIPLIER * PieceCADOverclock.POTENCY_MULTIPLIER)));
+                        s = (int)(val / PieceCADOverclock.POTENCY_MULTIPLIER) + "/" + (cadVal == -1 ? "\u221E" : (int) Math.ceil(((int) (cadVal * PieceCADOverclock.POTENCY_MULTIPLIER)) / (PieceCADOverclock.POTENCY_MULTIPLIER * PieceCADOverclock.POTENCY_MULTIPLIER)));
                         if ((int) (val * PieceCADOverclock.POTENCY_MULTIPLIER) <=  cadVal){
                             s = "\u00A7f" + s;
                         }

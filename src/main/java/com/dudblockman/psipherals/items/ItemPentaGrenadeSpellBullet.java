@@ -7,7 +7,6 @@ import vazkii.psi.api.PsiAPI;
 import vazkii.psi.api.cad.EnumCADComponent;
 import vazkii.psi.api.cad.ICAD;
 import vazkii.psi.api.spell.SpellContext;
-import vazkii.psi.common.entity.EntitySpellGrenade;
 import vazkii.psi.common.entity.EntitySpellProjectile;
 import vazkii.psi.common.item.ItemGrenadeSpellBullet;
 

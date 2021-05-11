@@ -28,4 +28,5 @@ public class PieceNames {
     public static final String PARALLEL_ENTITY = "selector_parallel_entity";
 
     public static final String OVERCLOCK = "cad_overclock";
+    public static final String DISTANCE_FROM_GROUND = "operator_distance_from_ground";
 }

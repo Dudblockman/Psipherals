@@ -3,7 +3,6 @@ package com.dudblockman.psipherals.potions;
 import com.dudblockman.psipherals.Psipherals;
 import com.dudblockman.psipherals.util.network.MessageRegistry;
 import com.dudblockman.psipherals.util.network.MessageShatter;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.Effect;

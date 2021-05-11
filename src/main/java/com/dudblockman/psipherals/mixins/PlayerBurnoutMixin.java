@@ -1,5 +1,6 @@
 package com.dudblockman.psipherals.mixins;
 
+import com.dudblockman.psipherals.util.PlayerDataWrapper;
 import net.minecraft.nbt.CompoundNBT;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -9,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import vazkii.psi.common.core.handler.PlayerDataHandler;
 
 @Mixin(PlayerDataHandler.PlayerData.class)
-public abstract class PlayerBurnoutMixin {
+public abstract class PlayerBurnoutMixin implements PlayerDataWrapper {
     private static final String TAG_BURNOUT_PSI = "psipherals.burnoutPsi";
 
     private static final int maxBurnout = 10000;
@@ -26,14 +27,18 @@ public abstract class PlayerBurnoutMixin {
 
     @Shadow public int availablePsi;
 
-    @Inject(
-            remap = false,
-            method = "Lvazkii/psi/common/core/handler/PlayerDataHandler$PlayerData;tick()V",
-            at = @At(
-                    value = "HEAD"
-            )
-    )
-    public void decreaseBurnout(CallbackInfo ci) {
+    @Override
+    public void addBurnout(int burnout) {
+        burnoutPsi += burnout;
+    }
+
+    @Override
+    public void subtractBurnout(int burnout) {
+        burnoutPsi = Math.max(0, burnoutPsi - burnout);
+    }
+
+    @Override
+    public void stepBurnout() {
         if (burnoutPsi > 0) {
             int deduction = (int) Math.ceil(burnoutPsi * recoveryRate);
             if (!(regenCooldown > 0) || deduction > regen) {
@@ -42,10 +47,22 @@ public abstract class PlayerBurnoutMixin {
                     deduction += 125; // Ensure at least 1/2 heart of damage
                 }
                 burnoutPsi = Math.max(0, burnoutPsi - deduction);
-                deductPsi(deduction+4,0,true);
+                deductPsi(deduction + 4, 0, true);
             }
         }
     }
+
+    @Inject(
+            remap = false,
+            method = "Lvazkii/psi/common/core/handler/PlayerDataHandler$PlayerData;tick()V",
+            at = @At(
+                    value = "HEAD"
+            )
+    )
+    public void decreaseBurnout(CallbackInfo ci) {
+        stepBurnout();
+    }
+
     @Inject(
             remap = false,
             method = "writeToNBT(Lnet/minecraft/nbt/CompoundNBT;)V",

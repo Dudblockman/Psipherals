@@ -1,6 +1,7 @@
 package com.dudblockman.psipherals.spell.base;
 
 import com.dudblockman.psipherals.Psipherals;
+import com.dudblockman.psipherals.spell.operator.OperatorDistanceFromGround;
 import com.dudblockman.psipherals.spell.operator.OperatorParallelFilter;
 import com.dudblockman.psipherals.spell.operator.OperatorParallelMaximum;
 import com.dudblockman.psipherals.spell.other.PieceCADOverclock;
@@ -29,6 +30,8 @@ public class SpellPieces {
         register(OperatorParallelMaximum.class, PieceNames.PARALLEL_MAXIMUM, LibPieceGroups.ENTITIES_INTRO);
         register(SelectorParallelIndex.class, PieceNames.PARALLEL_INDEX, LibPieceGroups.ENTITIES_INTRO);
         register(SelectorParallelEntity.class, PieceNames.PARALLEL_ENTITY, LibPieceGroups.ENTITIES_INTRO);
+
+        register(OperatorDistanceFromGround.class, PieceNames.DISTANCE_FROM_GROUND, LibPieceGroups.SECONDARY_OPERATORS);
 
         register(PieceCADOverclock.class, PieceNames.OVERCLOCK, LibPieceGroups.EIDOS_REVERSAL);
     }

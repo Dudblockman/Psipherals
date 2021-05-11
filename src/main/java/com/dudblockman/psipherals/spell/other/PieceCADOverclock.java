@@ -5,7 +5,7 @@ import vazkii.psi.api.spell.*;
 public class PieceCADOverclock extends SpellPiece {
     public static String OVERCLOCK = "psipherals.overclocked";
     public static double DISCOUNT_MULTIPLIER = 0.75;
-    public static double BURNOUT_MULTIPLIER = 0.60;
+    public static double BURNOUT_MULTIPLIER = 1.0;
     public static double POTENCY_MULTIPLIER = 0.7;
 
     public PieceCADOverclock(Spell spell) {

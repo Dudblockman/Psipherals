@@ -19,10 +19,13 @@ import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import vazkii.psi.api.PsiAPI;
 import vazkii.psi.api.cad.ISocketable;
@@ -166,8 +169,8 @@ public class ItemPsimetalCrossbow extends CrossbowItem implements IPsimetalTool 
                 AxisAlignedBB region = new AxisAlignedBB(player.getPosX() - radiusVal, player.getPosY() + player.getEyeHeight() - radiusVal, player.getPosZ() - radiusVal, player.getPosX() + radiusVal, player.getPosY() + player.getEyeHeight() + radiusVal, player.getPosZ() + radiusVal);
 
                 List<EntitySpellProjectile> spells = player.world.getEntitiesWithinAABB(EntitySpellProjectile.class, region, (e) -> ((e != null) && (e.context.caster == player) && (e.ticksExisted <= 1) && (e.getRidingEntity() == null)));
-                for (EntitySpellProjectile spellentity : spells) {
-                    spellentity.startRiding(projectile, true);
+                for (EntitySpellProjectile spellEntity : spells) {
+                    spellEntity.startRiding(projectile, true);
                 }
             }
         }
@@ -187,9 +190,21 @@ public class ItemPsimetalCrossbow extends CrossbowItem implements IPsimetalTool 
                 SpellContext context = (new SpellContext()).setPlayer(player).setSpell(spell);
 
                 int cost = ItemCAD.getRealCost(playerCad, bullet, context.cspell.metadata.getStat(EnumSpellStat.COST));
+
                 if (EnchantmentHelper.getEnchantments(crossbow).containsKey(Enchantments.MULTISHOT)) {
                     cost *= 3;
                 }
+
+                PreSpellCastEvent event = new PreSpellCastEvent(cost, 0, 0, 0, spell, context, player, data, playerCad, bullet);
+                if (MinecraftForge.EVENT_BUS.post(event)) {
+                    String cancelMessage = event.getCancellationMessage();
+                    if (cancelMessage != null && !cancelMessage.isEmpty()) {
+                        player.sendMessage(new TranslationTextComponent(cancelMessage).setStyle(Style.EMPTY.setFormatting(TextFormatting.RED)), Util.DUMMY_UUID);
+                    }
+                    return;
+                }
+                cost = event.getCost();
+
                 data.deductPsi(cost, 5, true);
                 if (cost < data.totalPsi * 1.5) {
                     CompoundNBT tag = new CompoundNBT();
