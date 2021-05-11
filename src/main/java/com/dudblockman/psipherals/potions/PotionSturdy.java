@@ -24,7 +24,7 @@ public class PotionSturdy extends Effect {
 
     @SubscribeEvent
     public static void onLivingDeath(LivingDeathEvent event) {
-        if (!event.getSource().canHarmInCreative()) {
+        if (!event.getSource().canHarmInCreative() && !event.getSource().equals(PlayerDataHandler.damageSourceOverload)) {
             LivingEntity victim = event.getEntityLiving();
             EffectInstance effect = victim.getActivePotionEffect(Potions.sturdy);
             if(effect != null) {

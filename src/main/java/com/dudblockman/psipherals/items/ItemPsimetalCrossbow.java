@@ -191,9 +191,11 @@ public class ItemPsimetalCrossbow extends CrossbowItem implements IPsimetalTool 
                     cost *= 3;
                 }
                 data.deductPsi(cost, 5, true);
-                CompoundNBT tag = new CompoundNBT();
-                bullet.write(tag);
-                compoundnbt.put("castBullet", tag);
+                if (cost < data.totalPsi * 1.5) {
+                    CompoundNBT tag = new CompoundNBT();
+                    bullet.write(tag);
+                    compoundnbt.put("castBullet", tag);
+                }
             }
         }
         crossbow.setTag(compoundnbt);
