@@ -126,6 +126,7 @@ public class ItemPickaxeCad extends PickaxeItem implements ICAD {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entityIn, int itemSlot, boolean isSelected) {
+        IPsimetalTool.regen(stack, entityIn);
         stack.getCapability(PsiAPI.CAD_DATA_CAPABILITY).ifPresent(data -> {
             if (entityIn instanceof ServerPlayerEntity && data.isDirty()) {
                 ServerPlayerEntity player = (ServerPlayerEntity) entityIn;

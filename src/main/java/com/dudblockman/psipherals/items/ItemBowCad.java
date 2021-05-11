@@ -48,6 +48,7 @@ import vazkii.psi.common.crafting.ModCraftingRecipes;
 import vazkii.psi.common.entity.EntitySpellProjectile;
 import vazkii.psi.common.item.ItemCAD;
 import vazkii.psi.common.item.base.ModItems;
+import vazkii.psi.common.item.tool.IPsimetalTool;
 import vazkii.psi.common.lib.LibPieceGroups;
 import vazkii.psi.common.network.MessageRegister;
 import vazkii.psi.common.network.message.MessageCADDataSync;
@@ -87,6 +88,7 @@ public class ItemBowCad extends BowItem implements ICAD {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entityIn, int itemSlot, boolean isSelected) {
+        IPsimetalTool.regen(stack, entityIn);
         stack.getCapability(PsiAPI.CAD_DATA_CAPABILITY).ifPresent(data -> {
             if (entityIn instanceof ServerPlayerEntity && data.isDirty()) {
                 ServerPlayerEntity player = (ServerPlayerEntity) entityIn;
