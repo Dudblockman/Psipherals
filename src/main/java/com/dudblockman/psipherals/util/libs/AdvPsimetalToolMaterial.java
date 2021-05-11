@@ -2,10 +2,15 @@ package com.dudblockman.psipherals.util.libs;
 
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.tags.ItemTags;
+import net.minecraft.util.LazyValue;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
+import vazkii.psi.api.PsiAPI;
 
 public class AdvPsimetalToolMaterial implements IItemTier {
+    private static final LazyValue<Ingredient> REPAIR_MATERIAL = new LazyValue<>(
+            () -> Ingredient.fromItems(Registry.ITEM.getOrDefault(new ResourceLocation(PsiAPI.MOD_ID, "psimetal"))));
+
     @Override
     public int getMaxUses() {
     return 900;
@@ -32,7 +37,5 @@ public class AdvPsimetalToolMaterial implements IItemTier {
     }
 
     @Override
-    public Ingredient getRepairMaterial() {
-        return Ingredient.fromTag(ItemTags.getCollection().getTagByID(new ResourceLocation("forge", "ingots/psimetal")));//func_241834_b = getOrCreate
-    }
+    public Ingredient getRepairMaterial() { return REPAIR_MATERIAL.getValue(); }
 }
