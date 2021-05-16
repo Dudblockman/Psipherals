@@ -33,6 +33,8 @@
     "psipherals.primary_spell_selected": "\u00a7dPrimary Spell\u00a77: %s",
     "psipherals.secondary_spell_selected": "\u00a7dSecondary Spell\u00a77: %s",
 
+    "psipherals.spell_loaded": "\u00a7dSpell Loaded\u00a77: %s",
+
     "entity.psipherals.psi_arrow": "Arrow",
 
     "psipherals.spellpiece.selector_alt_fire": "Selector: Alternative Fire",
@@ -61,6 +63,7 @@
 
     "psipherals.spellpiece.trick_bulwark": "Trick: Bulwark",
     "psipherals.spellpiece.trick_bulwark.desc": "Applies an effect that can prevent death",
+    "effect.psipherals.bulwark": "Bulwark",
 
     "psipherals.spellpiece.cad_overclock": "Limit Breaker",
     "psipherals.spellpiece.cad_overclock.desc": "Increases spellcasting ability at cost of reducing regen",

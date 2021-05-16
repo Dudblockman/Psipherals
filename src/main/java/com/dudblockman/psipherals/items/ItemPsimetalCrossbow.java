@@ -1,5 +1,6 @@
 package com.dudblockman.psipherals.items;
 
+import com.google.common.collect.Lists;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
@@ -18,10 +19,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -40,6 +38,8 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemPsimetalCrossbow extends CrossbowItem implements IPsimetalTool {
+    
+    public static String STORED_SPELL_TAG = "castBullet";
 
     public ItemPsimetalCrossbow(Properties propertiesIn) {
         super(propertiesIn.maxDamage(326));
@@ -93,9 +93,9 @@ public class ItemPsimetalCrossbow extends CrossbowItem implements IPsimetalTool 
                 }
             }
         }
-        if (crossbow.getTag() != null && crossbow.getTag().contains("castBullet")) {
+        if (crossbow.getTag() != null && crossbow.getTag().contains(STORED_SPELL_TAG)) {
             CompoundNBT stackTag = crossbow.getTag();
-            stackTag.remove("castBullet");
+            stackTag.remove(STORED_SPELL_TAG);
             crossbow.setTag(stackTag);
         }
 
@@ -150,9 +150,9 @@ public class ItemPsimetalCrossbow extends CrossbowItem implements IPsimetalTool 
     }
 
     private static void attachSpell(PlayerEntity player, ItemStack stack, ProjectileEntity projectile) {
-        if (ItemCAD.isTruePlayer(player) && stack.getTag() != null && stack.getTag().contains("castBullet") ) {
+        if (ItemCAD.isTruePlayer(player) && stack.getTag() != null && stack.getTag().contains(STORED_SPELL_TAG) ) {
             CompoundNBT stackTag = stack.getTag();
-            CompoundNBT tag = (CompoundNBT) stackTag.get("castBullet");
+            CompoundNBT tag = (CompoundNBT) stackTag.get(STORED_SPELL_TAG);
 
             ItemStack spellBullet = ItemStack.read(tag);
 
@@ -209,7 +209,7 @@ public class ItemPsimetalCrossbow extends CrossbowItem implements IPsimetalTool 
                 if (cost < data.totalPsi * 1.5) {
                     CompoundNBT tag = new CompoundNBT();
                     bullet.write(tag);
-                    compoundnbt.put("castBullet", tag);
+                    compoundnbt.put(STORED_SPELL_TAG, tag);
                 }
             }
         }
@@ -243,7 +243,31 @@ public class ItemPsimetalCrossbow extends CrossbowItem implements IPsimetalTool 
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void addInformation(ItemStack stack, @Nullable World playerIn, List<ITextComponent> tooltip, ITooltipFlag advanced) {
+    public void addInformation(ItemStack stack, @Nullable World playerIn, List<ITextComponent> tooltip, ITooltipFlag advanced) {      
+        List<ItemStack> list = getChargedProjectiles(stack);
+        if (isCharged(stack) && !list.isEmpty()) {
+            ItemStack itemstack = list.get(0);
+            tooltip.add((new TranslationTextComponent("item.minecraft.crossbow.projectile")).appendString(" ").append(itemstack.getTextComponent()));
+            if (advanced.isAdvanced() && itemstack.getItem() == Items.FIREWORK_ROCKET) {
+                List<ITextComponent> list1 = Lists.newArrayList();
+                Items.FIREWORK_ROCKET.addInformation(itemstack, playerIn, list1, advanced);
+                if (!list1.isEmpty()) {
+                    for(int i = 0; i < list1.size(); ++i) {
+                        list1.set(i, (new StringTextComponent("  ")).append(list1.get(i)).mergeStyle(TextFormatting.GRAY));
+                    }
+
+                    tooltip.addAll(list1);
+                }
+            }
+            if (stack.getTag() != null && stack.getTag().contains(STORED_SPELL_TAG)) {
+                CompoundNBT tag = (CompoundNBT) stack.getTag().get(STORED_SPELL_TAG);
+                if (tag != null) {
+                    ITextComponent spellName = ItemStack.read(tag).getDisplayName();
+                    tooltip.add(new TranslationTextComponent("psipherals.spell_loaded", spellName));
+                }
+            }
+
+        }
         ITextComponent componentName = ISocketable.getSocketedItemName(stack, "psimisc.none");
         tooltip.add(new TranslationTextComponent("psimisc.spell_selected", componentName));
     }
