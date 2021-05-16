@@ -9,7 +9,7 @@ import com.dudblockman.psipherals.spell.selector.SelectorAltFire;
 import com.dudblockman.psipherals.spell.selector.SelectorParallelEntity;
 import com.dudblockman.psipherals.spell.selector.SelectorParallelIndex;
 import com.dudblockman.psipherals.spell.trick.TrickFork;
-import com.dudblockman.psipherals.spell.trick.TrickSturdy;
+import com.dudblockman.psipherals.spell.trick.TrickBulwark;
 import com.dudblockman.psipherals.spell.trick.entity.TrickKingCrimson;
 import com.dudblockman.psipherals.util.libs.PieceNames;
 import net.minecraft.util.ResourceLocation;
@@ -23,7 +23,7 @@ public class SpellPieces {
     public static void init() {
         register(TrickKingCrimson.class, PieceNames.KING_CRIMSON, LibPieceGroups.MOVEMENT);
         register(TrickFork.class, PieceNames.FORK, LibPieceGroups.PROJECTILES);
-        register(TrickSturdy.class, PieceNames.STURDY, LibPieceGroups.POSITIVE_EFFECTS);
+        register(TrickBulwark.class, PieceNames.BULWARK, LibPieceGroups.POSITIVE_EFFECTS);
         register(SelectorAltFire.class, PieceNames.ALT_FIRE, LibPieceGroups.TOOL_CASTING);
 
         register(OperatorParallelFilter.class, PieceNames.PARALLEL_FILTER, LibPieceGroups.ENTITIES_INTRO);

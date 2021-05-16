@@ -16,8 +16,8 @@ import vazkii.psi.common.core.handler.PlayerDataHandler;
 import vazkii.psi.common.core.handler.PlayerDataHandler.PlayerData;
 
 @Mod.EventBusSubscriber(modid= Psipherals.MODID)
-public class PotionSturdy extends Effect {
-    protected PotionSturdy(EffectType typeIn, int liquidColorIn) {
+public class PotionBulwark extends Effect {
+    protected PotionBulwark(EffectType typeIn, int liquidColorIn) {
         super(typeIn, liquidColorIn);
     }
 
@@ -25,13 +25,13 @@ public class PotionSturdy extends Effect {
     public static void onLivingDeath(LivingDeathEvent event) {
         if (!event.getSource().canHarmInCreative() && !event.getSource().equals(PlayerDataHandler.damageSourceOverload)) {
             LivingEntity victim = event.getEntityLiving();
-            EffectInstance effect = victim.getActivePotionEffect(Potions.sturdy);
+            EffectInstance effect = victim.getActivePotionEffect(Potions.bulwark);
             if(effect != null) {
                 int amplifier = effect.getAmplifier();
                 int duration = effect.getDuration();
-                victim.removePotionEffect(Potions.sturdy);
+                victim.removePotionEffect(Potions.bulwark);
                 if (amplifier > 0) {
-                    victim.addPotionEffect(new EffectInstance(Potions.sturdy, duration, amplifier-1));
+                    victim.addPotionEffect(new EffectInstance(Potions.bulwark, duration, amplifier-1));
                 }
                 victim.setHealth(1);
                 victim.playSound(SoundEvents.ITEM_SHIELD_BREAK, 0.8F, 0.8F + victim.world.rand.nextFloat() * 0.4F);

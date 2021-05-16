@@ -9,7 +9,7 @@ public class PieceNames {
     public static final String KING_CRIMSON = "trick_king_crimson";
 
     public static final String FORK = "trick_fork";
-    public static final String STURDY = "trick_sturdy";
+    public static final String BULWARK = "trick_bulwark";
 
     public static final String SAVE_BINARY = "trick_save_binary";
     public static final String LOAD_BINARY = "selector_saved_binary";
