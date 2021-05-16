@@ -38,6 +38,9 @@
     "psipherals.spellpiece.selector_alt_fire": "Selector: Alternative Fire",
     "psipherals.spellpiece.selector_alt_fire.desc": "Selects if the spell was cast normally or via the alternative casting modes of an iCAD (0 if normal, 1+ for alternate)",
 
+    "psipherals.spellpiece.selector_distance_from_ground": "Selector: Distance From Ground",
+    "psipherals.spellpiece.selector_distance_from_ground.desc": "Gets the distance from a position to the ground",
+
     "psipherals.spellpiece.selector_parallel_entity": "Selector: Parallel Entity",
     "psipherals.spellpiece.selector_parallel_entity.desc": "Gets the current entity during parallel list operations",
 
@@ -55,6 +58,9 @@
 
     "psipherals.spellpiece.trick_fork": "Trick: Fork",
     "psipherals.spellpiece.trick_fork.desc": "Creates a spell projectile with the rest of the current spell on it",
+
+    "psipherals.spellpiece.trick_bulwark": "Trick: Bulwark",
+    "psipherals.spellpiece.trick_bulwark.desc": "Applies an effect that can prevent death",
 
     "psipherals.spellpiece.cad_overclock": "Limit Breaker",
     "psipherals.spellpiece.cad_overclock.desc": "Increases spellcasting ability at cost of reducing regen",
