@@ -21,7 +21,7 @@ import vazkii.psi.common.spell.base.ModSpellPieces;
 
 public class SpellPieces {
     public static void init() {
-        register(TrickKingCrimson.class, PieceNames.KING_CRIMSON, LibPieceGroups.MOVEMENT);
+        //register(TrickKingCrimson.class, PieceNames.KING_CRIMSON, LibPieceGroups.MOVEMENT);
         register(TrickFork.class, PieceNames.FORK, LibPieceGroups.PROJECTILES);
         register(TrickBulwark.class, PieceNames.BULWARK, LibPieceGroups.POSITIVE_EFFECTS);
         register(SelectorAltFire.class, PieceNames.ALT_FIRE, LibPieceGroups.TOOL_CASTING);
