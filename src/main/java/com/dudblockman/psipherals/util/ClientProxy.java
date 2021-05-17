@@ -75,6 +75,14 @@ public class ClientProxy implements IProxy {
         registerPropertyGetter(Items.psimetalCrossbow, new ResourceLocation("pull"), cpull);
         registerPropertyGetter(Items.psimetalCrossbow, new ResourceLocation("charged"), charged);
         registerPropertyGetter(Items.psimetalCrossbow, new ResourceLocation("firework"), firework);
+
+        registerPropertyGetter(Items.psiAmulet, new ResourceLocation("sus"), (stack,world,living) -> {
+            if (stack.hasTag()) {
+                if (stack.getTag().contains("sus"))
+                    return 1;
+            }
+            return 0;
+        });
     }
     private void addCADModels(ModelRegistryEvent event) {
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.SWORD_CAD_PSIMETAL));

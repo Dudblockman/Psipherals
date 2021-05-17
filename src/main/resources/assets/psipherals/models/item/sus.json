@@ -1,0 +1,6 @@
+{
+  "parent": "psipherals:item/psi_amulet",
+  "textures": {
+    "layer0": "psipherals:gui/totem_of_sus"
+  }
+}

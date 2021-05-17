@@ -1,10 +1,15 @@
 package com.dudblockman.psipherals.potions;
 
 import com.dudblockman.psipherals.Psipherals;
+import com.dudblockman.psipherals.items.Items;
+import com.dudblockman.psipherals.util.network.MessageDeathPrevented;
 import com.dudblockman.psipherals.util.network.MessageRegistry;
 import com.dudblockman.psipherals.util.network.MessageShatter;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
@@ -39,7 +44,9 @@ public class PotionBulwark extends Effect {
                     PlayerData data = PlayerDataHandler.get((PlayerEntity)victim);
                     data.overflowed = true;
                     MessageRegistry.sendToPlayer(new MessageShatter(), (PlayerEntity)victim);
+                    MessageRegistry.sendToPlayer(new MessageDeathPrevented(), (PlayerEntity)victim);
                 }
+
                 event.setCanceled(true);
             }
         }

@@ -23,6 +23,10 @@ public class MessageRegistry {
                 .encoder(MessageShatter::encode)
                 .decoder(MessageShatter::new)
                 .consumer(MessageShatter::receive).add();
+        HANDLER.messageBuilder(MessageDeathPrevented.class, id++)
+                .encoder(MessageDeathPrevented::encode)
+                .decoder(MessageDeathPrevented::new)
+                .consumer(MessageDeathPrevented::receive).add();
     }
     public static void sendToPlayer(Object msg, PlayerEntity player) {
         ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
