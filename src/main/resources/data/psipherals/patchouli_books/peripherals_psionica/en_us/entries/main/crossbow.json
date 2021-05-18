@@ -1,0 +1,18 @@
+{
+  "name": "Psimetal Crossbow",
+  "icon": "psipherals:psimetal_crossbow",
+  "category": "psipherals:main_category",
+  "priority": true,
+  "pages": [
+    {
+      "type": "spotlight",
+      "item": "psipherals:psimetal_crossbow",
+      "text": "psipherals.book.page.crossbow.1"
+    },
+    {
+      "type": "crafting",
+      "text": "psipherals.book.page.crossbow.2",
+      "recipe": "psipherals:psimetal_crossbow"
+    }
+  ]
+}

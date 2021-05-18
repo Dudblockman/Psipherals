@@ -1,0 +1,12 @@
+{
+  "name": "Ground Distance",
+  "icon": "psipherals:textures/spell/operator_distance_from_ground.png",
+  "category": "psipherals:main_category",
+  "pages": [
+      {
+        "type": "psi:spellpiece_spotlight",
+        "text": "psipherals.book.page.distance.1",
+        "spellpiece": "psipherals:operator_distance_from_ground"
+      }
+  ]
+}

@@ -40,8 +40,8 @@
     "psipherals.spellpiece.selector_alt_fire": "Selector: Alternative Fire",
     "psipherals.spellpiece.selector_alt_fire.desc": "Selects if the spell was cast normally or via the alternative casting modes of an iCAD (0 if normal, 1+ for alternate)",
 
-    "psipherals.spellpiece.selector_distance_from_ground": "Selector: Distance From Ground",
-    "psipherals.spellpiece.selector_distance_from_ground.desc": "Gets the distance from a position to the ground",
+    "psipherals.spellpiece.operator_distance_from_ground": "Operator: Distance From Ground",
+    "psipherals.spellpiece.operator_distance_from_ground.desc": "Gets the distance from a position to the ground",
 
     "psipherals.spellpiece.selector_parallel_entity": "Selector: Parallel Entity",
     "psipherals.spellpiece.selector_parallel_entity.desc": "Gets the current entity during parallel list operations",
@@ -80,7 +80,20 @@
     "psipherals.book.page.bow.1": "The $(thing)Psimetal Bow$(0) is a type of $(l:items/tools)$(item)Psimetal Tool$(0)$(/l) and confers many of the same properties listed in $(l:items/tools)their entry$(/l). $(br2)Instead of casting spells upon breaking blocks or attacking entities, the spell is cast upon firing the bow.",
     "psipherals.book.page.bow.2": "If a bullet such as a $(l:items/projectile_bullet)$(item)Projectile Spell Bullet$(0)$(/l) is used with the bow, the resulting spell projectile is attached to the arrow and $(piece)Selector: Attack Target$(0) will return the entity you hit with the arrow.",
 
-    "psipherals.book.page.pieces.1": "An $(l:psipherals:main/tools)$(thing)iCAD$(0)$(/l) can cast spells in different contexts. If you desire your spells to react differently based on how they were cast from your $(l:psipherals:main/tools)$(thing)iCAD$(0)$(/l), the piece $(thing)Selector: Alternative Fire$(0) will return 0 if the spell was cast normally and a 1 if the spell was triggered via attacking or breaking a block.$(br2)The axe will return 1 if used to break a block and 2 if used to attack.",
+    "psipherals.book.page.crossbow.1": "The $(thing)Psimetal Crossbow$(0) parallels the $(l:psipherals:main/bow)$(item)Psimetal Bow$(0)$(/l) and shares many properties with it, while functioning as a crossbow.$(br2)The cost of the $(thing)Spell$(0) is deducted upon fully drawing the crossbow rather than upon firing it, allowing you to save a spell for later.",
+    "psipherals.book.page.crossbow.2": "Do note, as a consequence the $(thing)Spell$(0) cannot be changed once the crossbow is drawn.$(br2)The $(item)Multishot$(0) enchantment will cause the crossbow to fire the $(thing)Spell$(0) three times, but will also increase the cost threefold.",
+
+    "psipherals.book.page.altfire.1": "An $(l:psipherals:main/tools)$(thing)iCAD$(0)$(/l) can cast spells in different contexts. If you desire your spells to react differently based on how they were cast from your $(l:psipherals:main/tools)$(thing)iCAD$(0)$(/l), the piece $(thing)Selector: Alternative Fire$(0) will return 0 if the spell was cast normally and a 1 if the spell was triggered via attacking or breaking a block.",
+    "psipherals.book.page.altfire.2": "The axe will return 1 if used to break a block and 2 if used to attack.",
+
+    "psipherals.book.page.distance.1": "$(thing)Operator: Distance From Ground$(0) measures the distance from the input position and returns it as a scalar.$(br2)A piece ported from Random Psideas",
+
+    "psipherals.book.page.fork.1": "$(thing)Trick: Fork$(0) will spawn a $(thing)Spell Projectile$(0) similar to that created by a $(l:items/projectile_bullet)$(item)Projectile Spell Bullet$(0)$(/l)$(br2)The $(thing)Spell Projectile$(0) is created at the input coordinates and fired in the specified direction. All current $(thing)Spell$(0) execution is paused, but will resume upon the impact of the $(thing)Spell Projectile$(0).",
+    "psipherals.book.page.fork.2": "This piece calculates its cost differently from most other pieces and will increase the cost of all tricks in the $(thing)Spell$(0).",
+
+    "psipherals.book.page.limitbreak.1": "$(thing)Limit Breaker$(0) is a spell modifier piece that will reduce the base cost of the spell and increase your potency maximum for the spell allowing you to cast more powerful spells, but it is taxing on the caster and will inflict $(thing)Burnout$(0).$(br2)$(thing)Burnout$(0) will reduce your regen rate until it is paid off.",
+    "psipherals.book.page.limitbreak.2": "Disclaimer: This piece is highly experimental and may have parameters tweaked between versions of Psionic Peripherals",
+    "psipherals.book.page.limitbreak.3": "You can consider $(thing)Burnout$(0) to be a psi debt. The more debt you accrue, the more it penalizes your psi regen rate.$(br2)Too much burnout can lead to your regen rate even going negative, and running out of energy with a negative regen rate can be disastrous for your health, so keep that in mind while using spells that inflict $(thing)Burnout$(0).",
 
     "psipherals.book.page.parallel.1": "The Parallel set of pieces are used to process an entity list by re-evaluating their input for every item in the list. All parallel operators take an input of an entity list and a number.$(br2)These features do come with a restriction, however. They can only support lists up to a certain length, this length being determined by the projection of your CAD.",
     "psipherals.book.page.parallel.2": "$(thing)Operator: Parallel Filter$(0) uses its numeric input to determine which entities should or shouldn't be kept in th list.$(br2)A value on the interval $(br)(-1 < x < 1) will result in the associated entity being retained in the list, while a value outside of that interval will be rejected.",

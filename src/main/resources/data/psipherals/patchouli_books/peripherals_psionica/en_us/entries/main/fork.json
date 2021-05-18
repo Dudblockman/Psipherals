@@ -1,0 +1,16 @@
+{
+  "name": "Spell Propagation",
+  "icon": "psipherals:textures/spell/trick_fork.png",
+  "category": "psipherals:main_category",
+  "pages": [
+      {
+        "type": "text",
+        "text": "psipherals.book.page.fork.1"
+      },
+      {
+        "type": "psi:spellpiece_spotlight",
+        "text": "psipherals.book.page.fork.2",
+        "spellpiece": "psipherals:trick_fork"
+      }
+  ]
+}

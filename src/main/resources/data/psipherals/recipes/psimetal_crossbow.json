@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "psipherals:psimetal_crossbow"
+  },
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "gDg",
+    "SHS",
+    " i "
+  ],
+  "key": {
+    "g": {
+      "item": "psi:psimetal"
+    },
+    "S": {
+      "item": "minecraft:string"
+    },
+    "H": {
+      "item": "minecraft:tripwire_hook"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "D": {
+      "item": "psi:psigem"
+    }
+  }
+}

@@ -2,6 +2,7 @@
   "name": "Advanced Psimetal tools",
   "icon": "psi:psimetal_sword",
   "category": "psipherals:main_category",
+  "priority": true,
   "pages": [
     {
       "type": "spotlight",

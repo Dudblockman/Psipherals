@@ -2,6 +2,7 @@
   "name": "Psimetal Bow",
   "icon": "psipherals:psimetal_bow",
   "category": "psipherals:main_category",
+  "priority": true,
   "pages": [
     {
       "type": "spotlight",

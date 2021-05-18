@@ -2,6 +2,7 @@
   "name": "Psi Amulet",
   "icon": "psipherals:psi_amulet",
   "category": "psipherals:main_category",
+  "priority": true,
   "pages": [
     {
       "type": "spotlight",
