@@ -29,4 +29,6 @@ public class PieceNames {
 
     public static final String OVERCLOCK = "cad_overclock";
     public static final String DISTANCE_FROM_GROUND = "operator_distance_from_ground";
+
+    public static final String PSILON = "psilon";
 }

@@ -1,6 +1,8 @@
 package com.dudblockman.psipherals.util;
 
 import com.dudblockman.psipherals.Psipherals;
+import com.dudblockman.psipherals.block.tile.TilePsilon;
+import com.dudblockman.psipherals.block.tile.TilePsilonRenderer;
 import com.dudblockman.psipherals.entity.Entities;
 import com.dudblockman.psipherals.entity.RenderPsiArrow;
 import com.dudblockman.psipherals.items.ItemAxeCad;
@@ -22,12 +24,14 @@ import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.DeferredWorkQueue;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import vazkii.psi.client.model.ModelCAD;
 
+import java.rmi.registry.Registry;
 import java.util.Objects;
 
 @OnlyIn(Dist.CLIENT)
@@ -43,6 +47,7 @@ public class ClientProxy implements IProxy {
 
     private void clientSetup(FMLClientSetupEvent event) {
         RenderingRegistry.registerEntityRenderingHandler(Entities.arrowEntityType, RenderPsiArrow::new);
+        ClientRegistry.bindTileEntityRenderer(TilePsilon.TYPE, TilePsilonRenderer::new);
         //ModelBakery.LOCATIONS_BUILTIN_TEXTURES.addAll(PsiAPI.getAllSpellPieceMaterial());
         DeferredWorkQueue.runLater(() -> {
             registerPropertyGetters();

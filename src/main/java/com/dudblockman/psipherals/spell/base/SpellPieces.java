@@ -10,6 +10,7 @@ import com.dudblockman.psipherals.spell.selector.SelectorParallelEntity;
 import com.dudblockman.psipherals.spell.selector.SelectorParallelIndex;
 import com.dudblockman.psipherals.spell.trick.TrickFork;
 import com.dudblockman.psipherals.spell.trick.TrickBulwark;
+import com.dudblockman.psipherals.spell.trick.TrickPsilon;
 import com.dudblockman.psipherals.spell.trick.entity.TrickKingCrimson;
 import com.dudblockman.psipherals.util.libs.PieceNames;
 import net.minecraft.util.ResourceLocation;
@@ -34,6 +35,8 @@ public class SpellPieces {
         register(OperatorDistanceFromGround.class, PieceNames.DISTANCE_FROM_GROUND, LibPieceGroups.SECONDARY_OPERATORS);
 
         register(PieceCADOverclock.class, PieceNames.OVERCLOCK, LibPieceGroups.EIDOS_REVERSAL);
+
+        register(TrickPsilon.class, PieceNames.PSILON, LibPieceGroups.GREATER_INFUSION);
     }
     public static ModSpellPieces.PieceContainer register(Class<? extends SpellPiece> clazz, String name, String group) {
         return register(clazz, name, group, false);

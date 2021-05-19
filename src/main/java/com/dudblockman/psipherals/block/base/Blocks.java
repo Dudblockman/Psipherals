@@ -2,6 +2,7 @@ package com.dudblockman.psipherals.block.base;
 
 import com.dudblockman.psipherals.Psipherals;
 import com.dudblockman.psipherals.block.BlockPsilon;
+import com.dudblockman.psipherals.block.tile.TilePsilon;
 import com.dudblockman.psipherals.util.libs.BlockNames;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -9,10 +10,12 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Rarity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
+import vazkii.psi.common.block.tile.TileCADAssembler;
 
 import static com.dudblockman.psipherals.items.Items.defaultBuilder;
 
@@ -29,6 +32,13 @@ public class Blocks {
     public static void registerItemBlocks(RegistryEvent.Register<Item> evt) {
         IForgeRegistry<Item> r = evt.getRegistry();
         r.register(new BlockItem(psilon, defaultBuilder().rarity(Rarity.UNCOMMON)).setRegistryName(psilon.getRegistryName()));
+
+    }
+    @SubscribeEvent
+    public static void registerTileEntities(RegistryEvent.Register<TileEntityType<?>> evt) {
+        IForgeRegistry<TileEntityType<?>> r = evt.getRegistry();
+
+        r.register(TileEntityType.Builder.create(TilePsilon::new, psilon).build(null).setRegistryName(psilon.getRegistryName()));
 
     }
 }
