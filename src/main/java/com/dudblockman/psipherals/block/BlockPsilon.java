@@ -1,6 +1,7 @@
 package com.dudblockman.psipherals.block;
 
 import com.dudblockman.psipherals.block.tile.TilePsilon;
+import com.dudblockman.psipherals.util.InfusionCrafting;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -87,8 +88,24 @@ public class BlockPsilon extends Block {
     @Override
     @SuppressWarnings("deprecation")
     public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
-        System.out.println(this.getComparatorInputOverride(state, worldIn, pos) + "HI");
         worldIn.updateComparatorOutputLevel(pos, this);
+        if (hasTileEntity(state)) {
+            TileEntity te = worldIn.getTileEntity(pos);
+            if (te instanceof TilePsilon) {
+                if(((TilePsilon) te).getComparatorValue() > 0) {
+                  ((TilePsilon) te).scheduleOffTick();
+                }
+                if (((TilePsilon) te).isMaster()) {
+                    if(((TilePsilon) te).mode == TilePsilon.InfusionState.READY) {
+                        InfusionCrafting.ActivateInfusion((TilePsilon) te);
+                    } else if(((TilePsilon) te).mode == TilePsilon.InfusionState.LIT) {
+                        InfusionCrafting.infusionCraft((TilePsilon) te);
+                    } else if(((TilePsilon) te).mode == TilePsilon.InfusionState.CONSUMING) {
+                        ((TilePsilon) te).disconnect(true);
+                    }
+                }
+            }
+        }
     }
 
     @Override

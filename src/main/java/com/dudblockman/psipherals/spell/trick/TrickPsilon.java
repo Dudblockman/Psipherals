@@ -1,19 +1,12 @@
 package com.dudblockman.psipherals.spell.trick;
 
 import com.dudblockman.psipherals.block.tile.TilePsilon;
+import com.dudblockman.psipherals.util.InfusionCrafting;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.chunk.IChunk;
 import vazkii.psi.api.internal.Vector3;
 import vazkii.psi.api.spell.*;
 import vazkii.psi.api.spell.param.ParamVector;
 import vazkii.psi.api.spell.piece.PieceTrick;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 public class TrickPsilon extends PieceTrick {
     SpellParam<Vector3> position;
@@ -48,27 +41,15 @@ public class TrickPsilon extends PieceTrick {
         }
         TileEntity target = context.focalPoint.world.getTileEntity(positionVal.toBlockPos());
         if (target instanceof TilePsilon) {
-            ((TilePsilon) target).activate(frequencyVal);
-            System.out.println(target);
-            //List<TilePsilon> Psilons = getTilesWithinAABB(TilePsilon.class, context.focalPoint.world, AxisAlignedBB.fromVector(context.focalPoint.getPositionVec()).grow(SpellContext.MAX_DISTANCE));
-            //System.out.println(Psilons.size());
+            TilePsilon master = (TilePsilon) target;
+            switch (InfusionCrafting.invokePsilon(master,frequencyVal)) {
+                case MULTIPLE_RADIUS:
+                    throw new SpellRuntimeException("MULTIPLE RADII");
+                case UNBALANCED_PLACEMENT:
+                    throw new SpellRuntimeException("BAD DISTRIBUTION");
+            }
         }
-
         return null;
     }
 
-    public static <T> List<T> getTilesWithinAABB(Class<T> type, World world, AxisAlignedBB bb) {
-        List<T> tileList = new ArrayList<>();
-        for (int i = (int)Math.floor(bb.minX); i < (int)Math.ceil(bb.maxX) + 16; i += 16) {
-            for (int j = (int)Math.floor(bb.minZ); j < (int)Math.ceil(bb.maxZ) + 16; j += 16) {
-                IChunk c = world.getChunk(new BlockPos(i, 0, j));
-                Set<BlockPos> tiles = c.getTileEntitiesPos();
-                for (BlockPos p : tiles) if (bb.contains(p.getX() + 0.5, p.getY() + 0.5, p.getZ() + 0.5)) {
-                    TileEntity t = world.getTileEntity(p);
-                    if (type.isInstance(t)) tileList.add((T)t);
-                }
-            }
-        }
-        return tileList;
-    }
 }
