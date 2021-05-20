@@ -19,6 +19,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.TickPriority;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.registries.ObjectHolder;
+import vazkii.psi.api.cad.ICADColorizer;
 import vazkii.psi.api.internal.Vector3;
 
 import java.util.ArrayList;
@@ -96,6 +97,15 @@ public class TilePsilon extends TileEntity implements IPsilonInfusionProvider {
         return null;
     }
 
+    public int getColorizerColor() {
+        if (this.isSlave()) {
+            return this.getMaster().getColorizerColor();
+        }
+        if (stack.getItem() instanceof ICADColorizer) {
+            return ((ICADColorizer)stack.getItem()).getColor(stack);
+        }
+        return ICADColorizer.DEFAULT_SPELL_COLOR;
+    }
     public float getCircleActivation(float partialTicks) {
         if (this.mode == InfusionState.LIT || this.mode == InfusionState.CONSUMING) {
             return Math.min(1,Math.max((this.updateTime + 30 - (this.world.getGameTime() + partialTicks))/10, 0));
@@ -168,7 +178,7 @@ public class TilePsilon extends TileEntity implements IPsilonInfusionProvider {
     public CompoundNBT write(CompoundNBT tag) {
         tag = super.write(tag);
         tag.put("stack", stack.write(new CompoundNBT()));
-        if (connectedPsilons != null) {
+        if (connectedPsilons != null && connectedPsilons.size() > 0) {
             ArrayList<Long> positions = new ArrayList<>();
             for (BlockPos position : connectedPsilons) {
                 positions.add(position.toLong());
@@ -176,7 +186,9 @@ public class TilePsilon extends TileEntity implements IPsilonInfusionProvider {
             tag.putLongArray("connectedPsilons", positions);
         }
         tag.putLong("lastActivation", updateTime);
-        tag.putInt("infusionState",mode.ordinal());
+        if(mode != InfusionState.OFF) {
+            tag.putInt("infusionState",mode.ordinal());
+        }
         return tag;
     }
 

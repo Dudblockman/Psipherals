@@ -1,7 +1,7 @@
 package com.dudblockman.psipherals.block;
 
 import com.dudblockman.psipherals.block.tile.TilePsilon;
-import com.dudblockman.psipherals.util.InfusionCrafting;
+import com.dudblockman.psipherals.crafting.InfusionCraftingHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -97,9 +97,9 @@ public class BlockPsilon extends Block {
                 }
                 if (((TilePsilon) te).isMaster()) {
                     if(((TilePsilon) te).mode == TilePsilon.InfusionState.READY) {
-                        InfusionCrafting.ActivateInfusion((TilePsilon) te);
+                        InfusionCraftingHelper.ActivateInfusion((TilePsilon) te);
                     } else if(((TilePsilon) te).mode == TilePsilon.InfusionState.LIT) {
-                        InfusionCrafting.infusionCraft((TilePsilon) te);
+                        InfusionCraftingHelper.infusionCraft((TilePsilon) te);
                     } else if(((TilePsilon) te).mode == TilePsilon.InfusionState.CONSUMING) {
                         ((TilePsilon) te).disconnect(true);
                     }

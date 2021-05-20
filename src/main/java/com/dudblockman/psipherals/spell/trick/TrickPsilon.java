@@ -1,7 +1,7 @@
 package com.dudblockman.psipherals.spell.trick;
 
 import com.dudblockman.psipherals.block.tile.TilePsilon;
-import com.dudblockman.psipherals.util.InfusionCrafting;
+import com.dudblockman.psipherals.crafting.InfusionCraftingHelper;
 import net.minecraft.tileentity.TileEntity;
 import vazkii.psi.api.internal.Vector3;
 import vazkii.psi.api.spell.*;
@@ -42,7 +42,7 @@ public class TrickPsilon extends PieceTrick {
         TileEntity target = context.focalPoint.world.getTileEntity(positionVal.toBlockPos());
         if (target instanceof TilePsilon) {
             TilePsilon master = (TilePsilon) target;
-            switch (InfusionCrafting.invokePsilon(master,frequencyVal)) {
+            switch (InfusionCraftingHelper.invokePsilon(master,frequencyVal)) {
                 case MULTIPLE_RADIUS:
                     throw new SpellRuntimeException("MULTIPLE RADII");
                 case UNBALANCED_PLACEMENT:

@@ -1,0 +1,47 @@
+{
+  "output": {
+    "item": "psi:psidust"
+  },
+  "type": "psipherals:infusion",
+  "focus": {
+    "item": "minecraft:dragon_egg"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:nether_star"
+    },
+    {
+      "item": "minecraft:nether_star"
+    },
+    {
+      "item": "minecraft:nether_star"
+    },
+    {
+      "item": "minecraft:nether_star"
+    },
+    {
+      "item": "minecraft:nether_star"
+    },
+    {
+      "item": "minecraft:nether_star"
+    },
+    {
+      "item": "minecraft:netherite_block"
+    },
+    {
+      "item": "minecraft:netherite_block"
+    },
+    {
+      "item": "minecraft:netherite_block"
+    },
+    {
+      "item": "minecraft:netherite_block"
+    },
+    {
+      "item": "minecraft:netherite_block"
+    },
+    {
+      "item": "minecraft:netherite_block"
+    }
+  ]
+}

@@ -1,28 +1,29 @@
-package com.dudblockman.psipherals.util;
+package com.dudblockman.psipherals.crafting;
 
 import com.dudblockman.psipherals.Psipherals;
 import com.dudblockman.psipherals.block.tile.TilePsilon;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunk;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 import vazkii.psi.api.internal.Vector3;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 
-public class InfusionCrafting {
+public class InfusionCraftingHelper {
     public static final int MIN_RADIUS = 2;
     public static final int MAX_RADIUS = 7;
     private static final int MIN_RADIUS_SQ = MIN_RADIUS * MIN_RADIUS;
     private static final int MAX_RADIUS_SQ = MAX_RADIUS * MAX_RADIUS;
-    private static final AxisAlignedBB SEARCH_SPACE = new AxisAlignedBB(-MAX_RADIUS,-1,-MAX_RADIUS,1+MAX_RADIUS,2,1+MAX_RADIUS);
+    private static final AxisAlignedBB SEARCH_SPACE = new AxisAlignedBB(-MAX_RADIUS,0,-MAX_RADIUS,1+MAX_RADIUS,1,1+MAX_RADIUS);
 
     public static final ResourceLocation BASE_TAG = Psipherals.location("psilon/base");
     public static final ResourceLocation PROVIDER_TAG = Psipherals.location("psilon/provider");
@@ -88,6 +89,10 @@ public class InfusionCrafting {
     }
 
     public static void infusionCraft(TilePsilon master) {
+        Optional<PsilonInfusionRecipe> recipe = getRecipe(master, getInfusionProviders(master));
+        if (!recipe.isPresent()) {
+            return;
+        }
         for (int i = 0; i < master.connectedPsilons.size(); i++) {
             TileEntity te = master.getWorld().getTileEntity(master.connectedPsilons.get(i));
             if (!(te instanceof TilePsilon)) {
@@ -98,7 +103,7 @@ public class InfusionCrafting {
             ((TilePsilon) te).sync();
         }
         master.mode = TilePsilon.InfusionState.CONSUMING;
-        master.replaceItem(new ItemStack(Items.BONE));
+        master.replaceItem(recipe.get().getRecipeOutput().copy());
         master.scheduleInfusionTick();
 
         master.disconnect(true);
@@ -109,22 +114,23 @@ public class InfusionCrafting {
         BlockPos pos = target.getPos();
         int value = target.activate(frequency);
         Set<ResourceLocation> tags = worldIn.getBlockState(pos.down()).getBlock().getTags();
-        if (tags.contains(InfusionCrafting.BASE_TAG)) {
+        if (tags.contains(InfusionCraftingHelper.BASE_TAG)) {
             if (value == 15) {
                 List<TilePsilon> entities = getInfusionProviders(target);
-                InfusionCrafting.InfusionError code = validateInfusionProviders(pos, entities);
-                if (code == InfusionCrafting.InfusionError.NONE) {
-                    target.connectToSlaves(entities);
-                    stepInfusion(target);
+                InfusionCraftingHelper.InfusionError code = validateInfusionProviders(pos, entities);
+                if (code == InfusionCraftingHelper.InfusionError.NONE) {
+                    if (getRecipe(target, entities).isPresent()) {
+                        target.connectToSlaves(entities);
+                        stepInfusion(target);
+                    }
                 }
                 return code;
             }
         }
-        if (tags.contains(InfusionCrafting.PROVIDER_TAG)) {
+        if (tags.contains(InfusionCraftingHelper.PROVIDER_TAG)) {
             if (target.isSlave()) {
                 if (value == 15) {
                     stepInfusion(target);
-                    System.out.println("YAAAAAAAAAAAAAAAAAAAAAAAY");
                 } else {
                     target.disconnect(true);
                     return InfusionError.INCORRECT_FREQUENCY;
@@ -134,9 +140,24 @@ public class InfusionCrafting {
         return InfusionError.NONE;
     }
 
-    public static boolean hasValidRecipe(TilePsilon master, List<TilePsilon> entities) {
-        //TODO get racipe here somehow
-        return true;
+    public static Optional<PsilonInfusionRecipe> getRecipe(TilePsilon master, List<TilePsilon> entities) {
+        RecipeWrapper inv = new RecipeWrapper(new ItemStackHandler(entities.size() + 1));
+        inv.setInventorySlotContents(0, master.getHeldItem());
+        for(int i = 0; i < entities.size(); i++) {
+            inv.setInventorySlotContents(i+1, entities.get(i).getHeldItem());
+        }
+        Optional<PsilonInfusionRecipe> recipe = master.getWorld().getRecipeManager().getRecipe(CraftingRecipes.INFUSION_TYPE, inv, master.getWorld());
+        /*if (recipe.isPresent()) {
+            ItemStack outCopy = recipe.get().getRecipeOutput().copy();
+            outCopy.setCount(stack.getCount());
+            item.setItem(outCopy);
+            did = true;
+            MessageVisualEffect msg = new MessageVisualEffect(ICADColorizer.DEFAULT_SPELL_COLOR,
+                    item.getPosX(), item.getPosY(), item.getPosZ(), item.getWidth(), item.getHeight(), item.getYOffset(),
+                    MessageVisualEffect.TYPE_CRAFT);
+            MessageRegister.HANDLER.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> item), msg);
+        }*/
+        return recipe;
     }
 
     public static InfusionError validateInfusionProviders(BlockPos origin, List<TilePsilon> pylons) {
