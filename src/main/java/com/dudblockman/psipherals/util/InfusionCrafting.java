@@ -94,10 +94,12 @@ public class InfusionCrafting {
                 //Oh no this bad
                 return;
             }
-            master.mode = TilePsilon.InfusionState.CONSUMING;
-            master.replaceItem(new ItemStack(Items.BONE));
-            master.scheduleInfusionTick();
+            ((TilePsilon) te).consumeItem();
+            ((TilePsilon) te).sync();
         }
+        master.mode = TilePsilon.InfusionState.CONSUMING;
+        master.replaceItem(new ItemStack(Items.BONE));
+        master.scheduleInfusionTick();
 
         master.disconnect(true);
     }

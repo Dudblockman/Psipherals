@@ -5,7 +5,6 @@ import com.dudblockman.psipherals.util.libs.BlockNames;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
@@ -98,10 +97,8 @@ public class TilePsilon extends TileEntity implements IPsilonInfusionProvider {
     }
 
     public float getCircleActivation(float partialTicks) {
-        if (this.mode == InfusionState.LIT) {
-            return Math.min(1,Math.max((this.updateTime + 50 - (this.world.getGameTime() + partialTicks))/50, 0));
-        } else if (this.mode == InfusionState.CONSUMING) {
-            return 0;
+        if (this.mode == InfusionState.LIT || this.mode == InfusionState.CONSUMING) {
+            return Math.min(1,Math.max((this.updateTime + 30 - (this.world.getGameTime() + partialTicks))/10, 0));
         }
         return Math.min((this.world.getGameTime() - this.updateTime + partialTicks)/10, 1);
     }
@@ -261,7 +258,7 @@ public class TilePsilon extends TileEntity implements IPsilonInfusionProvider {
             return;
         }
         this.updateTime = world.getGameTime();
-        this.world.getPendingBlockTicks().scheduleTick(this.pos,this.getBlockState().getBlock(), 50, TickPriority.HIGH);
+        this.world.getPendingBlockTicks().scheduleTick(this.pos,this.getBlockState().getBlock(), 30, TickPriority.HIGH);
     }
 
     public void scheduleOffTick() {
