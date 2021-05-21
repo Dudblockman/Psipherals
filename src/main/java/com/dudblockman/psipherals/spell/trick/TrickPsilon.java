@@ -8,6 +8,8 @@ import vazkii.psi.api.spell.*;
 import vazkii.psi.api.spell.param.ParamVector;
 import vazkii.psi.api.spell.piece.PieceTrick;
 
+import java.util.Dictionary;
+
 public class TrickPsilon extends PieceTrick {
     SpellParam<Vector3> position;
     SpellParam<Vector3> frequency;
@@ -42,11 +44,9 @@ public class TrickPsilon extends PieceTrick {
         TileEntity target = context.focalPoint.world.getTileEntity(positionVal.toBlockPos());
         if (target instanceof TilePsilon) {
             TilePsilon master = (TilePsilon) target;
-            switch (InfusionCraftingHelper.invokePsilon(master,frequencyVal)) {
-                case MULTIPLE_RADIUS:
-                    throw new SpellRuntimeException("MULTIPLE RADII");
-                case UNBALANCED_PLACEMENT:
-                    throw new SpellRuntimeException("BAD DISTRIBUTION");
+            InfusionCraftingHelper.InfusionError code = InfusionCraftingHelper.invokePsilon(master, frequencyVal);
+            if (code != InfusionCraftingHelper.InfusionError.NONE) {
+                InfusionCraftingHelper.throwError(code);
             }
         }
         return null;

@@ -1,10 +1,12 @@
 package com.dudblockman.psipherals.crafting;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import it.unimi.dsi.fastutil.ints.IntList;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.*;
 import net.minecraft.network.PacketBuffer;
@@ -17,6 +19,7 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PsilonInfusionRecipe implements IRecipe<RecipeWrapper> {
@@ -61,6 +64,14 @@ public class PsilonInfusionRecipe implements IRecipe<RecipeWrapper> {
     @Override
     public boolean canFit(int width, int height) {
         return true;
+    }
+
+    public List<List<ItemStack>> getRecipeInput() {
+        List<ItemStack> inputs = new ArrayList<>();
+        for (Ingredient ingredient : ingredients) {
+            inputs.addAll(Arrays.asList(ingredient.getMatchingStacks()));
+        }
+        return  ImmutableList.of(ImmutableList.copyOf(focus.getMatchingStacks()),ImmutableList.copyOf(inputs));
     }
 
     @Override

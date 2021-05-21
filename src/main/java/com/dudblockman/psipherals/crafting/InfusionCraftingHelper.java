@@ -11,6 +11,7 @@ import net.minecraft.world.chunk.IChunk;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 import vazkii.psi.api.internal.Vector3;
+import vazkii.psi.api.spell.SpellRuntimeException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,28 +34,54 @@ public class InfusionCraftingHelper {
         MULTIPLE_RADIUS,
         UNBALANCED_PLACEMENT,
         INCORRECT_FREQUENCY,
-        PREMATURE_ACTIVATION
+        INCORRECT_ORDER,
+        INVALID_RECIPE,
+        MISC_ERROR
     }
 
-    public static void stepInfusion(TilePsilon psilon) {
+    public static void throwError(InfusionError code) throws SpellRuntimeException {
+        String error = null;
+        switch (code) {
+            case MULTIPLE_RADIUS:
+                error = "psipherals.spellerror.multiple_radius";
+                break;
+            case UNBALANCED_PLACEMENT:
+                error = "psipherals.spellerror.unbalanced_placement";
+                break;
+            case INCORRECT_FREQUENCY:
+                error = "psipherals.spellerror.incorrect_frequency";
+                break;
+            case INCORRECT_ORDER:
+                error = "psipherals.spellerror.incorrect_order";
+                break;
+            case INVALID_RECIPE:
+                error = "psipherals.spellerror.invalid_recipe";
+                break;
+        }
+        if (error != null) {
+            throw new SpellRuntimeException(error);
+        }
+    }
+
+    public static InfusionError stepInfusion(TilePsilon psilon) {
         TilePsilon master = psilon;
         if (psilon.isSlave()) {
             master = psilon.getMaster();
         }
         if (!master.isMaster()) {
-            return;
+            return InfusionError.MISC_ERROR;
         }
         for (int i = 0; i < master.connectedPsilons.size(); i++) {
             TileEntity te = master.getWorld().getTileEntity(master.connectedPsilons.get(i));
             if (!(te instanceof TilePsilon)) {
                 //Oh no this bad
-                return;
+                return InfusionError.MISC_ERROR;
             }
             switch (((TilePsilon) te).mode) {
                 case OFF:
                     ((TilePsilon) te).mode = TilePsilon.InfusionState.READY;
                     ((TilePsilon) te).sync();
-                    return;
+                    return InfusionError.NONE;
                 case READY:
                     if (te.equals(psilon)) {
                         ((TilePsilon) te).mode = TilePsilon.InfusionState.LIT;
@@ -62,12 +89,15 @@ public class InfusionCraftingHelper {
                         if (i == master.connectedPsilons.size()-1) {
                             master.mode = TilePsilon.InfusionState.READY;
                             master.scheduleInfusionTick();
+                            return InfusionError.NONE;
                         }
                     } else {
                         master.disconnect(true);
+                        return InfusionError.INCORRECT_ORDER;
                     }
             }
         }
+        return InfusionError.MISC_ERROR;
     }
 
     public static void ActivateInfusion(TilePsilon master) {
@@ -122,6 +152,8 @@ public class InfusionCraftingHelper {
                     if (getRecipe(target, entities).isPresent()) {
                         target.connectToSlaves(entities);
                         stepInfusion(target);
+                    } else {
+                        return InfusionError.INVALID_RECIPE;
                     }
                 }
                 return code;
@@ -130,7 +162,7 @@ public class InfusionCraftingHelper {
         if (tags.contains(InfusionCraftingHelper.PROVIDER_TAG)) {
             if (target.isSlave()) {
                 if (value == 15) {
-                    stepInfusion(target);
+                    return stepInfusion(target);
                 } else {
                     target.disconnect(true);
                     return InfusionError.INCORRECT_FREQUENCY;

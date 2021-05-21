@@ -101,5 +101,7 @@
     "psipherals.book.page.parallel.4": "$(thing)Selector: Parallel Entity$(0) returns the entity that the current Parallel Operator is acting upon.$(br)All pieces that reside between the parallel selectors and the operator will be reevaluated for each entity on the list.$(br2)These pieces will not function if the same one is utilized by multiple operators.",
     "psipherals.book.page.parallel.5": "$(thing)Selector: Parallel Index$(0) functions similarly to Selector: Loopcast Index, returning an integer starting from 0 representing which item on the list you are currently working with during the parallel processing.",
     "psipherals.book.page.parallel.6": "An example spell using $(thing)Operator: Parallel Filter$(0) to return a list of all nearby injured creatures.",
-    "psipherals.book.page.parallel.7": "An example spell using $(thing)Operator: Parallel Maximum$(0) to smite the highest enemy near you."
+    "psipherals.book.page.parallel.7": "An example spell using $(thing)Operator: Parallel Maximum$(0) to smite the highest enemy near you.",
+
+    "jei.psipherals.category.psilon_crafting": "Psilon Infusion"
 }
