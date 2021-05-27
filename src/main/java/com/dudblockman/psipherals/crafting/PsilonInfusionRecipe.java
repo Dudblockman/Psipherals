@@ -27,14 +27,14 @@ public class PsilonInfusionRecipe implements IRecipe<RecipeWrapper> {
 
     private final Ingredient focus;
     private final List<Ingredient> ingredients;
-    private final ItemStack output;
+    private final ItemStack result;
     private final ResourceLocation id;
 
-    public PsilonInfusionRecipe(ResourceLocation id, Ingredient focus, List<Ingredient> ingredients, ItemStack output) {
+    public PsilonInfusionRecipe(ResourceLocation id, Ingredient focus, List<Ingredient> ingredients, ItemStack result) {
         this.id = id;
         this.focus = focus;
         this.ingredients = ingredients;
-        this.output = output;
+        this.result = result;
     }
 
     @Override
@@ -67,16 +67,17 @@ public class PsilonInfusionRecipe implements IRecipe<RecipeWrapper> {
     }
 
     public List<List<ItemStack>> getRecipeInput() {
-        List<ItemStack> inputs = new ArrayList<>();
+        List<List<ItemStack>> inputs = new ArrayList<>();
+        inputs.add(Arrays.asList(focus.getMatchingStacks()));
         for (Ingredient ingredient : ingredients) {
-            inputs.addAll(Arrays.asList(ingredient.getMatchingStacks()));
+            inputs.add(Arrays.asList(ingredient.getMatchingStacks()));
         }
-        return  ImmutableList.of(ImmutableList.copyOf(focus.getMatchingStacks()),ImmutableList.copyOf(inputs));
+        return inputs;
     }
 
     @Override
     public ItemStack getRecipeOutput() {
-        return output;
+        return result;
     }
 
     @Override
@@ -105,9 +106,9 @@ public class PsilonInfusionRecipe implements IRecipe<RecipeWrapper> {
                 ingredients.add(Ingredient.deserialize(b));
             }
 
-            ItemStack output = CraftingHelper.getItemStack(JSONUtils.getJsonObject(json, "output"), true);
+            ItemStack result = CraftingHelper.getItemStack(JSONUtils.getJsonObject(json, "result"), true);
 
-            return new PsilonInfusionRecipe(id, focus, ingredients, output);
+            return new PsilonInfusionRecipe(id, focus, ingredients, result);
         }
 
         @Nullable
@@ -121,8 +122,8 @@ public class PsilonInfusionRecipe implements IRecipe<RecipeWrapper> {
                 ingredients.add(Ingredient.read(buf));
             }
 
-            ItemStack output = buf.readItemStack();
-            return new PsilonInfusionRecipe(id, focus, ingredients, output);
+            ItemStack result = buf.readItemStack();
+            return new PsilonInfusionRecipe(id, focus, ingredients, result);
         }
 
         @Override
@@ -134,7 +135,7 @@ public class PsilonInfusionRecipe implements IRecipe<RecipeWrapper> {
                 ingredient.write(buf);
             }
 
-            buf.writeItemStack(recipe.output);
+            buf.writeItemStack(recipe.result);
         }
     }
 }

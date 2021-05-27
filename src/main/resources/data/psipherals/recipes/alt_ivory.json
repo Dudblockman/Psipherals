@@ -1,0 +1,36 @@
+{
+  "result": {
+    "item": "psi:ivory_substance",
+    "count": 8
+  },
+  "type": "psipherals:infusion",
+  "focus": {
+    "item": "psi:psidust"
+  },
+  "ingredients": [
+    {
+      "tag": "forge:gems/quartz"
+    },
+    {
+      "tag": "forge:gems/quartz"
+    },
+    {
+      "tag": "forge:gems/quartz"
+    },
+    {
+      "tag": "forge:gems/quartz"
+    },
+    {
+      "tag": "forge:gems/quartz"
+    },
+    {
+      "tag": "forge:gems/quartz"
+    },
+    {
+      "tag": "forge:gems/quartz"
+    },
+    {
+      "tag": "forge:gems/quartz"
+    }
+  ]
+}

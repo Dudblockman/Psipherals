@@ -20,10 +20,10 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 public class InfusionCraftingHelper {
-    public static final int MIN_RADIUS = 2;
-    public static final int MAX_RADIUS = 7;
-    private static final int MIN_RADIUS_SQ = MIN_RADIUS * MIN_RADIUS;
-    private static final int MAX_RADIUS_SQ = MAX_RADIUS * MAX_RADIUS;
+    public static final float MIN_RADIUS = 2;
+    public static final float MAX_RADIUS = 7.5f;
+    private static final float MIN_RADIUS_SQ = MIN_RADIUS * MIN_RADIUS;
+    private static final float MAX_RADIUS_SQ = MAX_RADIUS * MAX_RADIUS;
     private static final AxisAlignedBB SEARCH_SPACE = new AxisAlignedBB(-MAX_RADIUS,0,-MAX_RADIUS,1+MAX_RADIUS,1,1+MAX_RADIUS);
 
     public static final ResourceLocation BASE_TAG = Psipherals.location("psilon/base");

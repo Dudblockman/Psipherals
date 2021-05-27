@@ -1,0 +1,36 @@
+{
+  "result": {
+    "item": "psi:ebony_substance",
+    "count": 8
+  },
+  "type": "psipherals:infusion",
+  "focus": {
+    "item": "psi:psidust"
+  },
+  "ingredients": [
+    {
+      "tag": "minecraft:coals"
+    },
+    {
+      "tag": "minecraft:coals"
+    },
+    {
+      "tag": "minecraft:coals"
+    },
+    {
+      "tag": "minecraft:coals"
+    },
+    {
+      "tag": "minecraft:coals"
+    },
+    {
+      "tag": "minecraft:coals"
+    },
+    {
+      "tag": "minecraft:coals"
+    },
+    {
+      "tag": "minecraft:coals"
+    }
+  ]
+}
