@@ -9,7 +9,6 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
@@ -27,24 +26,18 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.fml.network.PacketDistributor;
 import vazkii.psi.api.PsiAPI;
 import vazkii.psi.api.cad.*;
 import vazkii.psi.api.internal.TooltipHelper;
-import vazkii.psi.api.internal.Vector3;
-import vazkii.psi.api.recipe.ITrickRecipe;
 import vazkii.psi.api.spell.PieceGroupAdvancementComplete;
 import vazkii.psi.api.spell.SpellContext;
-import vazkii.psi.api.spell.SpellRuntimeException;
-import vazkii.psi.api.spell.piece.PieceCraftingTrick;
-import vazkii.psi.common.core.handler.ContributorSpellCircleHandler;
 import vazkii.psi.common.block.BlockProgrammer;
 import vazkii.psi.common.block.base.ModBlocks;
 import vazkii.psi.common.core.handler.ConfigHandler;
+import vazkii.psi.common.core.handler.ContributorSpellCircleHandler;
 import vazkii.psi.common.core.handler.PlayerDataHandler;
 import vazkii.psi.common.core.handler.PsiSoundHandler;
 import vazkii.psi.common.core.handler.capability.CADData;
-import vazkii.psi.common.crafting.ModCraftingRecipes;
 import vazkii.psi.common.entity.EntitySpellProjectile;
 import vazkii.psi.common.item.ItemCAD;
 import vazkii.psi.common.item.base.ModItems;
@@ -52,20 +45,27 @@ import vazkii.psi.common.item.tool.IPsimetalTool;
 import vazkii.psi.common.lib.LibPieceGroups;
 import vazkii.psi.common.network.MessageRegister;
 import vazkii.psi.common.network.message.MessageCADDataSync;
-import vazkii.psi.common.network.message.MessageVisualEffect;
 import vazkii.psi.common.spell.trick.block.PieceTrickBreakBlock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Predicate;
 
-public class ItemBowCad extends BowItem implements ICAD {
+public class ItemBowCad extends BowItem implements IIntegratedCad {
 
     public ItemBowCad(Item.Properties props) {
         super(props);
+    }
+
+    @Override
+    public boolean isMelee() {
+        return false;
+    }
+
+    @Override
+    public boolean isTool() {
+        return false;
     }
 
     private ICADData getCADData(ItemStack stack) {
@@ -204,7 +204,7 @@ public class ItemBowCad extends BowItem implements ICAD {
                     setCADComponent(playerCad, dyeStack);
                 }
             }
-            boolean did = ItemCAD.cast(worldIn, playerIn, data, bullet, stack, 40, 25, 0.5F, ctx -> ctx.castFrom = Hand.MAIN_HAND);
+            boolean did = ItemCAD.cast(worldIn, playerIn, data, bullet, stack, 40, 25, 0.5F, ctx -> ctx.castFrom = Hand.MAIN_HAND).isPresent();
 
             if (!data.overflowed && bullet.isEmpty() && craft(playerCad, playerIn, null)) {
                 worldIn.playSound(null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), PsiSoundHandler.cadShoot, SoundCategory.PLAYERS, 0.5F, (float) (0.5 + Math.random() * 0.5));
@@ -219,49 +219,6 @@ public class ItemBowCad extends BowItem implements ICAD {
             return did;
         }
         return false;
-    }
-
-    @Override
-    public boolean craft(ItemStack cad, PlayerEntity player, PieceCraftingTrick craftingTrick) {
-        if (player.world.isRemote) {
-            return false;
-        }
-
-        List<ItemEntity> items = player.getEntityWorld().getEntitiesWithinAABB(ItemEntity.class,
-                player.getBoundingBox().grow(8),
-                entity -> entity != null && entity.getDistanceSq(player) <= 8 * 8);
-
-        ItemAxeCad.CraftingWrapper inv = new ItemAxeCad.CraftingWrapper();
-        boolean did = false;
-        for (ItemEntity item : items) {
-            ItemStack stack = item.getItem();
-            inv.setStack(stack);
-            Predicate<ITrickRecipe> predicate = r -> r.getPiece() == null;
-            if (craftingTrick != null) {
-                predicate = r -> r.getPiece() == null || r.getPiece().canCraft(craftingTrick);
-            }
-
-            Optional<ITrickRecipe> recipe = player.world.getRecipeManager().getRecipe(ModCraftingRecipes.TRICK_RECIPE_TYPE, inv, player.world)
-                    .filter(predicate);
-            if (recipe.isPresent()) {
-                ItemStack outCopy = recipe.get().getRecipeOutput().copy();
-                outCopy.setCount(stack.getCount());
-                item.setItem(outCopy);
-                did = true;
-                MessageVisualEffect msg = new MessageVisualEffect(ICADColorizer.DEFAULT_SPELL_COLOR,
-                        item.getPosX(), item.getPosY(), item.getPosZ(), item.getWidth(), item.getHeight(), item.getYOffset(),
-                        MessageVisualEffect.TYPE_CRAFT);
-                MessageRegister.HANDLER.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> item), msg);
-            }
-        }
-
-        return did;
-    }
-
-    public static void setComponent(ItemStack stack, ItemStack componentStack) {
-        if (stack.getItem() instanceof ICAD) {
-            ((ICAD) stack.getItem()).setCADComponent(stack, componentStack);
-        }
     }
 
     public static ItemStack makeCAD(ItemStack... components) {
@@ -281,132 +238,9 @@ public class ItemBowCad extends BowItem implements ICAD {
     public static ItemStack makeCAD(ItemStack base, List<ItemStack> components) {
         ItemStack stack = base.copy();
         for (ItemStack component : components) {
-            setComponent(stack, component);
+            ICAD.setComponent(stack, component);
         }
         return stack;
-    }
-
-    @Override
-    public ItemStack getComponentInSlot(ItemStack stack, EnumCADComponent type) {
-        String name = TAG_COMPONENT_PREFIX + type.name();
-        CompoundNBT cmp = stack.getOrCreateTag().getCompound(name);
-
-        if (cmp.isEmpty()) {
-            return ItemStack.EMPTY;
-        }
-
-        return ItemStack.read(cmp);
-    }
-
-    @Override
-    public int getStatValue(ItemStack stack, EnumCADStat stat) {
-        int statValue = 0;
-        ItemStack componentStack = getComponentInSlot(stack, stat.getSourceType());
-        if (!componentStack.isEmpty() && componentStack.getItem() instanceof ICADComponent) {
-            ICADComponent component = (ICADComponent) componentStack.getItem();
-            statValue = component.getCADStatValue(componentStack, stat);
-        }
-
-        CADStatEvent event = new CADStatEvent(stat, stack, componentStack, statValue);
-        MinecraftForge.EVENT_BUS.post(event);
-        return event.getStatValue();
-    }
-
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public int getSpellColor(ItemStack stack) {
-        ItemStack dye = getComponentInSlot(stack, EnumCADComponent.DYE);
-        if (!dye.isEmpty() && dye.getItem() instanceof ICADColorizer) {
-            return ((ICADColorizer) dye.getItem()).getColor(dye);
-        }
-        return ICADColorizer.DEFAULT_SPELL_COLOR;
-    }
-
-    @Override
-    public int getTime(ItemStack stack) {
-        return getCADData(stack).getTime();
-    }
-
-    @Override
-    public void incrementTime(ItemStack stack) {
-        ICADData data = getCADData(stack);
-        data.setTime(data.getTime() + 1);
-    }
-
-    @Override
-    public int getStoredPsi(ItemStack stack) {
-        int maxPsi = getStatValue(stack, EnumCADStat.OVERFLOW);
-
-        return Math.min(getCADData(stack).getBattery(), maxPsi);
-    }
-
-    @Override
-    public void regenPsi(ItemStack stack, int psi) {
-        int maxPsi = getStatValue(stack, EnumCADStat.OVERFLOW);
-        if (maxPsi == -1) {
-            return;
-        }
-
-        int currPsi = getStoredPsi(stack);
-        int endPsi = Math.min(currPsi + psi, maxPsi);
-
-        if (endPsi != currPsi) {
-            ICADData data = getCADData(stack);
-            data.setBattery(endPsi);
-            data.markDirty(true);
-        }
-    }
-
-    @Override
-    public int consumePsi(ItemStack stack, int psi) {
-        if (psi == 0) {
-            return 0;
-        }
-
-        int currPsi = getStoredPsi(stack);
-
-        if (currPsi == -1) {
-            return 0;
-        }
-
-        ICADData data = getCADData(stack);
-
-        if (currPsi >= psi) {
-            data.setBattery(currPsi - psi);
-            data.markDirty(true);
-            return 0;
-        }
-
-        data.setBattery(0);
-        data.markDirty(true);
-        return psi - currPsi;
-    }
-
-    @Override
-    public int getMemorySize(ItemStack stack) {
-        int sockets = getStatValue(stack, EnumCADStat.SOCKETS);
-        if (sockets == -1) {
-            return 0xFF;
-        }
-        return sockets / 3;
-    }
-
-    @Override
-    public void setStoredVector(ItemStack stack, int memorySlot, Vector3 vec) throws SpellRuntimeException {
-        int size = getMemorySize(stack);
-        if (memorySlot < 0 || memorySlot >= size) {
-            throw new SpellRuntimeException(SpellRuntimeException.MEMORY_OUT_OF_BOUNDS);
-        }
-        getCADData(stack).setSavedVector(memorySlot, vec);
-    }
-
-    @Override
-    public Vector3 getStoredVector(ItemStack stack, int memorySlot) throws SpellRuntimeException {
-        int size = getMemorySize(stack);
-        if (memorySlot < 0 || memorySlot >= size) {
-            throw new SpellRuntimeException(SpellRuntimeException.MEMORY_OUT_OF_BOUNDS);
-        }
-        return getCADData(stack).getSavedVector(memorySlot);
     }
 
     @Override
