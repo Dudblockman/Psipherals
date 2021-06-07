@@ -8,8 +8,6 @@ import vazkii.psi.api.spell.*;
 import vazkii.psi.api.spell.param.ParamVector;
 import vazkii.psi.api.spell.piece.PieceTrick;
 
-import java.util.Dictionary;
-
 public class TrickPsilon extends PieceTrick {
     SpellParam<Vector3> position;
     SpellParam<Vector3> frequency;
@@ -44,7 +42,7 @@ public class TrickPsilon extends PieceTrick {
         TileEntity target = context.focalPoint.world.getTileEntity(positionVal.toBlockPos());
         if (target instanceof TilePsilon) {
             TilePsilon master = (TilePsilon) target;
-            InfusionCraftingHelper.InfusionError code = InfusionCraftingHelper.invokePsilon(master, frequencyVal);
+            InfusionCraftingHelper.InfusionError code = InfusionCraftingHelper.invokePsilon(context.caster, master, frequencyVal);
             if (code != InfusionCraftingHelper.InfusionError.NONE) {
                 InfusionCraftingHelper.throwError(code);
             }

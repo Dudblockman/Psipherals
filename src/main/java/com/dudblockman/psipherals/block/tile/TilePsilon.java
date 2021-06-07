@@ -19,8 +19,13 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.TickPriority;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.registries.ObjectHolder;
+import vazkii.psi.api.PsiAPI;
+import vazkii.psi.api.cad.EnumCADComponent;
+import vazkii.psi.api.cad.ICAD;
 import vazkii.psi.api.cad.ICADColorizer;
 import vazkii.psi.api.internal.Vector3;
+import vazkii.psi.common.core.handler.PlayerDataHandler;
+import vazkii.psi.common.core.handler.PlayerDataHandler.PlayerData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +40,7 @@ public class TilePsilon extends TileEntity implements IPsilonInfusionProvider {
     public InfusionState mode = InfusionState.OFF;
 
     ItemStack stack = ItemStack.EMPTY;
+    ItemStack colorizer = ItemStack.EMPTY;
     private int comparatorValue = 0;
     private long updateTime = 0;
 
@@ -101,11 +107,12 @@ public class TilePsilon extends TileEntity implements IPsilonInfusionProvider {
         if (this.isSlave()) {
             return this.getMaster().getColorizerColor();
         }
-        if (stack.getItem() instanceof ICADColorizer) {
-            return ((ICADColorizer)stack.getItem()).getColor(stack);
+        if (colorizer.getItem() instanceof ICADColorizer) {
+            return ((ICADColorizer) colorizer.getItem()).getColor(colorizer);
         }
         return ICADColorizer.DEFAULT_SPELL_COLOR;
     }
+
     public float getCircleActivation(float partialTicks) {
         if (this.mode == InfusionState.LIT || this.mode == InfusionState.CONSUMING) {
             return Math.min(1,Math.max((this.updateTime + 30 - (this.world.getGameTime() + partialTicks))/10, 0));
@@ -137,6 +144,7 @@ public class TilePsilon extends TileEntity implements IPsilonInfusionProvider {
 
     public void disconnect(boolean recursive) {
         this.mode = InfusionState.OFF;
+        this.colorizer = ItemStack.EMPTY;
         if (this.connectedPsilons == null || this.connectedPsilons.size() == 0) {
             this.connectedPsilons = new ArrayList<>();
             return;
@@ -159,6 +167,7 @@ public class TilePsilon extends TileEntity implements IPsilonInfusionProvider {
 
     public void readPacketNBT(CompoundNBT tag) {
         stack = ItemStack.read(tag.getCompound("stack"));
+        colorizer = ItemStack.read(tag.getCompound("colorizer"));
         long[] positions = tag.getLongArray("connectedPsilons");
         this.connectedPsilons = new ArrayList<>();
         for (long position : positions) {
@@ -178,6 +187,7 @@ public class TilePsilon extends TileEntity implements IPsilonInfusionProvider {
     public CompoundNBT write(CompoundNBT tag) {
         tag = super.write(tag);
         tag.put("stack", stack.write(new CompoundNBT()));
+        tag.put("colorizer", colorizer.write(new CompoundNBT()));
         if (connectedPsilons != null && connectedPsilons.size() > 0) {
             ArrayList<Long> positions = new ArrayList<>();
             for (BlockPos position : connectedPsilons) {
@@ -246,6 +256,17 @@ public class TilePsilon extends TileEntity implements IPsilonInfusionProvider {
         this.scheduleOffTick();
 
         return comparatorValue;
+    }
+
+    public void connectPlayer(PlayerEntity player) {
+        PlayerData data = PlayerDataHandler.get(player);
+        ItemStack playerCad = PsiAPI.getPlayerCAD(player);
+
+        if (!playerCad.isEmpty()) {
+            this.colorizer = ((ICAD) playerCad.getItem()).getComponentInSlot(playerCad, EnumCADComponent.DYE).copy();
+            sync();
+        }
+
     }
 
     @Override

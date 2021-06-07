@@ -2,6 +2,7 @@ package com.dudblockman.psipherals.crafting;
 
 import com.dudblockman.psipherals.Psipherals;
 import com.dudblockman.psipherals.block.tile.TilePsilon;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -139,12 +140,31 @@ public class InfusionCraftingHelper {
         master.disconnect(true);
     }
 
-    public static InfusionError invokePsilon(TilePsilon target, Vector3 frequency) {
+    public static boolean isInfusionCenter(TilePsilon target) {
         World worldIn = target.getWorld();
         BlockPos pos = target.getPos();
+        if (worldIn == null) return false;
+        for (int x = -1; x <= 1; x++) {
+            for (int z = -1; z <= 1; z++) {
+                if (!worldIn.getBlockState(pos.down().add(x, 0, z)).getBlock().getTags().contains(InfusionCraftingHelper.BASE_TAG)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static boolean isInfusionProvider(TilePsilon target) {
+        World worldIn = target.getWorld();
+        BlockPos pos = target.getPos();
+        if (worldIn == null) return false;
+        return worldIn.getBlockState(pos.down()).getBlock().getTags().contains(InfusionCraftingHelper.PROVIDER_TAG);
+    }
+
+    public static InfusionError invokePsilon(PlayerEntity player, TilePsilon target, Vector3 frequency) {
         int value = target.activate(frequency);
-        Set<ResourceLocation> tags = worldIn.getBlockState(pos.down()).getBlock().getTags();
-        if (tags.contains(InfusionCraftingHelper.BASE_TAG)) {
+        BlockPos pos = target.getPos();
+        if (isInfusionCenter(target)) {
             if (value == 15) {
                 List<TilePsilon> entities = getInfusionProviders(target);
                 InfusionCraftingHelper.InfusionError code = validateInfusionProviders(pos, entities);
@@ -152,6 +172,7 @@ public class InfusionCraftingHelper {
                     if (getRecipe(target, entities).isPresent()) {
                         target.connectToSlaves(entities);
                         stepInfusion(target);
+                        target.connectPlayer(player);
                     } else {
                         return InfusionError.INVALID_RECIPE;
                     }
@@ -159,7 +180,7 @@ public class InfusionCraftingHelper {
                 return code;
             }
         }
-        if (tags.contains(InfusionCraftingHelper.PROVIDER_TAG)) {
+        if (isInfusionProvider(target)) {
             if (target.isSlave()) {
                 if (value == 15) {
                     return stepInfusion(target);
