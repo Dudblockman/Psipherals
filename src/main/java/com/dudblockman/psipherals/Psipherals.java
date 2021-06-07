@@ -35,14 +35,15 @@ public class Psipherals {
         proxy.registerHandlers();
     }
 
+    public static ResourceLocation location(String path) {
+        return new ResourceLocation(MODID, path);
+    }
+
     private void commonSetup(FMLCommonSetupEvent event) {
         new Items();
         new Entities();
         StatRegistry.registerStats();
         MessageRegistry.init();
-    }
-    public static ResourceLocation location(String path) {
-        return new ResourceLocation(MODID, path);
     }
 
     public void enqueueIMC(InterModEnqueueEvent evt) {

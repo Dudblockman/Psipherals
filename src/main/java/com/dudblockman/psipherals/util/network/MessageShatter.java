@@ -20,6 +20,7 @@ public class MessageShatter {
 
     public void encode(PacketBuffer buf) {
     }
+
     public boolean receive(Supplier<NetworkEvent.Context> context) {
         context.get().enqueueWork(() -> {
             PlayerEntity player = context.get().getSender();

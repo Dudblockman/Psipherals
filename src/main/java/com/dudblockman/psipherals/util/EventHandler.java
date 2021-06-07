@@ -23,12 +23,13 @@ public class EventHandler {
         Entity projectile = event.getEntity();
         ejectRidingSpells(projectile);
     }
+
     public static void ejectRidingSpells(Entity projectile) {
-        if ((projectile instanceof AbstractArrowEntity) || (projectile instanceof FireworkRocketEntity) ) {
+        if ((projectile instanceof AbstractArrowEntity) || (projectile instanceof FireworkRocketEntity)) {
             for (Entity rider : projectile.getPassengers()) {
                 if (rider instanceof EntitySpellProjectile) {
                     rider.stopRiding();
-                    rider.setPosition(projectile.getPosX(),projectile.getPosY(),projectile.getPosZ());
+                    rider.setPosition(projectile.getPosX(), projectile.getPosY(), projectile.getPosZ());
                     rider.setMotion(projectile.getMotion());
                     rider.velocityChanged = true;
                 }

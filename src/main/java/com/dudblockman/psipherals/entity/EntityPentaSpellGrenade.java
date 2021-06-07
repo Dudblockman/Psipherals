@@ -17,7 +17,6 @@ import vazkii.psi.api.spell.SpellContext;
 import vazkii.psi.common.entity.EntitySpellGrenade;
 import vazkii.psi.common.entity.EntitySpellProjectile;
 
-import java.util.Optional;
 import java.util.function.Consumer;
 
 public class EntityPentaSpellGrenade extends EntitySpellGrenade {
@@ -36,8 +35,9 @@ public class EntityPentaSpellGrenade extends EntitySpellGrenade {
     public EntityPentaSpellGrenade(World world, LivingEntity thrower) {
         super(world, thrower);
     }
+
     public EntitySpellProjectile setInfo(PlayerEntity player, ItemStack colorizer, ItemStack bullet) {
-        super.setInfo(player,colorizer,bullet);
+        super.setInfo(player, colorizer, bullet);
         dataManager.set(BULLET_DATA, bullet.copy());
 
         return this;
@@ -68,6 +68,7 @@ public class EntityPentaSpellGrenade extends EntitySpellGrenade {
         ItemStack bullet = ItemStack.read(bulletCmp);
         dataManager.set(BULLET_DATA, bullet);
     }
+
     @Override
     public void cast(Consumer<SpellContext> callback) {
         Entity thrower = func_234616_v_();

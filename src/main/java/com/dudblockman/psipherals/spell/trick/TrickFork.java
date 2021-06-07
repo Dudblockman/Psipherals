@@ -14,14 +14,17 @@ import vazkii.psi.common.entity.EntitySpellProjectile;
 public class TrickFork extends PieceTrick {
     SpellParam<Vector3> position;
     SpellParam<Vector3> direction;
+
     public TrickFork(Spell spell) {
         super(spell);
     }
+
     @Override
     public void initParams() {
         addParam(position = new ParamVector(SpellParam.GENERIC_NAME_POSITION, SpellParam.BLUE, false, false));
         addParam(direction = new ParamVector(SpellParam.GENERIC_NAME_DIRECTION, SpellParam.GREEN, false, false));
     }
+
     @Override
     public void addToMetadata(SpellMetadata meta) throws SpellCompilationException {
         super.addToMetadata(meta);
@@ -30,6 +33,7 @@ public class TrickFork extends PieceTrick {
         meta.addStat(EnumSpellStat.COST, 5);
         meta.compoundStatMultiplier(EnumSpellStat.COST, 1.05);
     }
+
     private SpellContext forkContext(SpellContext original) {
         SpellContext newContext = new SpellContext();
         newContext.caster = original.caster;
@@ -55,6 +59,7 @@ public class TrickFork extends PieceTrick {
         original.stopped = true;
         return newContext;
     }
+
     @Override
     public Object execute(SpellContext context) throws SpellRuntimeException {
         Vector3 positionVal = this.getParamValue(context, position);
@@ -76,7 +81,7 @@ public class TrickFork extends PieceTrick {
 
         float f = 0.75F;
         Vector3 motion = directionVal.normalize().multiply(f);
-        projectile.setPosition(positionVal.x,positionVal.y,positionVal.z);
+        projectile.setPosition(positionVal.x, positionVal.y, positionVal.z);
         projectile.setVelocity(motion.x, motion.y, motion.z);
 
         projectile.getEntityWorld().addEntity(projectile);

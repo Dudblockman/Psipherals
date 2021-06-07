@@ -90,25 +90,25 @@ public class ItemPsimetalBow extends BowItem implements IPsimetalTool {
 
                         //castSpell(playerentity, stack, new Vec3d(playerentity.getPosX(), playerentity.getPosY(), playerentity.getPosZ()), abstractarrowentity);
                         //if (isEnabled(stack)) {
-                            PlayerDataHandler.PlayerData data = PlayerDataHandler.get(playerentity);
-                            ItemStack playerCad = PsiAPI.getPlayerCAD(playerentity);
+                        PlayerDataHandler.PlayerData data = PlayerDataHandler.get(playerentity);
+                        ItemStack playerCad = PsiAPI.getPlayerCAD(playerentity);
 
-                            if (!playerCad.isEmpty()) {
-                                ISocketable sockets = ISocketable.socketable(stack);
-                                ItemStack bullet = sockets.getSelectedBullet();
-                                ItemCAD.cast(playerentity.getEntityWorld(), playerentity, data, bullet, playerCad, 5, 10, 0.05F, (SpellContext context) -> {
-                                    context.tool = stack;
-                                });
+                        if (!playerCad.isEmpty()) {
+                            ISocketable sockets = ISocketable.socketable(stack);
+                            ItemStack bullet = sockets.getSelectedBullet();
+                            ItemCAD.cast(playerentity.getEntityWorld(), playerentity, data, bullet, playerCad, 5, 10, 0.05F, (SpellContext context) -> {
+                                context.tool = stack;
+                            });
 
-                                float radiusVal = 0.2f;
-                                AxisAlignedBB region = new AxisAlignedBB(playerentity.getPosX() - radiusVal, playerentity.getPosY() + playerentity.getEyeHeight() - radiusVal, playerentity.getPosZ() - radiusVal, playerentity.getPosX() + radiusVal, playerentity.getPosY() + playerentity.getEyeHeight() + radiusVal, playerentity.getPosZ() + radiusVal);
+                            float radiusVal = 0.2f;
+                            AxisAlignedBB region = new AxisAlignedBB(playerentity.getPosX() - radiusVal, playerentity.getPosY() + playerentity.getEyeHeight() - radiusVal, playerentity.getPosZ() - radiusVal, playerentity.getPosX() + radiusVal, playerentity.getPosY() + playerentity.getEyeHeight() + radiusVal, playerentity.getPosZ() + radiusVal);
 
-                                List<EntitySpellProjectile> spells = playerentity.world.getEntitiesWithinAABB(EntitySpellProjectile.class, region, (e) -> ((e != null) && (e.context.caster == playerentity) && (e.ticksExisted <= 1)));
-                                for (EntitySpellProjectile spell : spells) {
-                                    spell.startRiding(abstractarrowentity, true);
-                                }
-
+                            List<EntitySpellProjectile> spells = playerentity.world.getEntitiesWithinAABB(EntitySpellProjectile.class, region, (e) -> ((e != null) && (e.context.caster == playerentity) && (e.ticksExisted <= 1)));
+                            for (EntitySpellProjectile spell : spells) {
+                                spell.startRiding(abstractarrowentity, true);
                             }
+
+                        }
                         //}
 
                         worldIn.addEntity(abstractarrowentity);
@@ -127,8 +127,10 @@ public class ItemPsimetalBow extends BowItem implements IPsimetalTool {
             }
         }
     }
+
     @Override
-    public void castOnBlockBreak(ItemStack itemstack, PlayerEntity player) {}
+    public void castOnBlockBreak(ItemStack itemstack, PlayerEntity player) {
+    }
 
     @Override
     public void setDamage(ItemStack stack, int damage) {

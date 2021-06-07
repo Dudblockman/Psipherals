@@ -16,6 +16,7 @@ public class ItemPentaGrenadeSpellBullet extends ItemGrenadeSpellBullet {
     public ItemPentaGrenadeSpellBullet(Properties properties) {
         super(properties);
     }
+
     @Override
     public ArrayList<Entity> castSpell(ItemStack stack, SpellContext context) {
         ItemStack cad = PsiAPI.getPlayerCAD(context.caster);
@@ -29,6 +30,7 @@ public class ItemPentaGrenadeSpellBullet extends ItemGrenadeSpellBullet {
         spellEntities.add(projectile);
         return spellEntities;
     }
+
     @Override
     public double getCostModifier(ItemStack stack) {
         return 4.00;

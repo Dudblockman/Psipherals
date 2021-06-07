@@ -21,9 +21,10 @@ public class EntityPsiArrow extends AbstractArrowEntity {
     private static final String TAG_COLORIZER = "colorizer";
     private static final DataParameter<ItemStack> COLORIZER_DATA = EntityDataManager.createKey(EntitySpellProjectile.class, DataSerializers.ITEMSTACK);
 
-    public EntityPsiArrow (EntityType<? extends AbstractArrowEntity> type, World world) {
+    public EntityPsiArrow(EntityType<? extends AbstractArrowEntity> type, World world) {
         super(type, world);
     }
+
     public EntityPsiArrow(World worldIn, LivingEntity shooter) {
         super(Entities.arrowEntityType, shooter, worldIn);
     }
@@ -42,6 +43,7 @@ public class EntityPsiArrow extends AbstractArrowEntity {
         dataManager.set(COLORIZER_DATA, colorizer);
         return this;
     }
+
     @Override
     protected void registerData() {
         super.registerData();
@@ -68,10 +70,11 @@ public class EntityPsiArrow extends AbstractArrowEntity {
         dataManager.set(COLORIZER_DATA, colorizer);
     }
 
-    public int getColor () {
+    public int getColor() {
         ItemStack colorizer = dataManager.get(COLORIZER_DATA);
         return Psi.proxy.getColorForColorizer(colorizer);
     }
+
     @Override
     public void updatePassenger(Entity passenger) {
         super.updatePassenger(passenger);

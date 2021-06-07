@@ -20,7 +20,7 @@ public class OperatorAdaptiveDivide extends OperatorAdaptiveTripleBase {
         addParam(in3 = new ParamVectorNumber(SpellParam.GENERIC_NAME_NUMBER3, SpellParam.YELLOW, true));
     }
 
-    public double operation (double a, double b, double c) throws SpellRuntimeException {
+    public double operation(double a, double b, double c) throws SpellRuntimeException {
         if (b == 0 || c == 0) {
             throw new SpellRuntimeException(SpellRuntimeException.DIVIDE_BY_ZERO);
         }

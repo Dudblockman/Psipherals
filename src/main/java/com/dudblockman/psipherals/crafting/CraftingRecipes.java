@@ -13,10 +13,11 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = Psipherals.MODID)
 public class CraftingRecipes {
     public static final IRecipeType<PsilonInfusionRecipe> INFUSION_TYPE = new CraftingRecipes.RecipeType();
+
     @SubscribeEvent
     public static void registerSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
         event.getRegistry().registerAll(
-                name(PsilonInfusionRecipe.SERIALIZER,"infusion")
+                name(PsilonInfusionRecipe.SERIALIZER, "infusion")
         );
 
     }

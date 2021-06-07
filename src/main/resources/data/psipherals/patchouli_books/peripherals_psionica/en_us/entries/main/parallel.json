@@ -3,39 +3,39 @@
   "icon": "psipherals:textures/spell/operator_parallel_filter.png",
   "category": "psipherals:main_category",
   "pages": [
-      {
-        "type": "text",
-        "text": "psipherals.book.page.parallel.1"
-      },
-      {
-        "type": "psi:spellpiece_spotlight",
-        "text": "psipherals.book.page.parallel.2",
-        "spellpiece": "psipherals:operator_parallel_filter"
-      },
-      {
-        "type": "psi:spellpiece_spotlight",
-        "text": "psipherals.book.page.parallel.3",
-        "spellpiece": "psipherals:operator_parallel_maximum"
-      },
-      {
-        "type": "psi:spellpiece_spotlight",
-        "text": "psipherals.book.page.parallel.4",
-        "spellpiece": "psipherals:selector_parallel_entity"
-      },
-      {
-        "type": "psi:spellpiece_spotlight",
-        "text": "psipherals.book.page.parallel.5",
-        "spellpiece": "psipherals:selector_parallel_index"
-      },
-      {
-        "type": "psi:spell_grid",
-        "text": "psipherals.book.page.parallel.6",
-        "spell": "{modsRequired:[{modVersion:\"1.16-93.356\",modName:\"psi\"},{modVersion:\"version\",modName:\"psipherals\"}],spellName:\"Nearby Injured\",uuidMost:1096481421010748075L,validSpell:1b,spellList:[{data:{key:\"psipherals:selector_parallel_entity\"},x:2,y:2},{data:{params:{_position:0,_radius:0},key:\"psi:selector_nearby_living\"},x:2,y:3},{data:{params:{_target:3},key:\"psi:operator_entity_health\"},x:3,y:2},{data:{params:{_list:3,_number:1},key:\"psipherals:operator_parallel_filter\"},x:3,y:3},{data:{params:{_number:0,_target:3},key:\"psi:trick_debug\"},x:4,y:3}],uuidLeast:-6148106440724560712L}"
-      },
-      {
-        "type": "psi:spell_grid",
-        "text": "psipherals.book.page.parallel.7",
-        "spell": "{modsRequired:[{modVersion:\"1.16-93.356\",modName:\"psi\"},{modVersion:\"version\",modName:\"psipherals\"}],spellName:\"Smite Highest\",uuidMost:1096481421010748075L,validSpell:1b,spellList:[{data:{key:\"psipherals:selector_parallel_entity\"},x:2,y:1},{data:{params:{_position:0,_radius:0},key:\"psi:selector_nearby_enemies\"},x:2,y:3},{data:{params:{_target:3},key:\"psi:operator_entity_position\"},x:3,y:1},{data:{params:{_target:1},key:\"psi:operator_vector_extract_y\"},x:3,y:2},{data:{params:{_list:3,_number:1},key:\"psipherals:operator_parallel_maximum\"},x:3,y:3},{data:{params:{_target:3},key:\"psi:operator_entity_position\"},x:4,y:3},{data:{params:{_position:1},key:\"psi:trick_smite\"},x:4,y:4}],uuidLeast:-6148106440724560712L}"
-      }
+    {
+      "type": "text",
+      "text": "psipherals.book.page.parallel.1"
+    },
+    {
+      "type": "psi:spellpiece_spotlight",
+      "text": "psipherals.book.page.parallel.2",
+      "spellpiece": "psipherals:operator_parallel_filter"
+    },
+    {
+      "type": "psi:spellpiece_spotlight",
+      "text": "psipherals.book.page.parallel.3",
+      "spellpiece": "psipherals:operator_parallel_maximum"
+    },
+    {
+      "type": "psi:spellpiece_spotlight",
+      "text": "psipherals.book.page.parallel.4",
+      "spellpiece": "psipherals:selector_parallel_entity"
+    },
+    {
+      "type": "psi:spellpiece_spotlight",
+      "text": "psipherals.book.page.parallel.5",
+      "spellpiece": "psipherals:selector_parallel_index"
+    },
+    {
+      "type": "psi:spell_grid",
+      "text": "psipherals.book.page.parallel.6",
+      "spell": "{modsRequired:[{modVersion:\"1.16-93.356\",modName:\"psi\"},{modVersion:\"version\",modName:\"psipherals\"}],spellName:\"Nearby Injured\",uuidMost:1096481421010748075L,validSpell:1b,spellList:[{data:{key:\"psipherals:selector_parallel_entity\"},x:2,y:2},{data:{params:{_position:0,_radius:0},key:\"psi:selector_nearby_living\"},x:2,y:3},{data:{params:{_target:3},key:\"psi:operator_entity_health\"},x:3,y:2},{data:{params:{_list:3,_number:1},key:\"psipherals:operator_parallel_filter\"},x:3,y:3},{data:{params:{_number:0,_target:3},key:\"psi:trick_debug\"},x:4,y:3}],uuidLeast:-6148106440724560712L}"
+    },
+    {
+      "type": "psi:spell_grid",
+      "text": "psipherals.book.page.parallel.7",
+      "spell": "{modsRequired:[{modVersion:\"1.16-93.356\",modName:\"psi\"},{modVersion:\"version\",modName:\"psipherals\"}],spellName:\"Smite Highest\",uuidMost:1096481421010748075L,validSpell:1b,spellList:[{data:{key:\"psipherals:selector_parallel_entity\"},x:2,y:1},{data:{params:{_position:0,_radius:0},key:\"psi:selector_nearby_enemies\"},x:2,y:3},{data:{params:{_target:3},key:\"psi:operator_entity_position\"},x:3,y:1},{data:{params:{_target:1},key:\"psi:operator_vector_extract_y\"},x:3,y:2},{data:{params:{_list:3,_number:1},key:\"psipherals:operator_parallel_maximum\"},x:3,y:3},{data:{params:{_target:3},key:\"psi:operator_entity_position\"},x:4,y:3},{data:{params:{_position:1},key:\"psi:trick_smite\"},x:4,y:4}],uuidLeast:-6148106440724560712L}"
+    }
   ]
 }

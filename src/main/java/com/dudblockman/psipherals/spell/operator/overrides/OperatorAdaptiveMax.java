@@ -11,8 +11,8 @@ public class OperatorAdaptiveMax extends OperatorAdaptiveTripleBase {
         orignalPiece = new PieceOperatorMax(spell);
     }
 
-    public double operation (double a, double b, double c) {
-        return Math.max(a,Math.max(b,c));
+    public double operation(double a, double b, double c) {
+        return Math.max(a, Math.max(b, c));
     }
 
 }

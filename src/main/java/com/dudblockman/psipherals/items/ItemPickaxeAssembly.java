@@ -15,6 +15,7 @@ import java.util.List;
 
 public class ItemPickaxeAssembly extends ItemCADComponent implements ICADAssembly {
     private final String model;
+
     public ItemPickaxeAssembly(Item.Properties props, String model) {
         super(props);
         this.model = model;

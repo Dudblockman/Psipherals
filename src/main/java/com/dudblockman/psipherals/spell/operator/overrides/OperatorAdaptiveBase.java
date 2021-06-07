@@ -23,13 +23,13 @@ public abstract class OperatorAdaptiveBase extends PieceOperator {
         return isInfiniteLoop(this, new HashSet<>());
     }
 
-    public boolean isInfiniteLoop (SpellPiece piece, Set<SpellPiece> visited) {
+    public boolean isInfiniteLoop(SpellPiece piece, Set<SpellPiece> visited) {
         if (!visited.add(piece)) {
             return true;
         }
         for (SpellParam.Side side : piece.paramSides.values()) {
             try {
-                SpellPiece nextPiece = spell.grid.getPieceAtSideWithRedirections(piece.x,piece.y, side);
+                SpellPiece nextPiece = spell.grid.getPieceAtSideWithRedirections(piece.x, piece.y, side);
                 if (nextPiece != piece) {
                     if (nextPiece instanceof OperatorAdaptiveBase && isInfiniteLoop(nextPiece, visited)) {
                         return true;
@@ -52,8 +52,9 @@ public abstract class OperatorAdaptiveBase extends PieceOperator {
                 SpellParam.Side side = this.paramSides.get(param);
                 SpellPiece piece = null;
                 try {
-                    piece = spell.grid.getPieceAtSideWithRedirections(this.x,this.y, side);
-                } catch (SpellCompilationException ignored) {}
+                    piece = spell.grid.getPieceAtSideWithRedirections(this.x, this.y, side);
+                } catch (SpellCompilationException ignored) {
+                }
                 if (piece != null && piece != this) {
                     Class<?> type = piece.getEvaluationType();
                     if (Vector3.class.isAssignableFrom(type)) {
@@ -69,12 +70,12 @@ public abstract class OperatorAdaptiveBase extends PieceOperator {
 
     public Vector3 vectorize(Object object) {
         if (object instanceof Vector3) {
-            return  (Vector3) object;
+            return (Vector3) object;
         } else if (object instanceof Number) {
             double val = ((Number) object).doubleValue();
-            return new Vector3(val,val,val);
+            return new Vector3(val, val, val);
         }
-        return new Vector3(defaultValue,defaultValue,defaultValue);
+        return new Vector3(defaultValue, defaultValue, defaultValue);
     }
 
     public static class ParamVectorNumber extends SpellParam<VectorOrNumber> {
@@ -93,6 +94,7 @@ public abstract class OperatorAdaptiveBase extends PieceOperator {
         }
 
     }
+
     public static class VectorOrNumber {
     }
 }

@@ -18,7 +18,7 @@ public class OperatorAdaptiveSubtract extends OperatorAdaptiveTripleBase {
         addParam(in3 = new ParamVectorNumber(SpellParam.GENERIC_NAME_NUMBER3, SpellParam.GREEN, true));
     }
 
-    public double operation (double a, double b, double c) {
+    public double operation(double a, double b, double c) {
         return a - b - c;
     }
 

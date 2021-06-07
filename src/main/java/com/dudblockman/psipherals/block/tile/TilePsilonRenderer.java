@@ -7,21 +7,21 @@ import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
-import vazkii.psi.api.cad.ICADColorizer;
 import vazkii.psi.api.internal.PsiRenderHelper;
 import vazkii.psi.api.internal.Vector3;
 import vazkii.psi.client.render.entity.RenderSpellCircle;
 import vazkii.psi.common.Psi;
 
 public class TilePsilonRenderer extends TileEntityRenderer<TilePsilon> {
+    float lastTime = 0;
+
     public TilePsilonRenderer(TileEntityRendererDispatcher rendererDispatcherIn) {
         super(rendererDispatcherIn);
     }
-    float lastTime = 0;
+
     @Override
     public void render(TilePsilon tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
         Minecraft mc = Minecraft.getInstance();
@@ -32,9 +32,9 @@ public class TilePsilonRenderer extends TileEntityRenderer<TilePsilon> {
 
         if (!tileEntityIn.stack.isEmpty()) {
             matrixStackIn.push();
-            matrixStackIn.translate(0.5,1.1875, 0.5);
+            matrixStackIn.translate(0.5, 1.1875, 0.5);
             long i = MathHelper.getPositionRandom(tileEntityIn.getPos());
-            matrixStackIn.rotate(Vector3f.YP.rotationDegrees(3 * ((mc.world.getGameTime()+i) % 360 + partialTicks)));
+            matrixStackIn.rotate(Vector3f.YP.rotationDegrees(3 * ((mc.world.getGameTime() + i) % 360 + partialTicks)));
             ir.renderItem(tileEntityIn.stack, ItemCameraTransforms.TransformType.GROUND, combinedLightIn, combinedOverlayIn, matrixStackIn, bufferIn);
             matrixStackIn.pop();
         }
@@ -67,7 +67,7 @@ public class TilePsilonRenderer extends TileEntityRenderer<TilePsilon> {
                         for (int i = 0; i < Math.ceil(5 * delta); i++) {
                             float s = 0.2F + (float) Math.random() * 0.1F;
                             float m = 0.01F + (float) Math.random() * 0.015F;
-                            Psi.proxy.wispFX(origin.x, origin.y, origin.z, r, g, b, s, 0, m, 0,1f);
+                            Psi.proxy.wispFX(origin.x, origin.y, origin.z, r, g, b, s, 0, m, 0, 1f);
                         }
                         break;
                     case CONSUMING:
@@ -82,7 +82,7 @@ public class TilePsilonRenderer extends TileEntityRenderer<TilePsilon> {
                             Psi.proxy.sparkleFX(origin.x, origin.y, origin.z, r, g, b, (float) dir.x, (float) dir.y, (float) dir.z, 1, 20);
                             float s = 0.2F + (float) Math.random() * 0.1F;
                             float m = 0.01F + (float) Math.random() * 0.015F;
-                            Psi.proxy.wispFX(origin.x, origin.y, origin.z, r, g, b, s, (float) (voffset.x * m), (float) (voffset.y * m), (float) (voffset.z * m),1f);
+                            Psi.proxy.wispFX(origin.x, origin.y, origin.z, r, g, b, s, (float) (voffset.x * m), (float) (voffset.y * m), (float) (voffset.z * m), 1f);
                         }
                         break;
                 }
@@ -102,11 +102,11 @@ public class TilePsilonRenderer extends TileEntityRenderer<TilePsilon> {
                     float g = PsiRenderHelper.g(color) / 255F;
                     float b = PsiRenderHelper.b(color) / 255F;
                     for (int i = 0; i < Math.ceil(size * size * 3 * delta); i++) {
-                        double x,z;
+                        double x, z;
                         do {
                             x = (Math.random() - 0.5) * size * 3;
                             z = (Math.random() - 0.5) * size * 3;
-                        } while (x*x + z*z > size*size*2.25);
+                        } while (x * x + z * z > size * size * 2.25);
                         double y = startpos.y;
                         x += startpos.x + 0.5;
                         z += startpos.z + 0.5;
@@ -118,6 +118,7 @@ public class TilePsilonRenderer extends TileEntityRenderer<TilePsilon> {
 
         }
     }
+
     public boolean isGlobalRenderer(TilePsilon te) {
         return true;
     }

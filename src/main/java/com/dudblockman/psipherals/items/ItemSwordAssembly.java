@@ -19,6 +19,7 @@ public class ItemSwordAssembly extends ItemCADComponent implements ICADAssembly 
     public static final String FLUGEL_TIARA_II_ELECTRIC_BOOGALOO = "d76a441dc5fd2ca08a4f27241f2f7509d28b201f28c62a5cd74f4a91c46ae822";
 
     private final String model;
+
     public ItemSwordAssembly(Item.Properties props, String model) {
         super(props);
         this.model = model;
@@ -26,7 +27,7 @@ public class ItemSwordAssembly extends ItemCADComponent implements ICADAssembly 
 
     @Override
     public ItemStack createCADStack(ItemStack stack, List<ItemStack> allComponents) {
-        if (StringObfuscator.matchesHash(stack.getTranslationKey()+stack.getDisplayName(),FLUGEL_TIARA_II_ELECTRIC_BOOGALOO)) {
+        if (StringObfuscator.matchesHash(stack.getTranslationKey() + stack.getDisplayName(), FLUGEL_TIARA_II_ELECTRIC_BOOGALOO)) {
             allComponents.set(allComponents.indexOf(stack), new ItemStack(Items.dessAssembly));
         }
         ListNBT enchants = stack.getEnchantmentTagList();

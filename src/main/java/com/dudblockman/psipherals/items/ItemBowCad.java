@@ -58,6 +58,28 @@ public class ItemBowCad extends BowItem implements IIntegratedCad {
         super(props);
     }
 
+    public static ItemStack makeCAD(ItemStack... components) {
+        return makeCAD(Arrays.asList(components));
+    }
+
+    public static ItemStack makeCADWithAssembly(ItemStack assembly, List<ItemStack> components) {
+        ItemStack cad = assembly.getItem() instanceof ICADAssembly ? ((ICADAssembly) assembly.getItem()).createCADStack(assembly, components) : new ItemStack(Items.bowCAD);
+
+        return makeCAD(cad, components);
+    }
+
+    public static ItemStack makeCAD(List<ItemStack> components) {
+        return makeCAD(new ItemStack(Items.bowCAD), components);
+    }
+
+    public static ItemStack makeCAD(ItemStack base, List<ItemStack> components) {
+        ItemStack stack = base.copy();
+        for (ItemStack component : components) {
+            ICAD.setComponent(stack, component);
+        }
+        return stack;
+    }
+
     @Override
     public boolean isMelee() {
         return false;
@@ -113,7 +135,7 @@ public class ItemBowCad extends BowItem implements IIntegratedCad {
                     PlayerDataHandler.PlayerData data = PlayerDataHandler.get(playerentity);
                     ItemStack playerCad = PsiAPI.getPlayerCAD(playerentity);
                     if (!playerCad.isEmpty()) {
-                        AbstractArrowEntity abstractarrowentity = new EntityPsiArrow(worldIn,playerentity).setInfo(getComponentInSlot(playerCad, EnumCADComponent.DYE));
+                        AbstractArrowEntity abstractarrowentity = new EntityPsiArrow(worldIn, playerentity).setInfo(getComponentInSlot(playerCad, EnumCADComponent.DYE));
                         abstractarrowentity = customArrow(abstractarrowentity);
                         abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch, playerentity.rotationYaw, 0.0F, f * 3.0F, 1.0F);
                         if (f == 1.0F) {
@@ -219,28 +241,6 @@ public class ItemBowCad extends BowItem implements IIntegratedCad {
             return did;
         }
         return false;
-    }
-
-    public static ItemStack makeCAD(ItemStack... components) {
-        return makeCAD(Arrays.asList(components));
-    }
-
-    public static ItemStack makeCADWithAssembly(ItemStack assembly, List<ItemStack> components) {
-        ItemStack cad = assembly.getItem() instanceof ICADAssembly ? ((ICADAssembly) assembly.getItem()).createCADStack(assembly, components) : new ItemStack(Items.bowCAD);
-
-        return makeCAD(cad, components);
-    }
-
-    public static ItemStack makeCAD(List<ItemStack> components) {
-        return makeCAD(new ItemStack(Items.bowCAD), components);
-    }
-
-    public static ItemStack makeCAD(ItemStack base, List<ItemStack> components) {
-        ItemStack stack = base.copy();
-        for (ItemStack component : components) {
-            ICAD.setComponent(stack, component);
-        }
-        return stack;
     }
 
     @Override

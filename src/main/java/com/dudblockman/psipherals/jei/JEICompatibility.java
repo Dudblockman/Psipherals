@@ -22,15 +22,18 @@ public class JEICompatibility implements IModPlugin {
     public ResourceLocation getPluginUid() {
         return UID;
     }
+
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
         helpers = registry.getJeiHelpers();
         registry.addRecipeCategories(new PsilonInfusionCategory(helpers.getGuiHelper()));
     }
+
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         registration.addRecipes(Minecraft.getInstance().world.getRecipeManager().getRecipes(CraftingRecipes.INFUSION_TYPE).values(), PsilonInfusionCategory.UID);
     }
+
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(new ItemStack(Blocks.psilon.asItem()), PsilonInfusionCategory.UID);

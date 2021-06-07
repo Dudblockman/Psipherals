@@ -1,14 +1,13 @@
 package com.dudblockman.psipherals.crafting;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import it.unimi.dsi.fastutil.ints.IntList;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.*;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
@@ -43,7 +42,7 @@ public class PsilonInfusionRecipe implements IRecipe<RecipeWrapper> {
             java.util.List<ItemStack> inputs = new java.util.ArrayList<>();
             int i = 0;
 
-            for(int j = 1; j < inv.getSizeInventory(); ++j) {
+            for (int j = 1; j < inv.getSizeInventory(); ++j) {
                 ItemStack itemstack = inv.getStackInSlot(j);
                 if (!itemstack.isEmpty()) {
                     ++i;
@@ -51,7 +50,7 @@ public class PsilonInfusionRecipe implements IRecipe<RecipeWrapper> {
                 }
             }
 
-            return i == this.ingredients.size() && net.minecraftforge.common.util.RecipeMatcher.findMatches(inputs,  this.ingredients) != null;
+            return i == this.ingredients.size() && net.minecraftforge.common.util.RecipeMatcher.findMatches(inputs, this.ingredients) != null;
         }
         return false;
     }

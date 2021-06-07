@@ -22,10 +22,11 @@ public abstract class PlayerBurnoutMixin implements PlayerDataWrapper {
     public int regenCooldown;
     @Shadow
     public int regen;
+    @Shadow
+    public int availablePsi;
 
-    @Shadow public abstract void deductPsi(int psi, int cd, boolean sync);
-
-    @Shadow public int availablePsi;
+    @Shadow
+    public abstract void deductPsi(int psi, int cd, boolean sync);
 
     @Override
     public void addBurnout(int burnout) {
@@ -73,6 +74,7 @@ public abstract class PlayerBurnoutMixin implements PlayerDataWrapper {
     public void saveNBT(CompoundNBT cmp, CallbackInfo ci) {
         cmp.putInt(TAG_BURNOUT_PSI, burnoutPsi);
     }
+
     @Inject(
             remap = false,
             method = "readFromNBT(Lnet/minecraft/nbt/CompoundNBT;)V",

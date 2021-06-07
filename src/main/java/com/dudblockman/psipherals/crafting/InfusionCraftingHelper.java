@@ -23,22 +23,11 @@ import java.util.function.Predicate;
 public class InfusionCraftingHelper {
     public static final float MIN_RADIUS = 2;
     public static final float MAX_RADIUS = 7.5f;
-    private static final float MIN_RADIUS_SQ = MIN_RADIUS * MIN_RADIUS;
-    private static final float MAX_RADIUS_SQ = MAX_RADIUS * MAX_RADIUS;
-    private static final AxisAlignedBB SEARCH_SPACE = new AxisAlignedBB(-MAX_RADIUS,0,-MAX_RADIUS,1+MAX_RADIUS,1,1+MAX_RADIUS);
-
     public static final ResourceLocation BASE_TAG = Psipherals.location("psilon/base");
     public static final ResourceLocation PROVIDER_TAG = Psipherals.location("psilon/provider");
-
-    public enum InfusionError {
-        NONE,
-        MULTIPLE_RADIUS,
-        UNBALANCED_PLACEMENT,
-        INCORRECT_FREQUENCY,
-        INCORRECT_ORDER,
-        INVALID_RECIPE,
-        MISC_ERROR
-    }
+    private static final float MIN_RADIUS_SQ = MIN_RADIUS * MIN_RADIUS;
+    private static final float MAX_RADIUS_SQ = MAX_RADIUS * MAX_RADIUS;
+    private static final AxisAlignedBB SEARCH_SPACE = new AxisAlignedBB(-MAX_RADIUS, 0, -MAX_RADIUS, 1 + MAX_RADIUS, 1, 1 + MAX_RADIUS);
 
     public static void throwError(InfusionError code) throws SpellRuntimeException {
         String error = null;
@@ -87,7 +76,7 @@ public class InfusionCraftingHelper {
                     if (te.equals(psilon)) {
                         ((TilePsilon) te).mode = TilePsilon.InfusionState.LIT;
                         ((TilePsilon) te).sync();
-                        if (i == master.connectedPsilons.size()-1) {
+                        if (i == master.connectedPsilons.size() - 1) {
                             master.mode = TilePsilon.InfusionState.READY;
                             master.scheduleInfusionTick();
                             return InfusionError.NONE;
@@ -196,8 +185,8 @@ public class InfusionCraftingHelper {
     public static Optional<PsilonInfusionRecipe> getRecipe(TilePsilon master, List<TilePsilon> entities) {
         RecipeWrapper inv = new RecipeWrapper(new ItemStackHandler(entities.size() + 1));
         inv.setInventorySlotContents(0, master.getHeldItem());
-        for(int i = 0; i < entities.size(); i++) {
-            inv.setInventorySlotContents(i+1, entities.get(i).getHeldItem());
+        for (int i = 0; i < entities.size(); i++) {
+            inv.setInventorySlotContents(i + 1, entities.get(i).getHeldItem());
         }
         Optional<PsilonInfusionRecipe> recipe = master.getWorld().getRecipeManager().getRecipe(CraftingRecipes.INFUSION_TYPE, inv, master.getWorld());
         /*if (recipe.isPresent()) {
@@ -216,7 +205,7 @@ public class InfusionCraftingHelper {
     public static InfusionError validateInfusionProviders(BlockPos origin, List<TilePsilon> pylons) {
         List<Double> distances = new ArrayList<>(pylons.size());
         Vector3 originVec = Vector3.fromBlockPos(origin);
-        Vector3 centroid = new Vector3(0,0,0);
+        Vector3 centroid = new Vector3(0, 0, 0);
         double averageDistance = 0;
         for (TilePsilon pylon : pylons) {
             double distance = Vector3.fromTileEntity(pylon).sub(originVec).mag();
@@ -228,7 +217,7 @@ public class InfusionCraftingHelper {
         averageDistance /= pylons.size();
         double variance = 0;
         for (double d : distances) {
-            variance += Math.pow(d - averageDistance,2);
+            variance += Math.pow(d - averageDistance, 2);
         }
         variance /= pylons.size();
         if (Math.sqrt(variance) > 0.25) {
@@ -244,9 +233,9 @@ public class InfusionCraftingHelper {
         World worldIn = master.getWorld();
         BlockPos origin = master.getPos();
         assert worldIn != null;
-        return getTileEntitiesWithinAABB(worldIn, TilePsilon.class, SEARCH_SPACE.offset(origin),(te) -> {
+        return getTileEntitiesWithinAABB(worldIn, TilePsilon.class, SEARCH_SPACE.offset(origin), (te) -> {
             BlockPos pos = te.getPos();
-            int distanceSq = (int) pos.distanceSq(origin.getX(), origin.getY(), origin.getZ(),false);
+            int distanceSq = (int) pos.distanceSq(origin.getX(), origin.getY(), origin.getZ(), false);
             if (distanceSq >= MIN_RADIUS_SQ && distanceSq <= MAX_RADIUS_SQ) {
                 return worldIn.getBlockState(pos.down()).getBlock().getTags().contains(PROVIDER_TAG);
             }
@@ -254,14 +243,14 @@ public class InfusionCraftingHelper {
         });
     }
 
-
     public static <T extends TileEntity> List<T> getTileEntitiesWithinAABB(World world, Class<? extends T> type, AxisAlignedBB aabb) {
         return getTileEntitiesWithinAABB(world, type, aabb, x -> true);
     }
+
     public static <T extends TileEntity> List<T> getTileEntitiesWithinAABB(World world, Class<? extends T> type, AxisAlignedBB aabb, Predicate<? super T> predicate) {
         List<T> tileList = new ArrayList<>();
-        for (int i = (int)Math.floor(aabb.minX); i < (int)Math.ceil(aabb.maxX) + 16; i += 16) {
-            for (int j = (int)Math.floor(aabb.minZ); j < (int)Math.ceil(aabb.maxZ) + 16; j += 16) {
+        for (int i = (int) Math.floor(aabb.minX); i < (int) Math.ceil(aabb.maxX) + 16; i += 16) {
+            for (int j = (int) Math.floor(aabb.minZ); j < (int) Math.ceil(aabb.maxZ) + 16; j += 16) {
                 IChunk c = world.getChunk(new BlockPos(i, 0, j));
                 Set<BlockPos> tiles = c.getTileEntitiesPos();
                 for (BlockPos p : tiles) {
@@ -275,5 +264,15 @@ public class InfusionCraftingHelper {
             }
         }
         return tileList;
+    }
+
+    public enum InfusionError {
+        NONE,
+        MULTIPLE_RADIUS,
+        UNBALANCED_PLACEMENT,
+        INCORRECT_FREQUENCY,
+        INCORRECT_ORDER,
+        INVALID_RECIPE,
+        MISC_ERROR
     }
 }

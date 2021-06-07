@@ -15,6 +15,7 @@ import java.util.List;
 
 public class ItemAxeAssembly extends ItemCADComponent implements ICADAssembly {
     private final String model;
+
     public ItemAxeAssembly(Item.Properties props, String model) {
         super(props);
         this.model = model;

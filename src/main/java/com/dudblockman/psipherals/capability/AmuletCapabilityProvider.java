@@ -29,8 +29,9 @@ public class AmuletCapabilityProvider extends ToolSocketable implements ICurio {
     private static final String TAG_TIMES_CAST = "timesCast";
 
     private final LazyOptional<?> capOptional;
+
     public AmuletCapabilityProvider(ItemStack tool, int slots) {
-        super(tool,slots);
+        super(tool, slots);
         this.capOptional = LazyOptional.of(() -> this);
     }
 
@@ -38,8 +39,8 @@ public class AmuletCapabilityProvider extends ToolSocketable implements ICurio {
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         if (cap == PsiAPI.SOCKETABLE_CAPABILITY ||
-            cap == PsiAPI.SPELL_ACCEPTOR_CAPABILITY ||
-            cap == CuriosCapability.ITEM) {
+                cap == PsiAPI.SPELL_ACCEPTOR_CAPABILITY ||
+                cap == CuriosCapability.ITEM) {
             return capOptional.cast();
         }
         return LazyOptional.empty();
@@ -57,6 +58,7 @@ public class AmuletCapabilityProvider extends ToolSocketable implements ICurio {
         }
 
     }
+
     @Override
     public Spell getSpell() {
         return ItemSpellDrive.getSpell(tool);
@@ -71,7 +73,7 @@ public class AmuletCapabilityProvider extends ToolSocketable implements ICurio {
     public ArrayList<Entity> castSpell(SpellContext context) {
         if (!(context.cspell.actions.firstElement().piece instanceof TrickExecuteAmulet)) {
             CompiledSpell.Action newAction = context.cspell.new Action(new TrickExecuteAmulet(null));
-            context.cspell.actions.add(0,newAction);
+            context.cspell.actions.add(0, newAction);
         }
         context.cspell.safeExecute(context);
         return null;
@@ -86,14 +88,15 @@ public class AmuletCapabilityProvider extends ToolSocketable implements ICurio {
     public boolean castableFromSocket() {
         return true;
     }
+
     @Override
     public boolean isCADOnlyContainer() {
         return true;
     }
 
     @Override
-    public void curioTick(String identifier, int index, LivingEntity livingEntity ) {
-        if (!(livingEntity instanceof  PlayerEntity))
+    public void curioTick(String identifier, int index, LivingEntity livingEntity) {
+        if (!(livingEntity instanceof PlayerEntity))
             return;
         PlayerEntity player = (PlayerEntity) livingEntity;
         PlayerDataHandler.PlayerData data = PlayerDataHandler.get(player);

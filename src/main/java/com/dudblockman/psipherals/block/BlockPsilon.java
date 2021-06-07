@@ -92,15 +92,15 @@ public class BlockPsilon extends Block {
         if (hasTileEntity(state)) {
             TileEntity te = worldIn.getTileEntity(pos);
             if (te instanceof TilePsilon) {
-                if(((TilePsilon) te).getComparatorValue() > 0) {
-                  ((TilePsilon) te).scheduleOffTick();
+                if (((TilePsilon) te).getComparatorValue() > 0) {
+                    ((TilePsilon) te).scheduleOffTick();
                 }
                 if (((TilePsilon) te).isMaster()) {
-                    if(((TilePsilon) te).mode == TilePsilon.InfusionState.READY) {
+                    if (((TilePsilon) te).mode == TilePsilon.InfusionState.READY) {
                         InfusionCraftingHelper.ActivateInfusion((TilePsilon) te);
-                    } else if(((TilePsilon) te).mode == TilePsilon.InfusionState.LIT) {
+                    } else if (((TilePsilon) te).mode == TilePsilon.InfusionState.LIT) {
                         InfusionCraftingHelper.infusionCraft((TilePsilon) te);
-                    } else if(((TilePsilon) te).mode == TilePsilon.InfusionState.CONSUMING) {
+                    } else if (((TilePsilon) te).mode == TilePsilon.InfusionState.CONSUMING) {
                         ((TilePsilon) te).disconnect(true);
                     }
                 }

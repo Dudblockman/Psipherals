@@ -38,10 +38,10 @@ public class RenderPsiArrow extends EntityRenderer<EntityPsiArrow> {
         float f7 = 0.3125F;
         float f8 = 0.05625F;
         int colorVal = entityIn.getColor();
-        int r = colorVal>> 16 & 255;
+        int r = colorVal >> 16 & 255;
         int g = colorVal >> 8 & 255;
         int b = colorVal & 255;
-        float f9 = (float)entityIn.arrowShake - partialTicks;
+        float f9 = (float) entityIn.arrowShake - partialTicks;
         if (f9 > 0.0F) {
             float f10 = -MathHelper.sin(f9 * 3.0F) * f9;
             matrixStackIn.rotate(Vector3f.ZP.rotationDegrees(f10));
@@ -63,7 +63,7 @@ public class RenderPsiArrow extends EntityRenderer<EntityPsiArrow> {
         this.drawVertex(matrix4f, matrix3f, ivertexbuilder, -7, -2, 2, 0.15625F, 0.3125F, 1, 0, 0, packedLightIn, r, g, b);
         this.drawVertex(matrix4f, matrix3f, ivertexbuilder, -7, -2, -2, 0.0F, 0.3125F, 1, 0, 0, packedLightIn, r, g, b);
 
-        for(int j = 0; j < 2; ++j) {
+        for (int j = 0; j < 2; ++j) {
             matrixStackIn.rotate(Vector3f.XP.rotationDegrees(90.0F));
             this.drawVertex(matrix4f, matrix3f, ivertexbuilder, -8, -2, 0, 0.0F, 0.0F, 0, 1, 0, packedLightIn, r, g, b);
             this.drawVertex(matrix4f, matrix3f, ivertexbuilder, 8, -2, 0, 0.5F, 0.0F, 0, 1, 0, packedLightIn, r, g, b);
@@ -76,6 +76,6 @@ public class RenderPsiArrow extends EntityRenderer<EntityPsiArrow> {
     }
 
     public void drawVertex(Matrix4f matrix, Matrix3f normals, IVertexBuilder vertexBuilder, int offsetX, int offsetY, int offsetZ, float textureX, float textureY, int p_229039_9_, int p_229039_10_, int p_229039_11_, int packedLightIn, int r, int g, int b) {
-        vertexBuilder.pos(matrix, (float)offsetX, (float)offsetY, (float)offsetZ).color(r, g, b, 255/3).tex(textureX, textureY).overlay(OverlayTexture.NO_OVERLAY).lightmap(packedLightIn).normal(normals, (float)p_229039_9_, (float)p_229039_11_, (float)p_229039_10_).endVertex();
+        vertexBuilder.pos(matrix, (float) offsetX, (float) offsetY, (float) offsetZ).color(r, g, b, 255 / 3).tex(textureX, textureY).overlay(OverlayTexture.NO_OVERLAY).lightmap(packedLightIn).normal(normals, (float) p_229039_9_, (float) p_229039_11_, (float) p_229039_10_).endVertex();
     }
 }

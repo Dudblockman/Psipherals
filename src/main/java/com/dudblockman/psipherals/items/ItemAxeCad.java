@@ -47,6 +47,28 @@ public class ItemAxeCad extends AxeItem implements IIntegratedCad {
         super(new AdvPsimetalToolMaterial(), 5.0F, -3.0F, props);
     }
 
+    public static ItemStack makeCAD(ItemStack... components) {
+        return makeCAD(Arrays.asList(components));
+    }
+
+    public static ItemStack makeCADWithAssembly(ItemStack assembly, List<ItemStack> components) {
+        ItemStack cad = assembly.getItem() instanceof ICADAssembly ? ((ICADAssembly) assembly.getItem()).createCADStack(assembly, components) : new ItemStack(Items.axeCAD);
+
+        return makeCAD(cad, components);
+    }
+
+    public static ItemStack makeCAD(List<ItemStack> components) {
+        return makeCAD(new ItemStack(Items.axeCAD), components);
+    }
+
+    public static ItemStack makeCAD(ItemStack base, List<ItemStack> components) {
+        ItemStack stack = base.copy();
+        for (ItemStack component : components) {
+            ICAD.setComponent(stack, component);
+        }
+        return stack;
+    }
+
     @Override
     public boolean isMelee() {
         return true;
@@ -74,7 +96,7 @@ public class ItemAxeCad extends AxeItem implements IIntegratedCad {
 
     @Override
     public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-        super.onBlockDestroyed(stack,worldIn,state,pos,entityLiving);
+        super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
         repairTool(stack, entityLiving);
         return true;
     }
@@ -118,28 +140,6 @@ public class ItemAxeCad extends AxeItem implements IIntegratedCad {
         ItemStack itemStackIn = playerIn.getHeldItem(hand);
         boolean did = normalCast(worldIn, playerIn, hand);
         return new ActionResult<>(did ? ActionResultType.PASS : ActionResultType.PASS, itemStackIn);
-    }
-
-    public static ItemStack makeCAD(ItemStack... components) {
-        return makeCAD(Arrays.asList(components));
-    }
-
-    public static ItemStack makeCADWithAssembly(ItemStack assembly, List<ItemStack> components) {
-        ItemStack cad = assembly.getItem() instanceof ICADAssembly ? ((ICADAssembly) assembly.getItem()).createCADStack(assembly, components) : new ItemStack(Items.axeCAD);
-
-        return makeCAD(cad, components);
-    }
-
-    public static ItemStack makeCAD(List<ItemStack> components) {
-        return makeCAD(new ItemStack(Items.axeCAD), components);
-    }
-
-    public static ItemStack makeCAD(ItemStack base, List<ItemStack> components) {
-        ItemStack stack = base.copy();
-        for (ItemStack component : components) {
-            ICAD.setComponent(stack, component);
-        }
-        return stack;
     }
 
     @Override

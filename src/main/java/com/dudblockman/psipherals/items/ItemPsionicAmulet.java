@@ -26,8 +26,9 @@ public class ItemPsionicAmulet extends Item {
 
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT unused) {
-        return new AmuletCapabilityProvider(stack,1);
+        return new AmuletCapabilityProvider(stack, 1);
     }
+
     @OnlyIn(Dist.CLIENT)
     @Override
     public void addInformation(ItemStack stack, @Nullable World playerin, List<ITextComponent> tooltip, ITooltipFlag advanced) {

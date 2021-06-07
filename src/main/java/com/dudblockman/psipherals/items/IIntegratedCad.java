@@ -50,17 +50,25 @@ import java.util.function.Predicate;
 
 public interface IIntegratedCad extends ICAD {
 
+    static ICADData getCADData(ItemStack stack) {
+        return stack.getCapability(PsiAPI.CAD_DATA_CAPABILITY).orElseGet(() -> new CADData(stack));
+    }
+
+    static ISocketable getSocketable(ItemStack stack) {
+        return stack.getCapability(PsiAPI.SOCKETABLE_CAPABILITY).orElseGet(() -> new CADData(stack));
+    }
+
     default void repairTool(ItemStack itemstack, Entity user) {
         int damage = itemstack.getDamage();
         if (user instanceof PlayerEntity && damage > 0) {
             PlayerEntity player = (PlayerEntity) user;
             PlayerDataHandler.PlayerData data = PlayerDataHandler.get(player);
             int cost = 150 / (1 + EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, itemstack));
-            if ((float)data.getAvailablePsi() / (float)data.getTotalPsi() > 0.5F) {
+            if ((float) data.getAvailablePsi() / (float) data.getTotalPsi() > 0.5F) {
                 int repaired = 0;
                 do {
                     repaired++;
-                } while ((repaired < damage) && (data.getAvailablePsi() - cost * repaired > (float)data.getTotalPsi() * 0.5F));
+                } while ((repaired < damage) && (data.getAvailablePsi() - cost * repaired > (float) data.getTotalPsi() * 0.5F));
                 data.deductPsi(cost * repaired, 0, true, false);
                 itemstack.setDamage(itemstack.getDamage() - repaired);
             }
@@ -145,14 +153,6 @@ public interface IIntegratedCad extends ICAD {
             did = true;
         }
         return did;
-    }
-
-    static ICADData getCADData(ItemStack stack) {
-        return stack.getCapability(PsiAPI.CAD_DATA_CAPABILITY).orElseGet(() -> new CADData(stack));
-    }
-
-    static ISocketable getSocketable(ItemStack stack) {
-        return stack.getCapability(PsiAPI.SOCKETABLE_CAPABILITY).orElseGet(() -> new CADData(stack));
     }
 
     default ItemStack getComponentInSlot(ItemStack stack, EnumCADComponent type) {

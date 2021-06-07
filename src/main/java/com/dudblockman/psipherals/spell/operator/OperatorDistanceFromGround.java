@@ -1,9 +1,7 @@
 package com.dudblockman.psipherals.spell.operator;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunk;
 import net.minecraftforge.common.extensions.IForgeBlockState;
 import vazkii.psi.api.internal.Vector3;
@@ -46,7 +44,7 @@ public class OperatorDistanceFromGround extends PieceOperator {
             while (pointer.getY() >= 0) {
                 pointer = pointer.down();
                 IForgeBlockState state = chunk.getBlockState(pointer);
-                if (!state.isAir(world,pointer)) {
+                if (!state.isAir(world, pointer)) {
                     break;
                 }
             }

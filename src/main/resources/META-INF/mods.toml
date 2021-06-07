@@ -1,38 +1,38 @@
-modLoader="javafml"
-loaderVersion="[34,)"
-license="MIT License"
-issueTrackerURL="https://github.com/Dudblockman/psipherals"
+modLoader = "javafml"
+loaderVersion = "[34,)"
+license = "MIT License"
+issueTrackerURL = "https://github.com/Dudblockman/psipherals"
 
 [[mods]]
-modId="psipherals"
-displayName="Psionic Peripherals"
-version="${version}"
-authors="Dudblockman"
-description='''
+modId = "psipherals"
+displayName = "Psionic Peripherals"
+version = "${version}"
+authors = "Dudblockman"
+description = '''
 Fun and experimental additions to Psi
 '''
 [[dependencies.psipherals]]
-    modId="patchouli"
-    mandatory=true
-    versionRange="[1.16-45,)"
-    side="BOTH"
+modId = "patchouli"
+mandatory = true
+versionRange = "[1.16-45,)"
+side = "BOTH"
 
 [[dependencies.psipherals]]
-    modId="psi"
-    mandatory=true
-    versionRange="[1.16-94.379,)"
-    side="BOTH"
+modId = "psi"
+mandatory = true
+versionRange = "[1.16-94.379,)"
+side = "BOTH"
 
 [[dependencies.psipherals]]
-    modId="forge"
-    mandatory=true
-    versionRange="[34.1.0,)"
-    ordering="AFTER"
-    side="BOTH"
+modId = "forge"
+mandatory = true
+versionRange = "[34.1.0,)"
+ordering = "AFTER"
+side = "BOTH"
 
 [[dependencies.psipherals]]
-    modId="curios"
-    mandatory=true
-    versionRange="[FORGE-1.16.3,)"
-    ordering="AFTER"
-    side="BOTH"
+modId = "curios"
+mandatory = true
+versionRange = "[FORGE-1.16.3,)"
+ordering = "AFTER"
+side = "BOTH"

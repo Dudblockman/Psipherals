@@ -3,15 +3,15 @@
   "icon": "psipherals:textures/spell/cad_overclock.png",
   "category": "psipherals:main_category",
   "pages": [
-      {
-        "type": "text",
-        "text": "psipherals.book.page.limitbreak.1"
-      },
-      {
-        "type": "psi:spellpiece_spotlight",
-        "text": "psipherals.book.page.limitbreak.2",
-        "spellpiece": "psipherals:cad_overclock"
-      },
+    {
+      "type": "text",
+      "text": "psipherals.book.page.limitbreak.1"
+    },
+    {
+      "type": "psi:spellpiece_spotlight",
+      "text": "psipherals.book.page.limitbreak.2",
+      "spellpiece": "psipherals:cad_overclock"
+    },
     {
       "type": "text",
       "text": "psipherals.book.page.limitbreak.3"

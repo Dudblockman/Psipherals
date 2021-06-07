@@ -1,8 +1,8 @@
 package com.dudblockman.psipherals.util;
 
 import com.dudblockman.psipherals.items.ItemBowCad;
-import com.dudblockman.psipherals.util.network.MessageRegistry;
 import com.dudblockman.psipherals.util.network.MessageBowCast;
+import com.dudblockman.psipherals.util.network.MessageRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResultType;
 import net.minecraftforge.api.distmarker.Dist;

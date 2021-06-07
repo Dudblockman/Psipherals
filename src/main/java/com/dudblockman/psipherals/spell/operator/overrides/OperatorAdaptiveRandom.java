@@ -20,7 +20,7 @@ public class OperatorAdaptiveRandom extends OperatorAdaptiveDoubleBase {
         addParam(in2 = new ParamVectorNumber(SpellParam.GENERIC_NAME_MIN, SpellParam.RED, true));
     }
 
-    public double operation (double a, double b) throws SpellRuntimeException {
+    public double operation(double a, double b) throws SpellRuntimeException {
         int maxVal = (int) a;
         int minVal = (int) b;
         if (maxVal - minVal <= 0) {

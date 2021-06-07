@@ -13,6 +13,7 @@ public class MessageRegistry {
             () -> VERSION,
             VERSION::equals,
             VERSION::equals);
+
     public static void init() {
         int id = 0;
         HANDLER.messageBuilder(MessageBowCast.class, id++)
@@ -28,10 +29,12 @@ public class MessageRegistry {
                 .decoder(MessageDeathPrevented::new)
                 .consumer(MessageDeathPrevented::receive).add();
     }
+
     public static void sendToPlayer(Object msg, PlayerEntity player) {
         ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
         HANDLER.send(PacketDistributor.PLAYER.with(() -> serverPlayer), msg);
     }
+
     public static void sendToServer(Object msg) {
         HANDLER.sendToServer(msg);
     }

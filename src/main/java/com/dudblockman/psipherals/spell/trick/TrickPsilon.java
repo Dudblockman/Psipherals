@@ -21,12 +21,14 @@ public class TrickPsilon extends PieceTrick {
         addParam(position = new ParamVector(SpellParam.GENERIC_NAME_POSITION, SpellParam.BLUE, false, false));
         addParam(frequency = new ParamVector(SpellParam.GENERIC_NAME_VECTOR1, SpellParam.GREEN, false, false));
     }
+
     @Override
     public void addToMetadata(SpellMetadata meta) throws SpellCompilationException {
         super.addToMetadata(meta);
         meta.addStat(EnumSpellStat.POTENCY, 35);
         meta.addStat(EnumSpellStat.COST, 25);
     }
+
     @Override
     public Object execute(SpellContext context) throws SpellRuntimeException {
         Vector3 positionVal = this.getParamValue(context, position);

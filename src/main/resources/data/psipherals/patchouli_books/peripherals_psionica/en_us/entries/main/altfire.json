@@ -3,14 +3,14 @@
   "icon": "psipherals:textures/spell/selector_alt_fire.png",
   "category": "psipherals:main_category",
   "pages": [
-      {
-        "type": "text",
-        "text": "psipherals.book.page.altfire.1"
-      },
-      {
-        "type": "psi:spellpiece_spotlight",
-        "text": "psipherals.book.page.altfire.2",
-        "spellpiece": "psipherals:selector_alt_fire"
-      }
+    {
+      "type": "text",
+      "text": "psipherals.book.page.altfire.1"
+    },
+    {
+      "type": "psi:spellpiece_spotlight",
+      "text": "psipherals.book.page.altfire.2",
+      "spellpiece": "psipherals:selector_alt_fire"
+    }
   ]
 }

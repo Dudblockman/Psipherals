@@ -10,7 +10,7 @@ public class OperatorAdaptiveSum extends OperatorAdaptiveTripleBase {
         orignalPiece = new PieceOperatorSum(spell);
     }
 
-    public double operation (double a, double b, double c) {
+    public double operation(double a, double b, double c) {
         return a + b + c;
     }
 

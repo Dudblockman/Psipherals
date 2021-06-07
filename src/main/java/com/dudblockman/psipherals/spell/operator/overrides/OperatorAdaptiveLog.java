@@ -19,7 +19,7 @@ public class OperatorAdaptiveLog extends OperatorAdaptiveDoubleBase {
         addParam(in2 = new ParamVectorNumber(SpellParam.GENERIC_NAME_BASE, SpellParam.RED, true));
     }
 
-    public double operation (double a, double b) throws SpellRuntimeException {
+    public double operation(double a, double b) throws SpellRuntimeException {
         if (a < 0) {
             throw new SpellRuntimeException(SpellRuntimeException.NEGATIVE_NUMBER);
         }

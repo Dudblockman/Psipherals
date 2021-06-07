@@ -37,13 +37,13 @@ public abstract class OperatorAdaptiveTripleBase extends OperatorAdaptiveBase {
             if (d3 != null) {
                 c = ((Number) d3).doubleValue();
             }
-            return operation(a,b,c);
+            return operation(a, b, c);
         }
     }
 
-    public Vector3 operation (Vector3 a, Vector3 b, Vector3 c) throws SpellRuntimeException{
-        return new Vector3(operation(a.x,b.x,c.x),operation(a.y,b.y,c.y),operation(a.z,b.z,c.z));
+    public Vector3 operation(Vector3 a, Vector3 b, Vector3 c) throws SpellRuntimeException {
+        return new Vector3(operation(a.x, b.x, c.x), operation(a.y, b.y, c.y), operation(a.z, b.z, c.z));
     }
 
-    public abstract double operation (double a, double b, double c) throws SpellRuntimeException;
+    public abstract double operation(double a, double b, double c) throws SpellRuntimeException;
 }

@@ -1,6 +1,5 @@
 package com.dudblockman.psipherals.spell.trick.internal;
 
-import com.dudblockman.psipherals.capability.AmuletCapabilityProvider;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import vazkii.psi.api.PsiAPI;
@@ -15,8 +14,10 @@ public class TrickExecuteAmulet extends PieceTrick {
     public TrickExecuteAmulet(Spell spell) {
         super(spell);
     }
+
     @Override
-    public void addToMetadata(SpellMetadata meta) throws SpellCompilationException, ArithmeticException {}
+    public void addToMetadata(SpellMetadata meta) throws SpellCompilationException, ArithmeticException {
+    }
 
     @Override
     public Object execute(SpellContext context) throws SpellRuntimeException {

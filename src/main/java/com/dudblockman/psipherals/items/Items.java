@@ -38,15 +38,19 @@ public class Items {
 
     public static final Item psiAmulet = new ItemPsionicAmulet(defaultBuilder());
 
-    public static final Item dessAssembly = new ItemSwordAssembly(new Item.Properties(),"igalima");
+    public static final Item dessAssembly = new ItemSwordAssembly(new Item.Properties(), "igalima");
 
     public static final Item pentaGrenadeSpellBullet = new ItemPentaGrenadeSpellBullet(defaultBuilder());
 
     public static final ItemBowCad bowCAD = new ItemBowCad(defaultBuilder());
+
     public static Item.Properties defaultBuilder() {
         return new Item.Properties().group(CreativeTab.INSTANCE);
     }
-    public static Item.Properties fireproofBuilder() { return defaultBuilder().isImmuneToFire(); }
+
+    public static Item.Properties fireproofBuilder() {
+        return defaultBuilder().isImmuneToFire();
+    }
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> evt) {

@@ -20,7 +20,7 @@ public class OperatorAdaptiveRoot extends OperatorAdaptiveDoubleBase {
         addParam(in2 = new ParamVectorNumber(SpellParam.GENERIC_NAME_ROOT, SpellParam.RED, false));
     }
 
-    public double operation (double a, double b) throws SpellRuntimeException {
+    public double operation(double a, double b) throws SpellRuntimeException {
         if (a < 0 && b % 2 == 0) {
             throw new SpellRuntimeException(SpellRuntimeException.EVEN_ROOT_NEGATIVE_NUMBER);
         }

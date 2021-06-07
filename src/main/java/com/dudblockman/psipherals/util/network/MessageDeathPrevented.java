@@ -21,6 +21,7 @@ public class MessageDeathPrevented {
 
     public void encode(PacketBuffer buf) {
     }
+
     public boolean receive(Supplier<NetworkEvent.Context> context) {
         context.get().enqueueWork(() -> {
             boolean did = false;
@@ -32,7 +33,7 @@ public class MessageDeathPrevented {
                     stack.setTag(tag);
                     Minecraft.getInstance().gameRenderer.displayItemActivation(stack);
                     assert Minecraft.getInstance().player != null;
-                    Minecraft.getInstance().player.playSound(SoundEvents.ITEM_TOTEM_USE,1,1);
+                    Minecraft.getInstance().player.playSound(SoundEvents.ITEM_TOTEM_USE, 1, 1);
                     did = true;
                 }
             } while (!did);

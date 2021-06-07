@@ -26,11 +26,11 @@ import java.util.Iterator;
 @SuppressWarnings("UnresolvedMixinReference")
 @Mixin(value = SpellCostsWidget.class)
 public class SpellCostMixin {
+    private static final ThreadLocal<EnumSpellStat> currentStat = new ThreadLocal<>();
     @Final
     @Shadow
     private GuiProgrammer parent;
 
-    private static final ThreadLocal<EnumSpellStat> currentStat = new ThreadLocal<>();
     @Inject(
             remap = false,
             method = "lambda$renderButton$0",
@@ -79,7 +79,7 @@ public class SpellCostMixin {
                         return s + " (" + newCost + "+\u00A7c" + burnout + "\u00A7r)";
                     case POTENCY:
                         s += "/" + (cadVal == -1 ? "\u221E" : (int) Math.ceil(((int) (cadVal * PieceCADOverclock.POTENCY_MULTIPLIER)) / (PieceCADOverclock.POTENCY_MULTIPLIER * PieceCADOverclock.POTENCY_MULTIPLIER)));
-                        if ((int) (val * PieceCADOverclock.POTENCY_MULTIPLIER) <=  cadVal){
+                        if ((int) (val * PieceCADOverclock.POTENCY_MULTIPLIER) <= cadVal) {
                             s = "\u00A7f" + s;
                         }
                         return s;

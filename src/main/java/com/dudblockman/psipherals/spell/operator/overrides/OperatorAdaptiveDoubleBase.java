@@ -30,13 +30,13 @@ public abstract class OperatorAdaptiveDoubleBase extends OperatorAdaptiveBase {
         } else {
             double a = ((Number) d1).doubleValue();
             double b = ((Number) d2).doubleValue();
-            return operation(a,b);
+            return operation(a, b);
         }
     }
 
-    public Vector3 operation (Vector3 a, Vector3 b) throws SpellRuntimeException{
-        return new Vector3(operation(a.x,b.x),operation(a.y,b.y),operation(a.z,b.z));
+    public Vector3 operation(Vector3 a, Vector3 b) throws SpellRuntimeException {
+        return new Vector3(operation(a.x, b.x), operation(a.y, b.y), operation(a.z, b.z));
     }
 
-    public abstract double operation (double a, double b) throws SpellRuntimeException;
+    public abstract double operation(double a, double b) throws SpellRuntimeException;
 }

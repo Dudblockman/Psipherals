@@ -72,6 +72,7 @@ public class SpellPieces {
 
         ModSpellPieces.register(OperatorAdaptiveSignum.class, LibPieceNames.OPERATOR_SIGNUM, LibPieceGroups.TRIGONOMETRY);
     }
+
     public static ModSpellPieces.PieceContainer register(Class<? extends SpellPiece> clazz, String name, String group) {
         return register(clazz, name, group, false);
     }

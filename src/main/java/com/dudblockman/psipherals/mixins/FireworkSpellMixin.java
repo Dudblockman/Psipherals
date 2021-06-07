@@ -12,8 +12,8 @@ import static com.dudblockman.psipherals.util.EventHandler.ejectRidingSpells;
 @Mixin(FireworkRocketEntity.class)
 public class FireworkSpellMixin {
     @Inject(
-        method = "func_213893_k()V",
-        at = @At(value = "HEAD")
+            method = "func_213893_k()V",
+            at = @At(value = "HEAD")
     )
     public void onExplode(CallbackInfo ci) {
         ejectRidingSpells(((Entity) (Object) this));

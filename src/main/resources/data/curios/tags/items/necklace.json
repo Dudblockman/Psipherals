@@ -1,4 +1,6 @@
 {
   "replace": "false",
-  "values": ["psipherals:psi_amulet"]
+  "values": [
+    "psipherals:psi_amulet"
+  ]
 }

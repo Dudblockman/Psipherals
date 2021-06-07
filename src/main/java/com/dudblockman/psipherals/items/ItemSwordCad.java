@@ -47,6 +47,34 @@ public class ItemSwordCad extends SwordItem implements IIntegratedCad {
         super(new AdvPsimetalToolMaterial(), 3, -2.4F, props);
     }
 
+    public static void setComponent(ItemStack stack, ItemStack componentStack) {
+        if (stack.getItem() instanceof ICAD) {
+            ((ICAD) stack.getItem()).setCADComponent(stack, componentStack);
+        }
+    }
+
+    public static ItemStack makeCAD(ItemStack... components) {
+        return makeCAD(Arrays.asList(components));
+    }
+
+    public static ItemStack makeCADWithAssembly(ItemStack assembly, List<ItemStack> components) {
+        ItemStack cad = assembly.getItem() instanceof ICADAssembly ? ((ICADAssembly) assembly.getItem()).createCADStack(assembly, components) : new ItemStack(Items.swordCAD);
+
+        return makeCAD(cad, components);
+    }
+
+    public static ItemStack makeCAD(List<ItemStack> components) {
+        return makeCAD(new ItemStack(Items.swordCAD), components);
+    }
+
+    public static ItemStack makeCAD(ItemStack base, List<ItemStack> components) {
+        ItemStack stack = base.copy();
+        for (ItemStack component : components) {
+            setComponent(stack, component);
+        }
+        return stack;
+    }
+
     @Override
     public boolean isMelee() {
         return true;
@@ -69,7 +97,7 @@ public class ItemSwordCad extends SwordItem implements IIntegratedCad {
     public boolean hitEntity(ItemStack itemstack, LivingEntity target, @Nonnull LivingEntity attacker) {
         super.hitEntity(itemstack, target, attacker);
         castOnAttackEntity(itemstack, target, attacker);
-        repairTool(itemstack,attacker);
+        repairTool(itemstack, attacker);
         return true;
     }
 
@@ -83,7 +111,7 @@ public class ItemSwordCad extends SwordItem implements IIntegratedCad {
     @Override
     public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
         super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
-        repairTool(stack,entityLiving);
+        repairTool(stack, entityLiving);
         return true;
     }
 
@@ -126,34 +154,6 @@ public class ItemSwordCad extends SwordItem implements IIntegratedCad {
         ItemStack itemStackIn = playerIn.getHeldItem(hand);
         boolean did = normalCast(worldIn, playerIn, hand);
         return new ActionResult<>(did ? ActionResultType.PASS : ActionResultType.PASS, itemStackIn);
-    }
-
-    public static void setComponent(ItemStack stack, ItemStack componentStack) {
-        if (stack.getItem() instanceof ICAD) {
-            ((ICAD) stack.getItem()).setCADComponent(stack, componentStack);
-        }
-    }
-
-    public static ItemStack makeCAD(ItemStack... components) {
-        return makeCAD(Arrays.asList(components));
-    }
-
-    public static ItemStack makeCADWithAssembly(ItemStack assembly, List<ItemStack> components) {
-        ItemStack cad = assembly.getItem() instanceof ICADAssembly ? ((ICADAssembly) assembly.getItem()).createCADStack(assembly, components) : new ItemStack(Items.swordCAD);
-
-        return makeCAD(cad, components);
-    }
-
-    public static ItemStack makeCAD(List<ItemStack> components) {
-        return makeCAD(new ItemStack(Items.swordCAD), components);
-    }
-
-    public static ItemStack makeCAD(ItemStack base, List<ItemStack> components) {
-        ItemStack stack = base.copy();
-        for (ItemStack component : components) {
-            setComponent(stack, component);
-        }
-        return stack;
     }
 
     @Override

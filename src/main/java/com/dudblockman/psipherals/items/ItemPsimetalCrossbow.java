@@ -11,7 +11,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.entity.projectile.FireworkRocketEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.CrossbowItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.*;
@@ -38,37 +39,11 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemPsimetalCrossbow extends CrossbowItem implements IPsimetalTool {
-    
+
     public static String STORED_SPELL_TAG = "castBullet";
 
     public ItemPsimetalCrossbow(Properties propertiesIn) {
         super(propertiesIn.maxDamage(326));
-    }
-
-    @Override
-    public boolean isCrossbow(ItemStack stack) {
-        return stack.getItem() instanceof CrossbowItem;
-    }
-
-    @Nonnull
-    @Override
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, PlayerEntity playerIn, @Nonnull Hand handIn) {
-        ItemStack itemstack = playerIn.getHeldItem(handIn);
-        if (isCharged(itemstack)) {
-            fireProjectiles(worldIn, playerIn, handIn, itemstack, func_220013_l(itemstack), 1.0F);
-            setCharged(itemstack, false);
-            return ActionResult.resultConsume(itemstack);
-        } else if (!playerIn.findAmmo(itemstack).isEmpty()) {
-            if (!isCharged(itemstack)) {
-                this.isLoadingStart = false;
-                this.isLoadingMiddle = false;
-                playerIn.setActiveHand(handIn);
-            }
-
-            return ActionResult.resultConsume(itemstack);
-        } else {
-            return ActionResult.resultFail(itemstack);
-        }
     }
 
     public static void fireProjectiles(World worldIn, LivingEntity shooter, Hand handIn, ItemStack stack, float velocityIn, float inaccuracyIn) {
@@ -76,9 +51,9 @@ public class ItemPsimetalCrossbow extends CrossbowItem implements IPsimetalTool 
         List<ItemStack> list = getChargedProjectiles(stack);
         float[] afloat = getRandomSoundPitches(shooter.getRNG());
 
-        for(int i = 0; i < list.size(); ++i) {
+        for (int i = 0; i < list.size(); ++i) {
             ItemStack itemstack = list.get(i);
-            boolean flag = shooter instanceof PlayerEntity && ((PlayerEntity)shooter).abilities.isCreativeMode;
+            boolean flag = shooter instanceof PlayerEntity && ((PlayerEntity) shooter).abilities.isCreativeMode;
             if (!itemstack.isEmpty()) {
                 ProjectileEntity projectile = null;
                 if (i == 0) {
@@ -88,8 +63,8 @@ public class ItemPsimetalCrossbow extends CrossbowItem implements IPsimetalTool 
                 } else if (i == 2) {
                     projectile = fireProjectile(worldIn, shooter, handIn, stack, itemstack, afloat[i], flag, velocityIn, inaccuracyIn, 10.0F);
                 }
-                if (projectile != null && shooter instanceof PlayerEntity){
-                    attachSpell((PlayerEntity)shooter, crossbow, projectile);
+                if (projectile != null && shooter instanceof PlayerEntity) {
+                    attachSpell((PlayerEntity) shooter, crossbow, projectile);
                 }
             }
         }
@@ -107,16 +82,16 @@ public class ItemPsimetalCrossbow extends CrossbowItem implements IPsimetalTool 
             boolean flag = projectile.getItem() == Items.FIREWORK_ROCKET;
             ProjectileEntity projectileentity;
             if (flag) {
-                projectileentity = new FireworkRocketEntity(worldIn, projectile, shooter, shooter.getPosX(), shooter.getPosYEye() - (double)0.15F, shooter.getPosZ(), true);
+                projectileentity = new FireworkRocketEntity(worldIn, projectile, shooter, shooter.getPosX(), shooter.getPosYEye() - (double) 0.15F, shooter.getPosZ(), true);
             } else {
                 projectileentity = createArrow(worldIn, shooter, crossbow, projectile);
                 if (isCreativeMode || projectileAngle != 0.0F) {
-                    ((AbstractArrowEntity)projectileentity).pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
+                    ((AbstractArrowEntity) projectileentity).pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
                 }
             }
 
             if (shooter instanceof ICrossbowUser) {
-                ICrossbowUser icrossbowuser = (ICrossbowUser)shooter;
+                ICrossbowUser icrossbowuser = (ICrossbowUser) shooter;
                 icrossbowuser.func_230284_a_(icrossbowuser.getAttackTarget(), crossbow, projectileentity, projectileAngle);
             } else {
                 Vector3d vector3d1 = shooter.getUpVector(1.0F);
@@ -137,20 +112,8 @@ public class ItemPsimetalCrossbow extends CrossbowItem implements IPsimetalTool 
         return null;
     }
 
-    @Override
-    public void onPlayerStoppedUsing(@Nonnull ItemStack stack, @Nonnull World worldIn, @Nonnull LivingEntity entityLiving, int timeLeft) {
-        int i = this.getUseDuration(stack) - timeLeft;
-        float f = getCharge(i, stack);
-        if (f >= 1.0F && !isCharged(stack) && hasAmmo(entityLiving, stack) && entityLiving instanceof PlayerEntity) {
-            setCharged(stack, true);
-            SoundCategory soundcategory = entityLiving instanceof PlayerEntity ? SoundCategory.PLAYERS : SoundCategory.HOSTILE;
-            worldIn.playSound(null, entityLiving.getPosX(), entityLiving.getPosY(), entityLiving.getPosZ(), SoundEvents.ITEM_CROSSBOW_LOADING_END, soundcategory, 1.0F, 1.0F / (random.nextFloat() * 0.5F + 1.0F) + 0.2F);
-            addSpell((PlayerEntity)entityLiving, stack);
-        }
-    }
-
     private static void attachSpell(PlayerEntity player, ItemStack stack, ProjectileEntity projectile) {
-        if (ItemCAD.isTruePlayer(player) && stack.getTag() != null && stack.getTag().contains(STORED_SPELL_TAG) ) {
+        if (ItemCAD.isTruePlayer(player) && stack.getTag() != null && stack.getTag().contains(STORED_SPELL_TAG)) {
             CompoundNBT stackTag = stack.getTag();
             CompoundNBT tag = (CompoundNBT) stackTag.get(STORED_SPELL_TAG);
 
@@ -175,7 +138,6 @@ public class ItemPsimetalCrossbow extends CrossbowItem implements IPsimetalTool 
             }
         }
     }
-
 
     public static void addSpell(PlayerEntity player, ItemStack crossbow) {
         CompoundNBT compoundnbt = crossbow.getOrCreateTag();
@@ -218,7 +180,46 @@ public class ItemPsimetalCrossbow extends CrossbowItem implements IPsimetalTool 
     }
 
     @Override
-    public void castOnBlockBreak(ItemStack itemstack, PlayerEntity player) {}
+    public boolean isCrossbow(ItemStack stack) {
+        return stack.getItem() instanceof CrossbowItem;
+    }
+
+    @Nonnull
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, PlayerEntity playerIn, @Nonnull Hand handIn) {
+        ItemStack itemstack = playerIn.getHeldItem(handIn);
+        if (isCharged(itemstack)) {
+            fireProjectiles(worldIn, playerIn, handIn, itemstack, func_220013_l(itemstack), 1.0F);
+            setCharged(itemstack, false);
+            return ActionResult.resultConsume(itemstack);
+        } else if (!playerIn.findAmmo(itemstack).isEmpty()) {
+            if (!isCharged(itemstack)) {
+                this.isLoadingStart = false;
+                this.isLoadingMiddle = false;
+                playerIn.setActiveHand(handIn);
+            }
+
+            return ActionResult.resultConsume(itemstack);
+        } else {
+            return ActionResult.resultFail(itemstack);
+        }
+    }
+
+    @Override
+    public void onPlayerStoppedUsing(@Nonnull ItemStack stack, @Nonnull World worldIn, @Nonnull LivingEntity entityLiving, int timeLeft) {
+        int i = this.getUseDuration(stack) - timeLeft;
+        float f = getCharge(i, stack);
+        if (f >= 1.0F && !isCharged(stack) && hasAmmo(entityLiving, stack) && entityLiving instanceof PlayerEntity) {
+            setCharged(stack, true);
+            SoundCategory soundcategory = entityLiving instanceof PlayerEntity ? SoundCategory.PLAYERS : SoundCategory.HOSTILE;
+            worldIn.playSound(null, entityLiving.getPosX(), entityLiving.getPosY(), entityLiving.getPosZ(), SoundEvents.ITEM_CROSSBOW_LOADING_END, soundcategory, 1.0F, 1.0F / (random.nextFloat() * 0.5F + 1.0F) + 0.2F);
+            addSpell((PlayerEntity) entityLiving, stack);
+        }
+    }
+
+    @Override
+    public void castOnBlockBreak(ItemStack itemstack, PlayerEntity player) {
+    }
 
     @Override
     public boolean isEnabled(ItemStack stack) {
@@ -243,7 +244,7 @@ public class ItemPsimetalCrossbow extends CrossbowItem implements IPsimetalTool 
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void addInformation(ItemStack stack, @Nullable World playerIn, List<ITextComponent> tooltip, ITooltipFlag advanced) {      
+    public void addInformation(ItemStack stack, @Nullable World playerIn, List<ITextComponent> tooltip, ITooltipFlag advanced) {
         List<ItemStack> list = getChargedProjectiles(stack);
         if (isCharged(stack) && !list.isEmpty()) {
             ItemStack itemstack = list.get(0);
@@ -252,7 +253,7 @@ public class ItemPsimetalCrossbow extends CrossbowItem implements IPsimetalTool 
                 List<ITextComponent> list1 = Lists.newArrayList();
                 Items.FIREWORK_ROCKET.addInformation(itemstack, playerIn, list1, advanced);
                 if (!list1.isEmpty()) {
-                    for(int i = 0; i < list1.size(); ++i) {
+                    for (int i = 0; i < list1.size(); ++i) {
                         list1.set(i, (new StringTextComponent("  ")).append(list1.get(i)).mergeStyle(TextFormatting.GRAY));
                     }
 

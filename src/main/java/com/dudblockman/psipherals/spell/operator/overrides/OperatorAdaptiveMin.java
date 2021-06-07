@@ -11,8 +11,8 @@ public class OperatorAdaptiveMin extends OperatorAdaptiveTripleBase {
         orignalPiece = new PieceOperatorMin(spell);
     }
 
-    public double operation (double a, double b, double c) {
-        return Math.min(a,Math.min(b,c));
+    public double operation(double a, double b, double c) {
+        return Math.min(a, Math.min(b, c));
     }
 
 }

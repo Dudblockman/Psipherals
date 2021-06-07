@@ -1,32 +1,35 @@
 package com.dudblockman.psipherals.spell.operator;
 
 import com.dudblockman.psipherals.spell.selector.SelectorParallel;
-import vazkii.psi.api.spell.CompiledSpell.Action;
 import vazkii.psi.api.spell.*;
+import vazkii.psi.api.spell.CompiledSpell.Action;
 import vazkii.psi.api.spell.param.ParamEntityListWrapper;
 import vazkii.psi.api.spell.param.ParamNumber;
 import vazkii.psi.api.spell.piece.PieceOperator;
 import vazkii.psi.api.spell.wrapper.EntityListWrapper;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Stack;
+import java.util.Vector;
 
 public abstract class OperatorParallel extends PieceOperator {
-    SpellParam<EntityListWrapper> entList;
-    SpellParam<Number> target;
     public static final String ENTITY = "psipherals.parallelentity";
     public static final String INDEX = "psipherals.parallelindex";
     public Stack<Action> repeatedActions;
     public Vector<Double> inputs;
+    SpellParam<EntityListWrapper> entList;
+    SpellParam<Number> target;
+
+    public OperatorParallel(Spell spell) {
+        super(spell);
+    }
 
     @Override
     public void initParams() {
         super.initParams();
         addParam(entList = new ParamEntityListWrapper(SpellParam.GENERIC_NAME_LIST, SpellParam.GREEN, false, false));
         addParam(target = new ParamNumber(SpellParam.GENERIC_NAME_NUMBER, SpellParam.BLUE, false, false));
-    }
-
-    public OperatorParallel(Spell spell) {
-        super(spell);
     }
 
     public boolean processExecution(EntityListWrapper listVal, SpellContext context) throws SpellRuntimeException {
@@ -46,7 +49,7 @@ public abstract class OperatorParallel extends PieceOperator {
             }
             for (int i = 0; i < listVal.size(); i++) {
                 context.actions.push(thisAction);
-                for(CompiledSpell.Action a : this.repeatedActions) {
+                for (CompiledSpell.Action a : this.repeatedActions) {
                     context.actions.push(a);
                 }
             }
@@ -57,9 +60,9 @@ public abstract class OperatorParallel extends PieceOperator {
             double input = this.getParamValue(context, target).doubleValue();
             inputs.add(input);
             int index = (int) context.customData.get(OperatorParallel.INDEX);
-            if (index+1 < listVal.size()) {
-                context.customData.put(OperatorParallel.ENTITY, listVal.get(index+1));
-                context.customData.put(OperatorParallel.INDEX, index+1);
+            if (index + 1 < listVal.size()) {
+                context.customData.put(OperatorParallel.ENTITY, listVal.get(index + 1));
+                context.customData.put(OperatorParallel.INDEX, index + 1);
             } else {
                 context.customData.remove(OperatorParallel.ENTITY);
                 context.customData.remove(OperatorParallel.INDEX);
@@ -68,6 +71,7 @@ public abstract class OperatorParallel extends PieceOperator {
         }
         return false;
     }
+
     public void hackTheStack(SpellContext context) {
         Set<SpellPiece> updatePieces = new HashSet<>();
         SpellPiece updatedPiece = context.cspell.sourceSpell.grid.getPieceAtSideSafely(this.x, this.y, this.paramSides.get(target));
@@ -81,11 +85,9 @@ public abstract class OperatorParallel extends PieceOperator {
             }
         }
     }
+
     protected boolean depthFirstSearch(SpellPiece piece, Set<SpellPiece> visited, Set<SpellPiece> found, SpellContext context) {
-        boolean isUpdated = false;
-        if (piece instanceof SelectorParallel) {
-            isUpdated = true;
-        }
+        boolean isUpdated = piece instanceof SelectorParallel;
         if (!visited.add(piece) || piece instanceof OperatorParallel) {
             return isUpdated;
         }

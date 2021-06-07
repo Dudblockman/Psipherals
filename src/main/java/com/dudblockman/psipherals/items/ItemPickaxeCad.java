@@ -47,6 +47,34 @@ public class ItemPickaxeCad extends PickaxeItem implements IIntegratedCad {
         super(new AdvPsimetalToolMaterial(), 1, -2.8F, props);
     }
 
+    public static void setComponent(ItemStack stack, ItemStack componentStack) {
+        if (stack.getItem() instanceof ICAD) {
+            ((ICAD) stack.getItem()).setCADComponent(stack, componentStack);
+        }
+    }
+
+    public static ItemStack makeCAD(ItemStack... components) {
+        return makeCAD(Arrays.asList(components));
+    }
+
+    public static ItemStack makeCADWithAssembly(ItemStack assembly, List<ItemStack> components) {
+        ItemStack cad = assembly.getItem() instanceof ICADAssembly ? ((ICADAssembly) assembly.getItem()).createCADStack(assembly, components) : new ItemStack(Items.pickaxeCAD);
+
+        return makeCAD(cad, components);
+    }
+
+    public static ItemStack makeCAD(List<ItemStack> components) {
+        return makeCAD(new ItemStack(Items.pickaxeCAD), components);
+    }
+
+    public static ItemStack makeCAD(ItemStack base, List<ItemStack> components) {
+        ItemStack stack = base.copy();
+        for (ItemStack component : components) {
+            setComponent(stack, component);
+        }
+        return stack;
+    }
+
     @Override
     public boolean isMelee() {
         return false;
@@ -74,7 +102,7 @@ public class ItemPickaxeCad extends PickaxeItem implements IIntegratedCad {
 
     @Override
     public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-        super.onBlockDestroyed(stack,worldIn,state,pos,entityLiving);
+        super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
         repairTool(stack, entityLiving);
         return true;
     }
@@ -118,35 +146,6 @@ public class ItemPickaxeCad extends PickaxeItem implements IIntegratedCad {
         ItemStack itemStackIn = playerIn.getHeldItem(hand);
         boolean did = normalCast(worldIn, playerIn, hand);
         return new ActionResult<>(did ? ActionResultType.PASS : ActionResultType.PASS, itemStackIn);
-    }
-
-
-    public static void setComponent(ItemStack stack, ItemStack componentStack) {
-        if (stack.getItem() instanceof ICAD) {
-            ((ICAD) stack.getItem()).setCADComponent(stack, componentStack);
-        }
-    }
-
-    public static ItemStack makeCAD(ItemStack... components) {
-        return makeCAD(Arrays.asList(components));
-    }
-
-    public static ItemStack makeCADWithAssembly(ItemStack assembly, List<ItemStack> components) {
-        ItemStack cad = assembly.getItem() instanceof ICADAssembly ? ((ICADAssembly) assembly.getItem()).createCADStack(assembly, components) : new ItemStack(Items.pickaxeCAD);
-
-        return makeCAD(cad, components);
-    }
-
-    public static ItemStack makeCAD(List<ItemStack> components) {
-        return makeCAD(new ItemStack(Items.pickaxeCAD), components);
-    }
-
-    public static ItemStack makeCAD(ItemStack base, List<ItemStack> components) {
-        ItemStack stack = base.copy();
-        for (ItemStack component : components) {
-            setComponent(stack, component);
-        }
-        return stack;
     }
 
     @Override

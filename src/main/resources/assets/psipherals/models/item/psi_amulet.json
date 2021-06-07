@@ -1,14 +1,14 @@
 {
-	"parent": "item/generated",
-	"textures": {
-		"layer0": "psipherals:items/amulet"
-	},
-	"overrides": [
-		{
-			"predicate": {
-				"sus": 1
-			},
-			"model": "psipherals:item/sus"
-		}
-	]
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "psipherals:items/amulet"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "sus": 1
+      },
+      "model": "psipherals:item/sus"
+    }
+  ]
 }

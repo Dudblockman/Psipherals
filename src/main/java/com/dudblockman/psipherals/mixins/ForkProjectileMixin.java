@@ -22,7 +22,7 @@ public class ForkProjectileMixin {
                     by = -3
             )
     )
-    boolean skipFork (boolean s) {
+    boolean skipFork(boolean s) {
         return context != null;
     }
 }

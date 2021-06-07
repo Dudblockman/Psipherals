@@ -11,6 +11,7 @@ public class PieceCADOverclock extends SpellPiece {
     public PieceCADOverclock(Spell spell) {
         super(spell);
     }
+
     @Override
     public void addToMetadata(SpellMetadata meta) {
         if (!meta.getFlag(OVERCLOCK)) {

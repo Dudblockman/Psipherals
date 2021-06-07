@@ -9,7 +9,8 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Psipherals.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Potions {
-    public static Effect bulwark = new PotionBulwark(EffectType.BENEFICIAL,745784);
+    public static Effect bulwark = new PotionBulwark(EffectType.BENEFICIAL, 745784);
+
     @SubscribeEvent
     public static void registerEffect(RegistryEvent.Register<Effect> evt) {
         evt.getRegistry().register(bulwark.setRegistryName(Psipherals.location("bulwark")));

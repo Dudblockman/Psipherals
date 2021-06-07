@@ -31,35 +31,11 @@ import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import vazkii.psi.client.model.ModelCAD;
 
-import java.rmi.registry.Registry;
 import java.util.Objects;
 
 @OnlyIn(Dist.CLIENT)
 public class ClientProxy implements IProxy {
 
-    public void registerHandlers() {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::modelBake);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::addCADModels);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::loadComplete);
-
-    }
-
-    private void clientSetup(FMLClientSetupEvent event) {
-        RenderingRegistry.registerEntityRenderingHandler(Entities.arrowEntityType, RenderPsiArrow::new);
-        ClientRegistry.bindTileEntityRenderer(TilePsilon.TYPE, TilePsilonRenderer::new);
-        //ModelBakery.LOCATIONS_BUILTIN_TEXTURES.addAll(PsiAPI.getAllSpellPieceMaterial());
-        DeferredWorkQueue.runLater(() -> {
-            registerPropertyGetters();
-        });
-    }
-    private void modelBake(ModelBakeEvent event) {
-        Item[] cads = {Items.swordCAD,Items.pickaxeCAD,Items.axeCAD};
-        for (Item cad : cads) {
-            ModelResourceLocation key = new ModelResourceLocation(Objects.requireNonNull(cad.getRegistryName()), "inventory");
-            event.getModelRegistry().put(key, new ModelCAD());
-        }
-    }
     private static void registerPropertyGetter(IItemProvider item, ResourceLocation id, IItemPropertyGetter propGetter) {
         ItemModelsProperties.registerProperty(item.asItem(), id, propGetter);
     }
@@ -81,7 +57,7 @@ public class ClientProxy implements IProxy {
         registerPropertyGetter(Items.psimetalCrossbow, new ResourceLocation("charged"), charged);
         registerPropertyGetter(Items.psimetalCrossbow, new ResourceLocation("firework"), firework);
 
-        registerPropertyGetter(Items.psiAmulet, new ResourceLocation("sus"), (stack,world,living) -> {
+        registerPropertyGetter(Items.psiAmulet, new ResourceLocation("sus"), (stack, world, living) -> {
             if (stack.hasTag()) {
                 if (stack.getTag().contains("sus"))
                     return 1;
@@ -89,6 +65,32 @@ public class ClientProxy implements IProxy {
             return 0;
         });
     }
+
+    public void registerHandlers() {
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::modelBake);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::addCADModels);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::loadComplete);
+
+    }
+
+    private void clientSetup(FMLClientSetupEvent event) {
+        RenderingRegistry.registerEntityRenderingHandler(Entities.arrowEntityType, RenderPsiArrow::new);
+        ClientRegistry.bindTileEntityRenderer(TilePsilon.TYPE, TilePsilonRenderer::new);
+        //ModelBakery.LOCATIONS_BUILTIN_TEXTURES.addAll(PsiAPI.getAllSpellPieceMaterial());
+        DeferredWorkQueue.runLater(() -> {
+            registerPropertyGetters();
+        });
+    }
+
+    private void modelBake(ModelBakeEvent event) {
+        Item[] cads = {Items.swordCAD, Items.pickaxeCAD, Items.axeCAD};
+        for (Item cad : cads) {
+            ModelResourceLocation key = new ModelResourceLocation(Objects.requireNonNull(cad.getRegistryName()), "inventory");
+            event.getModelRegistry().put(key, new ModelCAD());
+        }
+    }
+
     private void addCADModels(ModelRegistryEvent event) {
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.SWORD_CAD_PSIMETAL));
         ModelLoader.addSpecialModel(Psipherals.location("item/" + ItemNames.SWORD_CAD_EBONY_PSIMETAL));
@@ -109,6 +111,7 @@ public class ClientProxy implements IProxy {
 
 
     }
+
     private void loadComplete(FMLLoadCompleteEvent event) {
         DeferredWorkQueue.runLater(() -> {
             ItemColors items = Minecraft.getInstance().getItemColors();

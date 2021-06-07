@@ -13,8 +13,8 @@ public class AdvPsimetalToolMaterial implements IItemTier {
 
     @Override
     public int getMaxUses() {
-    return 900;
-}
+        return 900;
+    }
 
     @Override
     public float getEfficiency() {
@@ -37,5 +37,7 @@ public class AdvPsimetalToolMaterial implements IItemTier {
     }
 
     @Override
-    public Ingredient getRepairMaterial() { return REPAIR_MATERIAL.getValue(); }
+    public Ingredient getRepairMaterial() {
+        return REPAIR_MATERIAL.getValue();
+    }
 }

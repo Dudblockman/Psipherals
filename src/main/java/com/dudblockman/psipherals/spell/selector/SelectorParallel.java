@@ -13,6 +13,7 @@ public abstract class SelectorParallel extends PieceSelector {
     public SelectorParallel(Spell spell) {
         super(spell);
     }
+
     public boolean TriggerParallel(SpellContext context) throws SpellRuntimeException {
         OperatorParallel operator = getParallelOperator(this, context);
         if (operator != null) {
@@ -21,6 +22,7 @@ public abstract class SelectorParallel extends PieceSelector {
         }
         return false;
     }
+
     protected OperatorParallel getParallelOperator(SpellPiece start, SpellContext context) throws SpellRuntimeException {
         Set<SpellPiece> visited = new HashSet<>();
         Queue<SpellPiece> queue = new LinkedList<SpellPiece>();

@@ -1,6 +1,6 @@
 {
-	"parent": "minecraft:item/generated",
-	"textures": { 
-		"layer0": "psipherals:items/spell_bullet_penta_grenade"
-	}
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "psipherals:items/spell_bullet_penta_grenade"
+  }
 }

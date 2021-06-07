@@ -6,14 +6,14 @@ import vazkii.psi.common.spell.operator.number.PieceOperatorCeiling;
 
 public class OperatorAdaptiveCeiling extends OperatorAdaptiveSingleBase {
 
-    @Override
-    public void initParams() {
-        addParam(in1 = new ParamVectorNumber(SpellParam.GENERIC_NAME_NUMBER, SpellParam.GREEN, false));
-    }
-
     public OperatorAdaptiveCeiling(Spell spell) {
         super(spell);
         orignalPiece = new PieceOperatorCeiling(spell);
+    }
+
+    @Override
+    public void initParams() {
+        addParam(in1 = new ParamVectorNumber(SpellParam.GENERIC_NAME_NUMBER, SpellParam.GREEN, false));
     }
 
     @Override

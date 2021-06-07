@@ -8,7 +8,9 @@ import vazkii.psi.api.spell.piece.PieceSelector;
 public class SelectorAltFire extends PieceSelector {
     public static String ALTFIREKEY = "psipherals.altfire";
 
-    public SelectorAltFire(Spell spell) { super(spell); }
+    public SelectorAltFire(Spell spell) {
+        super(spell);
+    }
 
     @Override
     public Class<?> getEvaluationType() {

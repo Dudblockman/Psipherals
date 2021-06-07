@@ -18,8 +18,8 @@ public class OperatorAdaptivePower extends OperatorAdaptiveDoubleBase {
         addParam(in2 = new ParamVectorNumber(SpellParam.GENERIC_NAME_POWER, SpellParam.RED, false));
     }
 
-    public double operation (double a, double b)  {
-        return Math.pow(a,b);
+    public double operation(double a, double b) {
+        return Math.pow(a, b);
     }
 
 }

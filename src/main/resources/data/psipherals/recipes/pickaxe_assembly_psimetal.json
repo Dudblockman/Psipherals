@@ -6,7 +6,7 @@
   "base": {
     "item": "psi:psimetal_pickaxe"
   },
-  "addition":{
+  "addition": {
     "item": "minecraft:netherite_ingot"
   }
 }

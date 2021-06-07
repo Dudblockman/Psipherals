@@ -1,28 +1,28 @@
 {
-	"parent": "item/bow",
-	"textures": {
-		"layer0": "psipherals:items/psimetal_bow_advanced"
-	},
-	"overrides": [
-		{
-			"predicate": {
-				"pulling": 1
-			},
-			"model": "psipherals:item/psimetal_bow_advanced_pulling_0"
-		},
-		{
-			"predicate": {
-				"pulling": 1,
-				"pull": 0.65
-			},
-			"model": "psipherals:item/psimetal_bow_advanced_pulling_1"
-		},
-		{
-			"predicate": {
-				"pulling": 1,
-				"pull": 0.9
-			},
-			"model": "psipherals:item/psimetal_bow_advanced_pulling_2"
-		}
-	]
+  "parent": "item/bow",
+  "textures": {
+    "layer0": "psipherals:items/psimetal_bow_advanced"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "pulling": 1
+      },
+      "model": "psipherals:item/psimetal_bow_advanced_pulling_0"
+    },
+    {
+      "predicate": {
+        "pulling": 1,
+        "pull": 0.65
+      },
+      "model": "psipherals:item/psimetal_bow_advanced_pulling_1"
+    },
+    {
+      "predicate": {
+        "pulling": 1,
+        "pull": 0.9
+      },
+      "model": "psipherals:item/psimetal_bow_advanced_pulling_2"
+    }
+  ]
 }

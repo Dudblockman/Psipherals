@@ -17,13 +17,16 @@ public class TrickKingCrimson extends PieceTrick {
     SpellParam<Entity> target;
     SpellParam<Number> time;
 
-    public TrickKingCrimson(Spell spell) { super(spell); }
+    public TrickKingCrimson(Spell spell) {
+        super(spell);
+    }
 
     @Override
     public void initParams() {
         addParam(target = new ParamEntity(SpellParam.GENERIC_NAME_TARGET, SpellParam.YELLOW, false, false));
         addParam(time = new ParamNumber(SpellParam.GENERIC_NAME_TIME, SpellParam.RED, false, true));
     }
+
     @Override
     public void addToMetadata(SpellMetadata meta) throws SpellCompilationException {
         super.addToMetadata(meta);
@@ -35,6 +38,7 @@ public class TrickKingCrimson extends PieceTrick {
         meta.addStat(EnumSpellStat.POTENCY, (int) (Math.abs(timeVal) * 12));
         meta.addStat(EnumSpellStat.COST, (int) (Math.abs(timeVal) * 40));
     }
+
     @Override
     public Object execute(SpellContext context) throws SpellRuntimeException {
         Entity targetVal = this.getParamValue(context, target);
@@ -53,7 +57,7 @@ public class TrickKingCrimson extends PieceTrick {
                 Vector3 last = data.eidosChangelog.get(data.eidosChangelog.size() - 2);
                 Vector3 vec = Vector3.fromEntity(targetVal).sub(last);
                 if (vec.mag() < 10) {
-                    motion = new Vector3d(vec.x,vec.y,vec.z);
+                    motion = new Vector3d(vec.x, vec.y, vec.z);
                 }
             }
         }
@@ -61,7 +65,7 @@ public class TrickKingCrimson extends PieceTrick {
         double offY = motion.y * timeVal;
         double offZ = motion.z * timeVal;
         int adjustY = 0;
-        for (int i = -(int)offY; i > 0; i--) {
+        for (int i = -(int) offY; i > 0; i--) {
             BlockPos pos = new BlockPos(targetVal.getPosX() + offX, targetVal.getPosY() + offY + adjustY, targetVal.getPosZ() + offZ);
             BlockState state = context.caster.getEntityWorld().getBlockState(pos);
             if (state.isAir(context.caster.getEntityWorld(), pos) || state.getMaterial().isReplaceable()) {
@@ -70,7 +74,7 @@ public class TrickKingCrimson extends PieceTrick {
             adjustY++;
         }
 
-        targetVal.setPositionAndUpdate(targetVal.getPosX() + offX, adjustY == 0 ? targetVal.getPosY() + offY + adjustY : (int)(targetVal.getPosY() + offY + adjustY), targetVal.getPosZ() + offZ);
+        targetVal.setPositionAndUpdate(targetVal.getPosX() + offX, adjustY == 0 ? targetVal.getPosY() + offY + adjustY : (int) (targetVal.getPosY() + offY + adjustY), targetVal.getPosZ() + offZ);
         return null;
     }
 }

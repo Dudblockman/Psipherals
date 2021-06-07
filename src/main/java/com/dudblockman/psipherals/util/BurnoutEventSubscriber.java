@@ -6,7 +6,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import vazkii.psi.api.spell.PreSpellCastEvent;
 
-@Mod.EventBusSubscriber(modid= Psipherals.MODID)
+@Mod.EventBusSubscriber(modid = Psipherals.MODID)
 public class BurnoutEventSubscriber {
     @SubscribeEvent
     public static void applyBurnout(PreSpellCastEvent event) {

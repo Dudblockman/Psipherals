@@ -25,8 +25,8 @@ public class RequiredSpellMixin {
     )
     @SuppressWarnings("unchecked")
     void AddToSpell(CallbackInfoReturnable<Set> cir, Set temp, SpellPiece[][] var2, int var3, int var4, SpellPiece[] gridDatum, SpellPiece[] var6, int var7, int var8, SpellPiece spellPiece) {
-        if(spellPiece instanceof OperatorAdaptiveBase) {
-            if (((OperatorAdaptiveBase)spellPiece).orignalPiece != null && spellPiece.getEvaluationType() != ((OperatorAdaptiveBase)spellPiece).orignalPiece.getEvaluationType()) {
+        if (spellPiece instanceof OperatorAdaptiveBase) {
+            if (((OperatorAdaptiveBase) spellPiece).orignalPiece != null && spellPiece.getEvaluationType() != ((OperatorAdaptiveBase) spellPiece).orignalPiece.getEvaluationType()) {
                 temp.add(Psipherals.MODID);
             }
         }

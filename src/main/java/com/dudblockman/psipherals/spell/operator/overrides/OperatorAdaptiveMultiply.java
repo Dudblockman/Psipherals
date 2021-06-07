@@ -11,7 +11,7 @@ public class OperatorAdaptiveMultiply extends OperatorAdaptiveTripleBase {
         orignalPiece = new PieceOperatorMultiply(spell);
     }
 
-    public double operation (double a, double b, double c) {
+    public double operation(double a, double b, double c) {
         return a * b * c;
     }
 

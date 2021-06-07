@@ -15,25 +15,27 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
-import vazkii.psi.common.block.tile.TileCADAssembler;
 
 import static com.dudblockman.psipherals.items.Items.defaultBuilder;
 
 @Mod.EventBusSubscriber(modid = Psipherals.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Blocks {
     public static final Block psilon = new BlockPsilon(Block.Properties.create(Material.IRON).hardnessAndResistance(5, 10).sound(SoundType.METAL).notSolid());
+
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> evt) {
         IForgeRegistry<Block> r = evt.getRegistry();
         r.register(psilon.setRegistryName(Psipherals.location(BlockNames.PSILON)));
 
     }
+
     @SubscribeEvent
     public static void registerItemBlocks(RegistryEvent.Register<Item> evt) {
         IForgeRegistry<Item> r = evt.getRegistry();
         r.register(new BlockItem(psilon, defaultBuilder().rarity(Rarity.UNCOMMON)).setRegistryName(psilon.getRegistryName()));
 
     }
+
     @SubscribeEvent
     public static void registerTileEntities(RegistryEvent.Register<TileEntityType<?>> evt) {
         IForgeRegistry<TileEntityType<?>> r = evt.getRegistry();

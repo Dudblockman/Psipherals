@@ -22,16 +22,16 @@ public abstract class OperatorAdaptiveSingleBase extends OperatorAdaptiveBase {
     @Override
     public Object execute(SpellContext context) throws SpellRuntimeException {
         Object d1 = this.getParamValue(context, in1);
-        if (d1 instanceof Vector3 ) {
+        if (d1 instanceof Vector3) {
             return operation(vectorize(d1));
         } else {
             return operation(((Number) d1).doubleValue());
         }
     }
 
-    public Vector3 operation (Vector3 a) throws SpellRuntimeException {
-        return new Vector3(operation(a.x),operation(a.y),operation(a.z));
+    public Vector3 operation(Vector3 a) throws SpellRuntimeException {
+        return new Vector3(operation(a.x), operation(a.y), operation(a.z));
     }
 
-    public abstract double operation (double a) throws SpellRuntimeException;
+    public abstract double operation(double a) throws SpellRuntimeException;
 }
