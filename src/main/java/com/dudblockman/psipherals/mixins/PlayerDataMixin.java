@@ -1,20 +1,30 @@
 package com.dudblockman.psipherals.mixins;
 
+import com.dudblockman.psipherals.block.tile.TilePsilon;
 import com.dudblockman.psipherals.util.PlayerDataWrapper;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import vazkii.psi.api.spell.LoopcastEndEvent;
 import vazkii.psi.common.core.handler.PlayerDataHandler;
 
 @Mixin(PlayerDataHandler.PlayerData.class)
-public abstract class PlayerBurnoutMixin implements PlayerDataWrapper {
+public abstract class PlayerDataMixin implements PlayerDataWrapper {
     private static final String TAG_BURNOUT_PSI = "psipherals.burnoutPsi";
 
     private static final int maxBurnout = 10000;
     private static final double recoveryRate = 0.01;
+
+    private static final String TAG_RATEFLAG = "psipherals.rateOverride";
+    private static final String TAG_RATEVALUE = "psipherals.loopcastRate";
+    private boolean isRateModified = false;
+    private int rate = 0;
 
     public int burnoutPsi;
 
@@ -53,15 +63,56 @@ public abstract class PlayerBurnoutMixin implements PlayerDataWrapper {
         }
     }
 
+    @Override
+    public void psilonUpdate() {
+
+    }
+
+    @Override
+    public TilePsilon getActivePsilon() {
+        return null;
+    }
+
+    @Override
+    public int getLoopcastRate(int original) {
+        return isRateModified ? rate : original;
+    }
+
+    @Override
+    public void setLoopcastRate(int rate) {
+        this.rate = rate;
+        this.isRateModified = true;
+    }
+
+    @SubscribeEvent
+    public void handleLoopcastEnd(LoopcastEndEvent event) {
+        this.isRateModified = false;
+    }
+
     @Inject(
             remap = false,
-            method = "Lvazkii/psi/common/core/handler/PlayerDataHandler$PlayerData;tick()V",
+            method = "tick()V",
             at = @At(
                     value = "HEAD"
             )
     )
-    public void decreaseBurnout(CallbackInfo ci) {
+    public void headTickInjection(CallbackInfo ci) {
         stepBurnout();
+        psilonUpdate();
+    }
+
+    @ModifyConstant(
+            remap = false,
+            method = "tick()V",
+            constant = @Constant(
+                    intValue = 5,
+                    ordinal = 1
+            ),
+            require = 1,
+            allow = 1
+    )
+    int replaceLoopcastRate(int original) {
+        return getLoopcastRate(original);
     }
 
     @Inject(
@@ -73,6 +124,8 @@ public abstract class PlayerBurnoutMixin implements PlayerDataWrapper {
     )
     public void saveNBT(CompoundNBT cmp, CallbackInfo ci) {
         cmp.putInt(TAG_BURNOUT_PSI, burnoutPsi);
+        cmp.putBoolean(TAG_RATEFLAG, isRateModified);
+        cmp.putInt(TAG_RATEVALUE, rate);
     }
 
     @Inject(
@@ -84,5 +137,7 @@ public abstract class PlayerBurnoutMixin implements PlayerDataWrapper {
     )
     public void loadNBT(CompoundNBT cmp, CallbackInfo ci) {
         burnoutPsi = cmp.getInt(TAG_BURNOUT_PSI);
+        isRateModified = cmp.getBoolean(TAG_RATEFLAG);
+        rate = cmp.getInt(TAG_RATEVALUE);
     }
 }

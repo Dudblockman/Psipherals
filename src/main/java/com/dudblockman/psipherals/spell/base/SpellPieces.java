@@ -11,6 +11,7 @@ import com.dudblockman.psipherals.spell.selector.SelectorParallelEntity;
 import com.dudblockman.psipherals.spell.selector.SelectorParallelIndex;
 import com.dudblockman.psipherals.spell.trick.TrickBulwark;
 import com.dudblockman.psipherals.spell.trick.TrickFork;
+import com.dudblockman.psipherals.spell.trick.TrickLoopcastRate;
 import com.dudblockman.psipherals.spell.trick.TrickPsilon;
 import com.dudblockman.psipherals.util.libs.PieceNames;
 import net.minecraft.util.ResourceLocation;
@@ -38,6 +39,7 @@ public class SpellPieces {
         register(PieceCADOverclock.class, PieceNames.OVERCLOCK, LibPieceGroups.EIDOS_REVERSAL);
 
         register(TrickPsilon.class, PieceNames.PSILON, LibPieceGroups.GREATER_INFUSION);
+        register(TrickLoopcastRate.class, "loopcastrate", LibPieceGroups.LOOPCASTING);
 
         //Vanilla Psi Registry Replacements
         ModSpellPieces.register(OperatorAdaptiveSum.class, LibPieceNames.OPERATOR_SUM, LibPieceGroups.NUMBERS_INTRO, true);

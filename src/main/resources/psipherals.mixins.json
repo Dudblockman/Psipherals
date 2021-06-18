@@ -7,7 +7,8 @@
   "mixins": [
     "FireworkSpellMixin",
     "ForkProjectileMixin",
-    "PlayerBurnoutMixin",
+    "ParticleFixHackMixin",
+    "PlayerDataMixin",
     "RequiredSpellMixin"
   ],
   "client": [

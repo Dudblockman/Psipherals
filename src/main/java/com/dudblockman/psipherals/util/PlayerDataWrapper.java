@@ -1,5 +1,7 @@
 package com.dudblockman.psipherals.util;
 
+import com.dudblockman.psipherals.block.tile.TilePsilon;
+
 public interface PlayerDataWrapper {
     void stepBurnout();
 
@@ -7,7 +9,11 @@ public interface PlayerDataWrapper {
 
     void subtractBurnout(int burnout);
 
-    void getActivePsilon();
+    TilePsilon getActivePsilon();
 
-    void PsilonUpdate();
+    void psilonUpdate();
+
+    int getLoopcastRate(int original);
+
+    void setLoopcastRate(int rate);
 }

@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ActionResultType;
@@ -23,14 +24,16 @@ import vazkii.psi.api.PsiAPI;
 import vazkii.psi.api.cad.EnumCADComponent;
 import vazkii.psi.api.cad.ICAD;
 import vazkii.psi.api.cad.ICADColorizer;
+import vazkii.psi.api.internal.PsiRenderHelper;
 import vazkii.psi.api.internal.Vector3;
+import vazkii.psi.common.Psi;
 import vazkii.psi.common.core.handler.PlayerDataHandler;
 import vazkii.psi.common.core.handler.PlayerDataHandler.PlayerData;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TilePsilon extends TileEntity implements IPsilonInfusionProvider {
+public class TilePsilon extends TileEntity implements IPsilonInfusionProvider, ITickableTileEntity {
     public static final int ACTIVATION_TIME = 30;
     public static final int VECTOR_DOMAIN = 7;
     @ObjectHolder(Psipherals.MODID + ":" + BlockNames.PSILON)
@@ -303,6 +306,76 @@ public class TilePsilon extends TileEntity implements IPsilonInfusionProvider {
     public void sync() {
         markDirty();
         this.world.notifyBlockUpdate(this.pos, this.getBlockState(), this.getBlockState(), 0);
+    }
+
+    @Override
+    public void tick() {
+        if (this.world.isRemote() && (this.connectedPsilons != null)) {
+            int color = this.getColorizerColor();
+            float r = PsiRenderHelper.r(color) / 255F;
+            float g = PsiRenderHelper.g(color) / 255F;
+            float b = PsiRenderHelper.b(color) / 255F;
+            if (this.isSlave()) {
+                Vector3 origin = Vector3.fromBlockPos(this.getPos());
+                Vector3 voffset = Vector3.fromBlockPos(this.connectedPsilons.get(0)).subtract(origin);
+                double distance = voffset.mag();
+                voffset.normalize();
+                origin = origin.add(0.5, 1.1875, 0.5);
+                float s = 0.2F + (float) Math.random() * 0.1F;
+                float m = 0.01F + (float) Math.random() * 0.015F;
+                switch (this.mode) {
+                    case OFF:
+                        break;
+                    case READY:
+                        for (int i = 0; i < 3; i++) {
+                            Vector3 dir = new Vector3();
+                            double dist = 0.05;
+                            dir.x += (Math.random() - 0.5);
+                            dir.y += (Math.random() - 0.5);
+                            dir.z += (Math.random() - 0.5);
+                            dir.normalize().multiply(dist);
+                            Psi.proxy.sparkleFX(origin.x, origin.y, origin.z, r, g, b, (float) dir.x, (float) dir.y, (float) dir.z, 1, 10);
+                        }
+                        break;
+                    case LIT:
+                        Psi.proxy.wispFX(origin.x, origin.y, origin.z, r, g, b, s, 0, m, 0, 1f);
+                        break;
+                    case CONSUMING:
+                        double spread = 0.3;
+                        double dist = 0.1 * distance;
+                        for (int i = 0; i < 5; i++) {
+                            Vector3 dir = new Vector3(voffset);
+                            dir.x += (Math.random() - 0.5) * spread;
+                            dir.y += (Math.random() - 0.5) * spread;
+                            dir.z += (Math.random() - 0.5) * spread;
+                            dir.normalize().multiply(dist);
+                            Psi.proxy.sparkleFX(origin.x, origin.y, origin.z, r, g, b, (float) dir.x, (float) dir.y, (float) dir.z, 1, 20);
+                        }
+                        Psi.proxy.wispFX(origin.x, origin.y, origin.z, r, g, b, s, (float) (voffset.x * m), (float) (voffset.y * m), (float) (voffset.z * m), 1f);
+                        break;
+                }
+            }
+            if (this.isMaster()) {
+                BlockPos offset = this.connectedPsilons.get(0).subtract(this.getPos());
+                float distance = (float) Math.sqrt(offset.getX() * offset.getX() + offset.getZ() * offset.getZ());
+                float size = -0.4f + distance * 0.675f;
+                size *= getCircleActivation(0);
+                Vector3 startpos = Vector3.fromTileEntity(this);
+                for (int i = 0; i < Math.ceil(size * size * 3); i++) {
+                    double x, z;
+                    do {
+                        x = (Math.random() - 0.5) * size * 3;
+                        z = (Math.random() - 0.5) * size * 3;
+                    } while (x * x + z * z > size * size * 2.25);
+                    double y = startpos.y;
+                    x += startpos.x + 0.5;
+                    z += startpos.z + 0.5;
+                    float grav = -0.15F - (float) Math.random() * 0.03F;
+                    Psi.proxy.sparkleFX(x, y, z, r, g, b, grav, 0.25F, 15);
+                }
+            }
+
+        }
     }
 
     public enum InfusionState {
