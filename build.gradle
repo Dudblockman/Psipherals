@@ -131,8 +131,8 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-1.16.2:7.3.2.25:api")
     runtimeOnly fg.deobf("mezz.jei:jei-1.16.2:7.3.2.25")
 
-    compileOnly fg.deobf("vazkii.psi:Psi:1.16-94.390")
-    runtimeOnly fg.deobf("vazkii.psi:Psi:1.16-94.390")
+    compileOnly fg.deobf("vazkii.psi:Psi:1.16-94.399")
+    runtimeOnly fg.deobf("vazkii.psi:Psi:1.16-94.399")
 
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.3-4.0.2.0")
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.3-4.0.2.0")

@@ -51,7 +51,8 @@ public class SpellCostMixin {
             method = "lambda$renderButton$0",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/FontRenderer;drawString(Lcom/mojang/blaze3d/matrix/MatrixStack;Ljava/lang/String;FFI)I"
+                    target = "Lnet/minecraft/client/gui/FontRenderer;drawString(Lcom/mojang/blaze3d/matrix/MatrixStack;Ljava/lang/String;FFI)I",
+                    remap = true
             ),
             index = 1,
             require = 1

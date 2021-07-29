@@ -1,6 +1,5 @@
 package com.dudblockman.psipherals.spell.operator.overrides;
 
-import net.minecraft.client.Minecraft;
 import vazkii.psi.api.spell.Spell;
 import vazkii.psi.api.spell.SpellParam;
 import vazkii.psi.api.spell.SpellRuntimeException;
@@ -24,7 +23,6 @@ public class OperatorAdaptiveRoot extends OperatorAdaptiveDoubleBase {
         if (a < 0 && b % 2 == 0) {
             throw new SpellRuntimeException(SpellRuntimeException.EVEN_ROOT_NEGATIVE_NUMBER);
         }
-        assert Minecraft.getInstance().world != null;
         return Math.pow(a, 1 / b);
     }
 

@@ -76,7 +76,7 @@ public class AmuletCapabilityProvider extends ToolSocketable implements ICurio {
             context.cspell.actions.add(0, newAction);
         }
         context.cspell.safeExecute(context);
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
