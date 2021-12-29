@@ -73,5 +73,7 @@
   "psipherals.book.page.parallel.6": "An example spell using $(thing)Operator: Parallel Filter$(0) to return a list of all nearby injured creatures.",
   "psipherals.book.page.parallel.7": "An example spell using $(thing)Operator: Parallel Maximum$(0) to smite the highest enemy near you.",
   "jei.psipherals.category.psilon_crafting": "Psilon Infusion",
-  "psi.datatype.vector_or_number": "Number or Vector"
+  "psi.datatype.vector_or_number": "Number or Vector",
+  "attribute.name.psipherals.psicapacity": "Psi Capacity",
+  "attribute.name.psipherals.psiregen": "Psi Regeneration"
 }

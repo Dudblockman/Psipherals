@@ -5,9 +5,13 @@ import com.dudblockman.psipherals.items.Items;
 import com.dudblockman.psipherals.items.StatRegistry;
 import com.dudblockman.psipherals.util.ClientProxy;
 import com.dudblockman.psipherals.util.IProxy;
+import com.dudblockman.psipherals.util.PsiAttributes;
 import com.dudblockman.psipherals.util.ServerProxy;
 import com.dudblockman.psipherals.util.network.MessageRegistry;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
@@ -33,6 +37,7 @@ public class Psipherals {
         MinecraftForge.EVENT_BUS.register(this);
         IProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> ServerProxy::new);
         proxy.registerHandlers();
+        new PsiAttributes();
     }
 
     public static ResourceLocation location(String path) {

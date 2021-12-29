@@ -1,14 +1,25 @@
 package com.dudblockman.psipherals.items;
 
 import com.dudblockman.psipherals.Psipherals;
+import com.dudblockman.psipherals.items.armor.ItemPsimetalHardsuitBoots;
+import com.dudblockman.psipherals.items.armor.ItemPsimetalHardsuitChestplate;
+import com.dudblockman.psipherals.items.armor.ItemPsimetalHardsuitHelmet;
+import com.dudblockman.psipherals.items.armor.ItemPsimetalHardsuitLeggings;
 import com.dudblockman.psipherals.spell.base.SpellPieces;
 import com.dudblockman.psipherals.util.CreativeTab;
 import com.dudblockman.psipherals.util.libs.ItemNames;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
+import vazkii.psi.common.item.armor.ItemPsimetalExosuitBoots;
+import vazkii.psi.common.item.armor.ItemPsimetalExosuitChestplate;
+import vazkii.psi.common.item.armor.ItemPsimetalExosuitHelmet;
+import vazkii.psi.common.item.armor.ItemPsimetalExosuitLeggings;
+import vazkii.psi.common.lib.LibItemNames;
+import vazkii.psi.common.lib.LibMisc;
 
 @Mod.EventBusSubscriber(modid = Psipherals.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Items {
@@ -43,6 +54,11 @@ public class Items {
     public static final Item pentaGrenadeSpellBullet = new ItemPentaGrenadeSpellBullet(defaultBuilder());
 
     public static final ItemBowCad bowCAD = new ItemBowCad(defaultBuilder());
+
+    public static final Item psimetalHardsuitHelmet = new ItemPsimetalHardsuitHelmet(EquipmentSlotType.HEAD, defaultBuilder());
+    public static final Item psimetalHardsuitChestplate = new ItemPsimetalHardsuitChestplate(EquipmentSlotType.CHEST, defaultBuilder());
+    public static final Item psimetalHardsuitLeggings = new ItemPsimetalHardsuitLeggings(EquipmentSlotType.LEGS, defaultBuilder());
+    public static final Item psimetalHardsuitBoots = new ItemPsimetalHardsuitBoots(EquipmentSlotType.FEET, defaultBuilder());
 
     public static Item.Properties defaultBuilder() {
         return new Item.Properties().group(CreativeTab.INSTANCE);
@@ -91,5 +107,11 @@ public class Items {
         r.register(dessAssembly.setRegistryName(Psipherals.location("igalima")));
 
         r.register(pentaGrenadeSpellBullet.setRegistryName(Psipherals.location(ItemNames.PENTA_GRENADE)));
+
+
+        r.register(psimetalHardsuitHelmet.setRegistryName(Psipherals.location(LibItemNames.PSIMETAL_EXOSUIT_HELMET)));
+        r.register(psimetalHardsuitChestplate.setRegistryName(Psipherals.location(LibItemNames.PSIMETAL_EXOSUIT_CHESTPLATE)));
+        r.register(psimetalHardsuitLeggings.setRegistryName(Psipherals.location(LibItemNames.PSIMETAL_EXOSUIT_LEGGINGS)));
+        r.register(psimetalHardsuitBoots.setRegistryName(Psipherals.location(LibItemNames.PSIMETAL_EXOSUIT_BOOTS)));
     }
 }
